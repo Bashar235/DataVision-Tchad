@@ -1,0 +1,59 @@
+# ==========================================
+# DataVision Tchad - Root .gitignore
+# ==========================================
+
+# ============ Frontend ====================
+# Node.js dependencies
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+
+# Build outputs
+frontend/build/
+
+# ============ Backend =====================
+# Python virtual environments
+backend/venv/
+backend/.venv/
+backend/env/
+backend/ENV/
+
+# Python cache
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
+backend/*.so
+
+# Environment variables
+backend/.env
+backend/.env.local
+
+# Database
+backend/*.db
+backend/*.sqlite3
+
+# Reports and outputs
+backend/reports/
+backend/uploads/
+
+# ============ IDEs & Editors ==============
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ============ OS Generated ================
+Thumbs.db
+Desktop.ini
+
+# ============ Git & Version Control =======
+*.orig
+*.rej
+
+# ============ Logs ========================
+*.log
+logs/

@@ -1,0 +1,525 @@
+:root {
+    --primary-color: #1e3a8a;
+    --secondary-color: #fbbf24;
+    --accent-color: #059669;
+    --dark-blue: #1e40af;
+    --light-gray: #f8fafc;
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+}
+
+/* Navigation */
+.landing-page .navbar {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(30, 58, 138, 0.1);
+    transition: all 0.3s ease;
+    padding: 1rem 0;
+    z-index: 1050 !important;
+    /* Ensure it's above everything */
+}
+
+.landing-page .navbar-collapse {
+    display: flex !important;
+    /* Force flex for testing */
+}
+
+@media (max-width: 991.98px) {
+    .landing-page .navbar-collapse {
+        background: white;
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin-top: 1rem;
+    }
+}
+
+.landing-page .navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--primary-color) !important;
+    text-decoration: none;
+}
+
+.landing-page .nav-link {
+    color: var(--text-dark) !important;
+    font-weight: 500;
+    margin: 0 0.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.landing-page .nav-link:hover {
+    color: var(--primary-color) !important;
+    transform: translateY(-2px);
+}
+
+.landing-page .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 50%;
+    background: var(--secondary-color);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.landing-page .nav-link:hover::after {
+    width: 100%;
+}
+
+.landing-page .btn-login {
+    background: linear-gradient(135deg, var(--primary-color), var(--dark-blue));
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 50px;
+    color: white !important;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.landing-page .btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(30, 58, 138, 0.3);
+    color: white !important;
+}
+
+/* Language Toggle */
+.landing-page .language-toggle {
+    z-index: 1000;
+}
+
+[dir="ltr"] .landing-page .language-toggle {
+    margin-right: 1rem;
+}
+
+[dir="rtl"] .landing-page .language-toggle {
+    margin-left: 1rem;
+}
+
+.landing-page .language-dropdown .dropdown-menu {
+    min-width: 100px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.landing-page .language-dropdown .dropdown-item {
+    padding: 8px 15px;
+    font-weight: 500;
+    color: var(--text-dark);
+    cursor: pointer;
+}
+
+.landing-page .language-dropdown .dropdown-item:hover {
+    background-color: var(--secondary-color);
+    color: var(--text-dark);
+}
+
+.landing-page .language-dropdown .dropdown-item.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.landing-page .language-dropdown .btn {
+    background: var(--primary-color);
+    color: white;
+    border-radius: 25px;
+    font-weight: 600;
+    padding: 8px 15px;
+    border: none;
+}
+
+.landing-page .language-dropdown .btn:hover {
+    background: var(--secondary-color);
+    color: var(--text-dark);
+}
+
+/* Hero Section */
+.landing-page .hero {
+    background: linear-gradient(135deg, #0f172a 0%, var(--primary-color) 50%, var(--dark-blue) 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.landing-page .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(251,191,36,0.1)" points="0,1000 1000,0 1000,1000"/><circle fill="rgba(251,191,36,0.05)" cx="200" cy="200" r="100"/><circle fill="rgba(251,191,36,0.05)" cx="800" cy="600" r="150"/></svg>');
+    background-size: cover;
+}
+
+.landing-page .hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.landing-page .hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.landing-page .hero p {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+}
+
+.landing-page .btn-hero {
+    background: var(--secondary-color);
+    color: var(--text-dark);
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    transition: all 0.3s ease;
+    margin-right: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.landing-page .btn-hero:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(251, 191, 36, 0.4);
+    color: var(--text-dark);
+}
+
+.landing-page .btn-hero-outline {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.landing-page .btn-hero-outline:hover {
+    background: white;
+    color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+/* Sections */
+.landing-page .section {
+    padding: 6rem 0;
+}
+
+.landing-page .section-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.landing-page .section-subtitle {
+    font-size: 1.2rem;
+    text-align: center;
+    color: var(--text-light);
+    margin-bottom: 4rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Features */
+.landing-page .feature-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+    border: 1px solid rgba(30, 58, 138, 0.1);
+}
+
+.landing-page .feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.landing-page .feature-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--dark-blue));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.landing-page .feature-icon i {
+    font-size: 2rem;
+    color: white;
+}
+
+.landing-page .feature-card h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+/* About Section */
+.landing-page .about-bg {
+    background: var(--light-gray);
+}
+
+.landing-page .about-image {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.landing-page .stats-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+.landing-page .stats-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    display: block;
+}
+
+.landing-page .stats-label {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+/* Services */
+.landing-page .services-bg {
+    background: linear-gradient(135deg, var(--primary-color), var(--dark-blue));
+    color: white;
+}
+
+.landing-page .services-bg .section-title,
+.landing-page .services-bg .section-subtitle {
+    color: white;
+}
+
+.landing-page .service-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.landing-page .service-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-5px);
+}
+
+.landing-page .service-item i {
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+/* Contact Form */
+.landing-page .contact-form {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+}
+
+.landing-page .form-control {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.landing-page .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(30, 58, 138, 0.25);
+}
+
+.landing-page .btn-submit {
+    background: linear-gradient(135deg, var(--primary-color), var(--dark-blue));
+    color: white;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.landing-page .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(30, 58, 138, 0.3);
+}
+
+/* Footer */
+.landing-page .footer {
+    background: var(--text-dark);
+    color: white;
+    padding: 3rem 0 1rem;
+}
+
+.landing-page .footer-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.landing-page .footer-link:hover {
+    color: var(--secondary-color);
+}
+
+.landing-page .social-links a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    margin: 0 5px;
+    color: white;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.landing-page .social-links a:hover {
+    background: var(--secondary-color);
+    color: var(--text-dark);
+    transform: translateY(-3px);
+}
+
+/* Modal Overrides for Landing Page */
+.landing-page .modal-content {
+    border-radius: 20px;
+    border: none;
+    overflow: hidden;
+}
+
+.landing-page .modal-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--dark-blue));
+    color: white;
+    border: none;
+    padding: 2rem;
+}
+
+.landing-page .modal-body {
+    padding: 2rem;
+}
+
+.landing-page .form-floating .form-control {
+    height: 3.5rem;
+}
+
+.landing-page .signup-link {
+    color: var(--primary-color) !important;
+    font-weight: 600;
+    text-decoration: underline;
+    display: inline-block;
+    padding: 2px 5px;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.landing-page .signup-link:hover {
+    color: var(--secondary-color) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .landing-page .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .landing-page .hero p {
+        font-size: 1.1rem;
+    }
+
+    .landing-page .btn-hero,
+    .landing-page .btn-hero-outline {
+        display: block;
+        margin: 0.5rem 0;
+        text-align: center;
+    }
+
+    .landing-page .language-toggle {
+        margin: 0.5rem 0;
+        text-align: center;
+    }
+
+    .landing-page .section-title {
+        font-size: 2.2rem;
+    }
+
+    .landing-page .feature-card {
+        margin-bottom: 2rem;
+    }
+
+    [dir="rtl"] .landing-page .navbar-nav {
+        text-align: right;
+    }
+}
+
+/* RTL Specific Adjustments */
+[dir="rtl"] .landing-page .navbar-brand {
+    margin-left: 1rem;
+    margin-right: 0;
+}
+
+[dir="rtl"] .landing-page .nav-link {
+    margin: 0 0.5rem 0 0;
+}
+
+[dir="rtl"] .landing-page .btn-login {
+    margin-left: 1rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.landing-page .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}

@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+python-dotenv
+passlib[bcrypt]
+python-multipart
+pydantic-settings
+reportlab
+pandas
+openpyxl
+pyotp
+qrcode[pil]
+apscheduler

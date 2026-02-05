@@ -1,0 +1,11 @@
+year,region,population,fertility_rate,mortality_rate,migration_net,urbanization_rate,gdp_contribution,employment_agriculture,employment_industry,employment_services,age_0_14,age_15_64,age_65_plus,risk_score,category,indicator_name,value,unit
+2020,National,,,,,,,,,,,,,,,Population Total,16200000.0,Habitants
+2021,National,,,,,,,,,,,,,,,Population Total,16700000.0,Habitants
+2022,National,,,,,,,,,,,,,,,Population Total,17200000.0,Habitants
+2023,National,,,,,,,,,,,,,,,Population Total,17700000.0,Habitants
+2023,N'Djamena,,,,,,,,,,,,,,,Population,1200000.0,Habitants
+2023,Logone Occidental,,,,,,,,,,,,,,,Population,850000.0,Habitants
+2023,National,,,,,,,,,,,,,,,Taux De Chômage,12.5,%
+2023,National,,,,,,,,,,,,,,,Pib Par Habitant,700.0,USD
+2022,National,,,,,,,,,,,,,,,Pib Par Habitant,680.0,USD
+2024,National,,,,,,,,,,,,,,,Population Forecast,18200000.0,Habitants
