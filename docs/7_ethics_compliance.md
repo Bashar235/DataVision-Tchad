@@ -464,12 +464,8 @@ DataVision Tchad complies with **Loi n° 007/PR/2022 relative à la protection d
 
 **Signature**:
 
-**Dr. Mahamat Saleh**  
+**Dr. Tom Cheriff **  
 *Director General, INSEED Chad*  
 *Date: February 5, 2026*
 
 ---
-
-**Document Prepared By**: Antigravity AI for INSEED Chad  
-**Review Status**: Pending Legal Review by Ministry of Justice  
-**Classification**: Public Document (may be shared with external stakeholders)
