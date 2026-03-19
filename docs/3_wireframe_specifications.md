@@ -624,7 +624,3 @@ const { t } = useLanguage();
 Translation files: `src/data/translations.ts`
 
 ---
-
-**Document Prepared By**: Antigravity AI for INSEED Chad  
-**Review Status**: Pending UI/UX Review  
-**Next Update**: Post user testing in N'Djamena regional office
