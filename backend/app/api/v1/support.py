@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import datetime, timezone
 
 from app.db.session import get_db
 from app.models.support import SupportTicket
@@ -28,7 +28,7 @@ class SupportResponse(BaseModel):
     created_at: datetime
     
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 @router.post("/", response_model=SupportResponse)
 def create_support_ticket(
@@ -52,11 +52,11 @@ def create_support_ticket(
     
     # Send Email
     send_support_email(
-        user_email=current_user.email,
+        user_email=str(current_user.email),
         subject=request.subject,
         message=request.message,
-        user_name=current_user.full_name,
-        user_role=current_user.role,
+        user_name=str(current_user.full_name),
+        user_role=str(current_user.role),
         is_urgent=request.is_urgent
     )
     
@@ -88,16 +88,16 @@ def resolve_ticket(
     if not ticket:
         raise HTTPException(status_code=404, detail="Ticket not found")
         
-    ticket.status = "resolved"
-    ticket.resolved_at = datetime.utcnow()
+    ticket.status = "resolved" # type: ignore
+    ticket.resolved_at = datetime.now(timezone.utc) # type: ignore
     db.commit()
     
     # Send Resolution Email
-    formatted_date = ticket.resolved_at.strftime("%Y-%m-%d %H:%M UTC")
+    formatted_date = ticket.resolved_at.strftime("%Y-%m-%d %H:%M UTC") # type: ignore
     send_resolution_email(
-        user_email=ticket.user_email_snapshot,
-        user_name=ticket.user_name_snapshot,
-        subject=ticket.subject,
+        user_email=str(ticket.user_email_snapshot),
+        user_name=str(ticket.user_name_snapshot),
+        subject=str(ticket.subject),
         resolved_at=formatted_date
     )
     

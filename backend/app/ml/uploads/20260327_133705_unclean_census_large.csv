@@ -1,0 +1,967 @@
+Region,Year,Age_Group,Population_Total
+Batha,2009,Total,500ZER
+Batha,2010,Total,515000
+Batha,2011,Total,530450
+Batha,2012,Total,546363
+Batha,2013,Total,562754
+Batha,2014,Total,579637
+Batha,2015,Total,597026
+Batha,2016,Total,614936
+Batha,2017,Total,633385
+Batha,2018,Total,652386
+Batha,2019,Total,671958
+Batha,2020,Total,692116
+Batha,2021,Total,712880
+Batha,2022,Total,734266
+Batha,2023,Total,756294
+Batha,2024,Total,778983
+Batha,2025,Total,802353
+Batha,2026,Total,826423
+Batha,2027,Total,851216
+Batha,2028,Total,876753
+Batha,2029,Total,903055
+Batha,2030,Total,465073
+Batha,2031,Total,958051
+Batha,2032,Total,986793
+Batha,2033,Total,1016397
+Batha,2034,Total,1046888
+Batha,2035,Total,1078295
+Batha,2036,Total,1110644
+Batha,2037,Total,1143963
+Batha,2038,Total,1178282
+Batha,2039,Total,1213631
+Batha,2040,Total,1250040
+Batha,2041,Total,1287541
+Batha,2042,Total,1326167
+Batha,2043,Total,1365952
+Batha,2044,Total,1406931
+Batha,2045,Total,1449139
+Batha,2046,Total,1492613
+Batha,2047,Total,1537391
+Batha,2048,Total,1583513
+Batha,2049,Total,1631018
+Batha,2050,Total,1679949
+Borkou,2009,Total,500000
+Borkou,2010,Total,515000
+Borkou,2011,Total,530450
+Borkou,2012,Total,546363
+Borkou,2013,Total,562754
+Borkou,2014,Total,579637
+Borkou,2015,Total,597026
+Borkou,2016,Total,614936
+Borkou,2017,Total,633385
+Borkou,2018,Total,652386
+Borkou,2019,Total,671958
+Borkou,2020,Total,692116
+Borkou,2021,Total,712880
+Borkou,2022,Total,734266
+Borkou,2023,Total,756294
+Borkou,2024,Total,778983
+Borkou,2025,Total,802353
+Borkou,2026,Total,826423
+Borkou,2027,Total,851216
+Borkou,2028,Total,876753
+Borkou,2029,Total,903055
+Borkou,2030,Total,930147
+Borkou,2031,Total,958051
+Borkou,2032,Total,986793
+Borkou,2033,Total,1016397
+Borkou,2034,Total,1046888
+Borkou,2035,Total,1078295
+Borkou,2036,Total,1110644
+Borkou,2037,Total,1143963
+Borkou,2038,Total,1178282
+Borkou,2039,Total,1213631
+Borkou,2040,Total,1250040
+Borkou,2041,Total,1287541
+Borkou,2042,Total,1326167
+Borkou,2043,Total,1365952
+Borkou,2044,Total,1406931
+Borkou,2045,Total,1449139
+Borkou,2046,Total,1492613
+Borkou,2047,Total,1537391
+Borkou,2048,Total,1583513
+Borkou,2049,Total,1631018
+Borkou,2050,Total,1679949
+Chari-Baguirmi,2009,Total,500000
+Chari-Baguirmi,2010,Total,515000
+Chari-Baguirmi,2011,Total,530450
+Chari-Baguirmi,2012,Total,546363
+Chari-Baguirmi,2013,Total,562754
+Chari-Baguirmi,2014,Total,579637
+Chari-Baguirmi,2015,Total,597026
+Chari-Baguirmi,2016,Total,614936
+Chari-Baguirmi,2017,Total,633385
+Chari-Baguirmi,2018,Total,652386
+Chari-Baguirmi,2019,Total,671958
+Chari-Baguirmi,2020,Total,692116
+Chari-Baguirmi,2021,Total,712880
+Chari-Baguirmi,2022,Total,734266
+Chari-Baguirmi,2023,Total,756294
+Chari-Baguirmi,2024,Total,778983
+Chari-Baguirmi,2025,Total,802353
+Chari-Baguirmi,2026,Total,826423
+Chari-Baguirmi,2027,Total,851216
+Chari-Baguirmi,2028,Total,876753
+Chari-Baguirmi,2029,Total,903055
+Chari-Baguirmi,2030,Total,930147
+Chari-Baguirmi,2031,Total,958051
+Chari-Baguirmi,2032,Total,986793
+Chari-Baguirmi,2033,Total,1016397
+Chari-Baguirmi,2034,Total,1046888
+Chari-Baguirmi,2035,Total,1078295
+Chari-Baguirmi,2036,Total,1110644
+Chari-Baguirmi,2037,Total,1143963
+Chari-Baguirmi,2038,Total,1178282
+Chari-Baguirmi,2039,Total,1213631
+Chari-Baguirmi,2040,Total,1250040
+Chari-Baguirmi,2041,Total,1287541
+Chari-Baguirmi,2042,Total,1326167
+Chari-Baguirmi,2043,Total,1365952
+Chari-Baguirmi,2044,Total,1406931
+Chari-Baguirmi,2045,Total,1449139
+Chari-Baguirmi,2046,Total,1492613
+Chari-Baguirmi,2047,Total,1537391
+Chari-Baguirmi,2048,Total,1583513
+Chari-Baguirmi,2049,Total,1631018
+Chari-Baguirmi,2050,Total,1679949
+Ennedi Est,2009,Total,500000
+Ennedi Est,2010,Total,515000
+Ennedi Est,2011,Total,530450
+Ennedi Est,2012,Total,546363
+Ennedi Est,2013,Total,562754
+Ennedi Est,2014,Total,579637
+Ennedi Est,2015,Total,597026
+Ennedi Est,2016,Total,614936
+Ennedi Est,2017,Total,633385
+Ennedi Est,2018,Total,652386
+Ennedi Est,2019,Total,671958
+Ennedi Est,2020,Total,692116
+Ennedi Est,2021,Total,712880
+Ennedi Est,2022,Total,734266
+Ennedi Est,2023,Total,756294
+Ennedi Est,2024,Total,778983
+Ennedi Est,2025,Total,802353
+Ennedi Est,2026,Total,826423
+Ennedi Est,2027,Total,851216
+Ennedi Est,2028,Total,876753
+Ennedi Est,2029,Total,903055
+Ennedi Est,2030,Total,930147
+Ennedi Est,2031,Total,958051
+Ennedi Est,2032,Total,986793
+Ennedi Est,2033,Total,1016397
+Ennedi Est,2034,Total,1046888
+Ennedi Est,2035,Total,1078295
+Ennedi Est,2036,Total,1110644
+Ennedi Est,2037,Total,1143963
+Ennedi Est,2038,Total,1178282
+Ennedi Est,2039,Total,1213631
+Ennedi Est,2040,Total,1250040
+Ennedi Est,2041,Total,1287541
+Ennedi Est,2042,Total,1326167
+Ennedi Est,2043,Total,1365952
+Ennedi Est,2044,Total,1406931
+Ennedi Est,2045,Total,1449139
+Ennedi Est,2046,Total,1492613
+Ennedi Est,2047,Total,1537391
+Ennedi Est,2048,Total,1583513
+Ennedi Est,2049,Total,1631018
+Ennedi Est,2050,Total,1679949
+Ennedi Ouest,2009,Total,500000
+Ennedi Ouest,2010,Total,515000
+Ennedi Ouest,2011,Total,530450
+Ennedi Ouest,2012,Total,546363
+Ennedi Ouest,2013,Total,562754
+Ennedi Ouest,2014,Total,579637
+Ennedi Ouest,2015,Total,597026
+Ennedi Ouest,2016,Total,614936
+Ennedi Ouest,2017,Total,633385
+Ennedi Ouest,2018,Total,652386
+Ennedi Ouest,2019,Total,671958
+Ennedi Ouest,2020,Total,692116
+Ennedi Ouest,2021,Total,712880
+Ennedi Ouest,2022,Total,734266
+Ennedi Ouest,2023,Total,756294
+Ennedi Ouest,2024,Total,778983
+Ennedi Ouest,2025,Total,802353
+Ennedi Ouest,2026,Total,826423
+Ennedi Ouest,2027,Total,851216
+Ennedi Ouest,2028,Total,876753
+Ennedi Ouest,2029,Total,903055
+Ennedi Ouest,2030,Total,930147
+Ennedi Ouest,2031,Total,958051
+Ennedi Ouest,2032,Total,986793
+Ennedi Ouest,2033,Total,1016397
+Ennedi Ouest,2034,Total,1046888
+Ennedi Ouest,2035,Total,1078295
+Ennedi Ouest,2036,Total,1110644
+Ennedi Ouest,2037,Total,1143963
+Ennedi Ouest,2038,Total,1178282
+Ennedi Ouest,2039,Total,1213631
+Ennedi Ouest,2040,Total,1250040
+Ennedi Ouest,2041,Total,1287541
+Ennedi Ouest,2042,Total,1326167
+Ennedi Ouest,2043,Total,1365952
+Ennedi Ouest,2044,Total,1406931
+Ennedi Ouest,2045,Total,1449139
+Ennedi Ouest,2046,Total,1492613
+Ennedi Ouest,2047,Total,1537391
+Ennedi Ouest,2048,Total,1583513
+Ennedi Ouest,2049,Total,1631018
+Ennedi Ouest,2050,Total,1679949
+Guéra,2009,Total,500000
+Guéra,2010,Total,515000
+Guéra,2011,Total,530450
+Guéra,2012,Total,546363
+Guéra,2013,Total,562754
+Guéra,2014,Total,579637
+Guéra,2015,Total,597026
+Guéra,2016,Total,614936
+Guéra,2017,Total,633385
+Guéra,2018,Total,652386
+Guéra,2019,Total,671958
+Guéra,2020,Total,692116
+Guéra,2021,Total,712880
+Guéra,2022,Total,734266
+Guéra,2023,Total,756294
+Guéra,2024,Total,778983
+Guéra,2025,Total,802353
+Guéra,2026,Total,826423
+Guéra,2027,Total,851216
+Guéra,2028,Total,876753
+Guéra,2029,Total,903055
+Guéra,2030,Total,465073
+Guéra,2031,Total,958051
+Guéra,2032,Total,986793
+Guéra,2033,Total,1016397
+Guéra,2034,Total,1046888
+Guéra,2035,Total,1078295
+Guéra,2036,Total,1110644
+Guéra,2037,Total,1143963
+Guéra,2038,Total,1178282
+Guéra,2039,Total,1213631
+Guéra,2040,Total,1250040
+Guéra,2041,Total,1287541
+Guéra,2042,Total,1326167
+Guéra,2043,Total,1365952
+Guéra,2044,Total,1406931
+Guéra,2045,Total,1449139
+Guéra,2046,Total,1492613
+Guéra,2047,Total,1537391
+Guéra,2048,Total,1583513
+Guéra,2049,Total,1631018
+Guéra,2050,Total,1679949
+Hadjer-Lamis,2009,Total,500000
+Hadjer-Lamis,2010,Total,515000
+Hadjer-Lamis,2011,Total,530450
+Hadjer-Lamis,2012,Total,546363
+Hadjer-Lamis,2013,Total,562754
+Hadjer-Lamis,2014,Total,579637
+Hadjer-Lamis,2015,Total,597026
+Hadjer-Lamis,2016,Total,614936
+Hadjer-Lamis,2017,Total,633385
+Hadjer-Lamis,2018,Total,652386
+Hadjer-Lamis,2019,Total,671958
+Hadjer-Lamis,2020,Total,692116
+Hadjer-Lamis,2021,Total,712880
+Hadjer-Lamis,2022,Total,734266
+Hadjer-Lamis,2023,Total,756294
+Hadjer-Lamis,2024,Total,778983
+Hadjer-Lamis,2025,Total,802353
+Hadjer-Lamis,2026,Total,826423
+Hadjer-Lamis,2027,Total,851216
+Hadjer-Lamis,2028,Total,876753
+Hadjer-Lamis,2029,Total,903055
+Hadjer-Lamis,2030,Total,930147
+Hadjer-Lamis,2031,Total,958051
+Hadjer-Lamis,2032,Total,986793
+Hadjer-Lamis,2033,Total,1016397
+Hadjer-Lamis,2034,Total,1046888
+Hadjer-Lamis,2035,Total,1078295
+Hadjer-Lamis,2036,Total,1110644
+Hadjer-Lamis,2037,Total,1143963
+Hadjer-Lamis,2038,Total,1178282
+Hadjer-Lamis,2039,Total,1213631
+Hadjer-Lamis,2040,Total,1250040
+Hadjer-Lamis,2041,Total,1287541
+Hadjer-Lamis,2042,Total,1326167
+Hadjer-Lamis,2043,Total,1365952
+Hadjer-Lamis,2044,Total,1406931
+Hadjer-Lamis,2045,Total,1449139
+Hadjer-Lamis,2046,Total,1492613
+Hadjer-Lamis,2047,Total,1537391
+Hadjer-Lamis,2048,Total,1583513
+Hadjer-Lamis,2049,Total,1631018
+Hadjer-Lamis,2050,Total,1679949
+Kanem,2009,Total,500000
+Kanem,2010,Total,515000
+Kanem,2011,Total,530450
+Kanem,2012,Total,546363
+Kanem,2013,Total,562754
+Kanem,2014,Total,579637
+Kanem,2015,Total,597026
+Kanem,2016,Total,614936
+Kanem,2017,Total,633385
+Kanem,2018,Total,652386
+Kanem,2019,Total,671958
+Kanem,2020,Total,692116
+Kanem,2021,Total,712880
+Kanem,2022,Total,734266
+Kanem,2023,Total,756294
+Kanem,2024,Total,778983
+Kanem,2025,Total,802353
+Kanem,2026,Total,826423
+Kanem,2027,Total,851216
+Kanem,2028,Total,876753
+Kanem,2029,Total,903055
+Kanem,2030,Total,930147
+Kanem,2031,Total,958051
+Kanem,2032,Total,986793
+Kanem,2033,Total,1016397
+Kanem,2034,Total,1046888
+Kanem,2035,Total,1078295
+Kanem,2036,Total,1110644
+Kanem,2037,Total,1143963
+Kanem,2038,Total,1178282
+Kanem,2039,Total,1213631
+Kanem,2040,Total,1250040
+Kanem,2041,Total,1287541
+Kanem,2042,Total,1326167
+Kanem,2043,Total,1365952
+Kanem,2044,Total,1406931
+Kanem,2045,Total,1449139
+Kanem,2046,Total,1492613
+Kanem,2047,Total,1537391
+Kanem,2048,Total,1583513
+Kanem,2049,Total,1631018
+Kanem,2050,Total,1679949
+Lac,2009,Total,500000
+Lac,2010,Total,515000
+Lac,2011,Total,530450
+Lac,2012,Total,546363
+Lac,2013,Total,562754
+Lac,2014,Total,579637
+Lac,2015,Total,597026
+Lac,2016,Total,614936
+Lac,2017,Total,633385
+Lac,2018,Total,652386
+Lac,2019,Total,671958
+Lac,2020,Total,692116
+Lac,2021,Total,712880
+Lac,2022,Total,734266
+Lac,2023,Total,756294
+Lac,2024,Total,778983
+Lac,2025,Total,802353
+Lac,2026,Total,826423
+Lac,2027,Total,851216
+Lac,2028,Total,876753
+Lac,2029,Total,903055
+Lac,2030,Total,465073
+Lac,2031,Total,958051
+Lac,2032,Total,986793
+Lac,2033,Total,1016397
+Lac,2034,Total,1046888
+Lac,2035,Total,1078295
+Lac,2036,Total,1110644
+Lac,2037,Total,1143963
+Lac,2038,Total,1178282
+Lac,2039,Total,1213631
+Lac,2040,Total,1250040
+Lac,2041,Total,1287541
+Lac,2042,Total,1326167
+Lac,2043,Total,1365952
+Lac,2044,Total,1406931
+Lac,2045,Total,1449139
+Lac,2046,Total,1492613
+Lac,2047,Total,1537391
+Lac,2048,Total,1583513
+Lac,2049,Total,1631018
+Lac,2050,Total,1679949
+Logone Occidental,2009,Total,500000
+Logone Occidental,2010,Total,515000
+Logone Occidental,2011,Total,530450
+Logone Occidental,2012,Total,546363
+Logone Occidental,2013,Total,562754
+Logone Occidental,2014,Total,579637
+Logone Occidental,2015,Total,597026
+Logone Occidental,2016,Total,614936
+Logone Occidental,2017,Total,633385
+Logone Occidental,2018,Total,652386
+Logone Occidental,2019,Total,671958
+Logone Occidental,2020,Total,692116
+Logone Occidental,2021,Total,712880
+Logone Occidental,2022,Total,734266
+Logone Occidental,2023,Total,756294
+Logone Occidental,2024,Total,778983
+Logone Occidental,2025,Total,802353
+Logone Occidental,2026,Total,826423
+Logone Occidental,2027,Total,851216
+Logone Occidental,2028,Total,876753
+Logone Occidental,2029,Total,903055
+Logone Occidental,2030,Total,930147
+Logone Occidental,2031,Total,958051
+Logone Occidental,2032,Total,986793
+Logone Occidental,2033,Total,1016397
+Logone Occidental,2034,Total,1046888
+Logone Occidental,2035,Total,1078295
+Logone Occidental,2036,Total,1110644
+Logone Occidental,2037,Total,1143963
+Logone Occidental,2038,Total,1178282
+Logone Occidental,2039,Total,1213631
+Logone Occidental,2040,Total,1250040
+Logone Occidental,2041,Total,1287541
+Logone Occidental,2042,Total,1326167
+Logone Occidental,2043,Total,1365952
+Logone Occidental,2044,Total,1406931
+Logone Occidental,2045,Total,1449139
+Logone Occidental,2046,Total,1492613
+Logone Occidental,2047,Total,1537391
+Logone Occidental,2048,Total,1583513
+Logone Occidental,2049,Total,1631018
+Logone Occidental,2050,Total,1679949
+Logone Oriental,2009,Total,500000
+Logone Oriental,2010,Total,515000
+Logone Oriental,2011,Total,530450
+Logone Oriental,2012,Total,546363
+Logone Oriental,2013,Total,562754
+Logone Oriental,2014,Total,579637
+Logone Oriental,2015,Total,597026
+Logone Oriental,2016,Total,614936
+Logone Oriental,2017,Total,633385
+Logone Oriental,2018,Total,652386
+Logone Oriental,2019,Total,671958
+Logone Oriental,2020,Total,692116
+Logone Oriental,2021,Total,712880
+Logone Oriental,2022,Total,734266
+Logone Oriental,2023,Total,756294
+Logone Oriental,2024,Total,778983
+Logone Oriental,2025,Total,802353
+Logone Oriental,2026,Total,826423
+Logone Oriental,2027,Total,851216
+Logone Oriental,2028,Total,876753
+Logone Oriental,2029,Total,903055
+Logone Oriental,2030,Total,930147
+Logone Oriental,2031,Total,958051
+Logone Oriental,2032,Total,986793
+Logone Oriental,2033,Total,1016397
+Logone Oriental,2034,Total,1046888
+Logone Oriental,2035,Total,1078295
+Logone Oriental,2036,Total,1110644
+Logone Oriental,2037,Total,1143963
+Logone Oriental,2038,Total,1178282
+Logone Oriental,2039,Total,1213631
+Logone Oriental,2040,Total,1250040
+Logone Oriental,2041,Total,1287541
+Logone Oriental,2042,Total,1326167
+Logone Oriental,2043,Total,1365952
+Logone Oriental,2044,Total,1406931
+Logone Oriental,2045,Total,1449139
+Logone Oriental,2046,Total,1492613
+Logone Oriental,2047,Total,1537391
+Logone Oriental,2048,Total,1583513
+Logone Oriental,2049,Total,1631018
+Logone Oriental,2050,Total,1679949
+Mandoul,2009,Total,500000
+Mandoul,2010,Total,515000
+Mandoul,2011,Total,530450
+Mandoul,2012,Total,546363
+Mandoul,2013,Total,562754
+Mandoul,2014,Total,579637
+Mandoul,2015,Total,597026
+Mandoul,2016,Total,614936
+Mandoul,2017,Total,633385
+Mandoul,2018,Total,652386
+Mandoul,2019,Total,671958
+Mandoul,2020,Total,692116
+Mandoul,2021,Total,712880
+Mandoul,2022,Total,734266
+Mandoul,2023,Total,756294
+Mandoul,2024,Total,778983
+Mandoul,2025,Total,802353
+Mandoul,2026,Total,826423
+Mandoul,2027,Total,851216
+Mandoul,2028,Total,876753
+Mandoul,2029,Total,903055
+Mandoul,2030,Total,930147
+Mandoul,2031,Total,958051
+Mandoul,2032,Total,986793
+Mandoul,2033,Total,1016397
+Mandoul,2034,Total,1046888
+Mandoul,2035,Total,1078295
+Mandoul,2036,Total,1110644
+Mandoul,2037,Total,1143963
+Mandoul,2038,Total,1178282
+Mandoul,2039,Total,1213631
+Mandoul,2040,Total,1250040
+Mandoul,2041,Total,1287541
+Mandoul,2042,Total,1326167
+Mandoul,2043,Total,1365952
+Mandoul,2044,Total,1406931
+Mandoul,2045,Total,1449139
+Mandoul,2046,Total,1492613
+Mandoul,2047,Total,1537391
+Mandoul,2048,Total,1583513
+Mandoul,2049,Total,1631018
+Mandoul,2050,Total,1679949
+Mayo-Kebbi Est,2009,Total,500000
+Mayo-Kebbi Est,2010,Total,515000
+Mayo-Kebbi Est,2011,Total,530450
+Mayo-Kebbi Est,2012,Total,546363
+Mayo-Kebbi Est,2013,Total,562754
+Mayo-Kebbi Est,2014,Total,579637
+Mayo-Kebbi Est,2015,Total,597026
+Mayo-Kebbi Est,2016,Total,614936
+Mayo-Kebbi Est,2017,Total,633385
+Mayo-Kebbi Est,2018,Total,652386
+Mayo-Kebbi Est,2019,Total,671958
+Mayo-Kebbi Est,2020,Total,692116
+Mayo-Kebbi Est,2021,Total,712880
+Mayo-Kebbi Est,2022,Total,734266
+Mayo-Kebbi Est,2023,Total,756294
+Mayo-Kebbi Est,2024,Total,778983
+Mayo-Kebbi Est,2025,Total,802353
+Mayo-Kebbi Est,2026,Total,826423
+Mayo-Kebbi Est,2027,Total,851216
+Mayo-Kebbi Est,2028,Total,876753
+Mayo-Kebbi Est,2029,Total,903055
+Mayo-Kebbi Est,2030,Total,930147
+Mayo-Kebbi Est,2031,Total,958051
+Mayo-Kebbi Est,2032,Total,986793
+Mayo-Kebbi Est,2033,Total,1016397
+Mayo-Kebbi Est,2034,Total,1046888
+Mayo-Kebbi Est,2035,Total,1078295
+Mayo-Kebbi Est,2036,Total,1110644
+Mayo-Kebbi Est,2037,Total,1143963
+Mayo-Kebbi Est,2038,Total,1178282
+Mayo-Kebbi Est,2039,Total,1213631
+Mayo-Kebbi Est,2040,Total,1250040
+Mayo-Kebbi Est,2041,Total,1287541
+Mayo-Kebbi Est,2042,Total,1326167
+Mayo-Kebbi Est,2043,Total,1365952
+Mayo-Kebbi Est,2044,Total,1406931
+Mayo-Kebbi Est,2045,Total,1449139
+Mayo-Kebbi Est,2046,Total,1492613
+Mayo-Kebbi Est,2047,Total,1537391
+Mayo-Kebbi Est,2048,Total,1583513
+Mayo-Kebbi Est,2049,Total,1631018
+Mayo-Kebbi Est,2050,Total,1679949
+Mayo-Kebbi Ouest,2009,Total,500000
+Mayo-Kebbi Ouest,2010,Total,515000
+Mayo-Kebbi Ouest,2011,Total,530450
+Mayo-Kebbi Ouest,2012,Total,546363
+Mayo-Kebbi Ouest,2013,Total,562754
+Mayo-Kebbi Ouest,2014,Total,579637
+Mayo-Kebbi Ouest,2015,Total,597026
+Mayo-Kebbi Ouest,2016,Total,614936
+Mayo-Kebbi Ouest,2017,Total,633385
+Mayo-Kebbi Ouest,2018,Total,652386
+Mayo-Kebbi Ouest,2019,Total,671958
+Mayo-Kebbi Ouest,2020,Total,692116
+Mayo-Kebbi Ouest,2021,Total,712880
+Mayo-Kebbi Ouest,2022,Total,734266
+Mayo-Kebbi Ouest,2023,Total,756294
+Mayo-Kebbi Ouest,2024,Total,778983
+Mayo-Kebbi Ouest,2025,Total,802353
+Mayo-Kebbi Ouest,2026,Total,826423
+Mayo-Kebbi Ouest,2027,Total,851216
+Mayo-Kebbi Ouest,2028,Total,876753
+Mayo-Kebbi Ouest,2029,Total,903055
+Mayo-Kebbi Ouest,2030,Total,930147
+Mayo-Kebbi Ouest,2031,Total,958051
+Mayo-Kebbi Ouest,2032,Total,986793
+Mayo-Kebbi Ouest,2033,Total,1016397
+Mayo-Kebbi Ouest,2034,Total,1046888
+Mayo-Kebbi Ouest,2035,Total,1078295
+Mayo-Kebbi Ouest,2036,Total,1110644
+Mayo-Kebbi Ouest,2037,Total,1143963
+Mayo-Kebbi Ouest,2038,Total,1178282
+Mayo-Kebbi Ouest,2039,Total,1213631
+Mayo-Kebbi Ouest,2040,Total,1250040
+Mayo-Kebbi Ouest,2041,Total,1287541
+Mayo-Kebbi Ouest,2042,Total,1326167
+Mayo-Kebbi Ouest,2043,Total,1365952
+Mayo-Kebbi Ouest,2044,Total,1406931
+Mayo-Kebbi Ouest,2045,Total,1449139
+Mayo-Kebbi Ouest,2046,Total,1492613
+Mayo-Kebbi Ouest,2047,Total,1537391
+Mayo-Kebbi Ouest,2048,Total,1583513
+Mayo-Kebbi Ouest,2049,Total,1631018
+Mayo-Kebbi Ouest,2050,Total,1679949
+Moyen-Chari,2009,Total,500000
+Moyen-Chari,2010,Total,515000
+Moyen-Chari,2011,Total,530450
+Moyen-Chari,2012,Total,546363
+Moyen-Chari,2013,Total,562754
+Moyen-Chari,2014,Total,579637
+Moyen-Chari,2015,Total,597026
+Moyen-Chari,2016,Total,614936
+Moyen-Chari,2017,Total,633385
+Moyen-Chari,2018,Total,652386
+Moyen-Chari,2019,Total,671958
+Moyen-Chari,2020,Total,692116
+Moyen-Chari,2021,Total,712880
+Moyen-Chari,2022,Total,734266
+Moyen-Chari,2023,Total,756294
+Moyen-Chari,2024,Total,778983
+Moyen-Chari,2025,Total,802353
+Moyen-Chari,2026,Total,826423
+Moyen-Chari,2027,Total,851216
+Moyen-Chari,2028,Total,876753
+Moyen-Chari,2029,Total,903055
+Moyen-Chari,2030,Total,930147
+Moyen-Chari,2031,Total,958051
+Moyen-Chari,2032,Total,986793
+Moyen-Chari,2033,Total,1016397
+Moyen-Chari,2034,Total,1046888
+Moyen-Chari,2035,Total,1078295
+Moyen-Chari,2036,Total,1110644
+Moyen-Chari,2037,Total,1143963
+Moyen-Chari,2038,Total,1178282
+Moyen-Chari,2039,Total,1213631
+Moyen-Chari,2040,Total,1250040
+Moyen-Chari,2041,Total,1287541
+Moyen-Chari,2042,Total,1326167
+Moyen-Chari,2043,Total,1365952
+Moyen-Chari,2044,Total,1406931
+Moyen-Chari,2045,Total,1449139
+Moyen-Chari,2046,Total,1492613
+Moyen-Chari,2047,Total,1537391
+Moyen-Chari,2048,Total,1583513
+Moyen-Chari,2049,Total,1631018
+Moyen-Chari,2050,Total,1679949
+Ouaddaï,2009,Total,500000
+Ouaddaï,2010,Total,515000
+Ouaddaï,2011,Total,530450
+Ouaddaï,2012,Total,546363
+Ouaddaï,2013,Total,562754
+Ouaddaï,2014,Total,579637
+Ouaddaï,2015,Total,597026
+Ouaddaï,2016,Total,614936
+Ouaddaï,2017,Total,633385
+Ouaddaï,2018,Total,652386
+Ouaddaï,2019,Total,671958
+Ouaddaï,2020,Total,692116
+Ouaddaï,2021,Total,712880
+Ouaddaï,2022,Total,734266
+Ouaddaï,2023,Total,756294
+Ouaddaï,2024,Total,778983
+Ouaddaï,2025,Total,802353
+Ouaddaï,2026,Total,826423
+Ouaddaï,2027,Total,851216
+Ouaddaï,2028,Total,876753
+Ouaddaï,2029,Total,903055
+Ouaddaï,2030,Total,930147
+Ouaddaï,2031,Total,958051
+Ouaddaï,2032,Total,986793
+Ouaddaï,2033,Total,1016397
+Ouaddaï,2034,Total,1046888
+Ouaddaï,2035,Total,1078295
+Ouaddaï,2036,Total,1110644
+Ouaddaï,2037,Total,1143963
+Ouaddaï,2038,Total,1178282
+Ouaddaï,2039,Total,1213631
+Ouaddaï,2040,Total,1250040
+Ouaddaï,2041,Total,1287541
+Ouaddaï,2042,Total,1326167
+Ouaddaï,2043,Total,1365952
+Ouaddaï,2044,Total,1406931
+Ouaddaï,2045,Total,1449139
+Ouaddaï,2046,Total,1492613
+Ouaddaï,2047,Total,1537391
+Ouaddaï,2048,Total,1583513
+Ouaddaï,2049,Total,1631018
+Ouaddaï,2050,Total,1679949
+Salamat,2009,Total,500000
+Salamat,2010,Total,515000
+Salamat,2011,Total,530450
+Salamat,2012,Total,546363
+Salamat,2013,Total,562754
+Salamat,2014,Total,579637
+Salamat,2015,Total,597026
+Salamat,2016,Total,614936
+Salamat,2017,Total,633385
+Salamat,2018,Total,652386
+Salamat,2019,Total,671958
+Salamat,2020,Total,692116
+Salamat,2021,Total,712880
+Salamat,2022,Total,734266
+Salamat,2023,Total,756294
+Salamat,2024,Total,778983
+Salamat,2025,Total,802353
+Salamat,2026,Total,826423
+Salamat,2027,Total,851216
+Salamat,2028,Total,876753
+Salamat,2029,Total,903055
+Salamat,2030,Total,930147
+Salamat,2031,Total,958051
+Salamat,2032,Total,986793
+Salamat,2033,Total,1016397
+Salamat,2034,Total,1046888
+Salamat,2035,Total,1078295
+Salamat,2036,Total,1110644
+Salamat,2037,Total,1143963
+Salamat,2038,Total,1178282
+Salamat,2039,Total,1213631
+Salamat,2040,Total,1250040
+Salamat,2041,Total,1287541
+Salamat,2042,Total,1326167
+Salamat,2043,Total,1365952
+Salamat,2044,Total,1406931
+Salamat,2045,Total,1449139
+Salamat,2046,Total,1492613
+Salamat,2047,Total,1537391
+Salamat,2048,Total,1583513
+Salamat,2049,Total,1631018
+Salamat,2050,Total,1679949
+Sila,2009,Total,500000
+Sila,2010,Total,515000
+Sila,2011,Total,530450
+Sila,2012,Total,546363
+Sila,2013,Total,562754
+Sila,2014,Total,579637
+Sila,2015,Total,597026
+Sila,2016,Total,614936
+Sila,2017,Total,633385
+Sila,2018,Total,652386
+Sila,2019,Total,671958
+Sila,2020,Total,692116
+Sila,2021,Total,712880
+Sila,2022,Total,734266
+Sila,2023,Total,756294
+Sila,2024,Total,778983
+Sila,2025,Total,802353
+Sila,2026,Total,826423
+Sila,2027,Total,851216
+Sila,2028,Total,876753
+Sila,2029,Total,903055
+Sila,2030,Total,930147
+Sila,2031,Total,958051
+Sila,2032,Total,986793
+Sila,2033,Total,1016397
+Sila,2034,Total,1046888
+Sila,2035,Total,1078295
+Sila,2036,Total,1110644
+Sila,2037,Total,1143963
+Sila,2038,Total,1178282
+Sila,2039,Total,1213631
+Sila,2040,Total,1250040
+Sila,2041,Total,1287541
+Sila,2042,Total,1326167
+Sila,2043,Total,1365952
+Sila,2044,Total,1406931
+Sila,2045,Total,1449139
+Sila,2046,Total,1492613
+Sila,2047,Total,1537391
+Sila,2048,Total,1583513
+Sila,2049,Total,1631018
+Sila,2050,Total,1679949
+Tandjilé,2009,Total,500000
+Tandjilé,2010,Total,515000
+Tandjilé,2011,Total,530450
+Tandjilé,2012,Total,546363
+Tandjilé,2013,Total,562754
+Tandjilé,2014,Total,579637
+Tandjilé,2015,Total,597026
+Tandjilé,2016,Total,614936
+Tandjilé,2017,Total,633385
+Tandjilé,2018,Total,652386
+Tandjilé,2019,Total,671958
+Tandjilé,2020,Total,692116
+Tandjilé,2021,Total,712880
+Tandjilé,2022,Total,734266
+Tandjilé,2023,Total,756294
+Tandjilé,2024,Total,778983
+Tandjilé,2025,Total,802353
+Tandjilé,2026,Total,826423
+Tandjilé,2027,Total,851216
+Tandjilé,2028,Total,876753
+Tandjilé,2029,Total,903055
+Tandjilé,2030,Total,930147
+Tandjilé,2031,Total,958051
+Tandjilé,2032,Total,986793
+Tandjilé,2033,Total,1016397
+Tandjilé,2034,Total,1046888
+Tandjilé,2035,Total,1078295
+Tandjilé,2036,Total,1110644
+Tandjilé,2037,Total,1143963
+Tandjilé,2038,Total,1178282
+Tandjilé,2039,Total,1213631
+Tandjilé,2040,Total,1250040
+Tandjilé,2041,Total,1287541
+Tandjilé,2042,Total,1326167
+Tandjilé,2043,Total,1365952
+Tandjilé,2044,Total,1406931
+Tandjilé,2045,Total,1449139
+Tandjilé,2046,Total,1492613
+Tandjilé,2047,Total,1537391
+Tandjilé,2048,Total,1583513
+Tandjilé,2049,Total,1631018
+Tandjilé,2050,Total,1679949
+Tibesti,2009,Total,500000
+Tibesti,2010,Total,515000
+Tibesti,2011,Total,530450
+Tibesti,2012,Total,546363
+Tibesti,2013,Total,562754
+Tibesti,2014,Total,579637
+Tibesti,2015,Total,597026
+Tibesti,2016,Total,614936
+Tibesti,2017,Total,633385
+Tibesti,2018,Total,652386
+Tibesti,2019,Total,671958
+Tibesti,2020,Total,692116
+Tibesti,2021,Total,712880
+Tibesti,2022,Total,734266
+Tibesti,2023,Total,756294
+Tibesti,2024,Total,778983
+Tibesti,2025,Total,802353
+Tibesti,2026,Total,826423
+Tibesti,2027,Total,851216
+Tibesti,2028,Total,876753
+Tibesti,2029,Total,903055
+Tibesti,2030,Total,930147
+Tibesti,2031,Total,958051
+Tibesti,2032,Total,986793
+Tibesti,2033,Total,1016397
+Tibesti,2034,Total,1046888
+Tibesti,2035,Total,1078295
+Tibesti,2036,Total,1110644
+Tibesti,2037,Total,1143963
+Tibesti,2038,Total,1178282
+Tibesti,2039,Total,1213631
+Tibesti,2040,Total,1250040
+Tibesti,2041,Total,1287541
+Tibesti,2042,Total,1326167
+Tibesti,2043,Total,1365952
+Tibesti,2044,Total,1406931
+Tibesti,2045,Total,1449139
+Tibesti,2046,Total,1492613
+Tibesti,2047,Total,1537391
+Tibesti,2048,Total,1583513
+Tibesti,2049,Total,1631018
+Tibesti,2050,Total,1679949
+Wadi Fira,2009,Total,500000
+Wadi Fira,2010,Total,515000
+Wadi Fira,2011,Total,530450
+Wadi Fira,2012,Total,546363
+Wadi Fira,2013,Total,562754
+Wadi Fira,2014,Total,579637
+Wadi Fira,2015,Total,597026
+Wadi Fira,2016,Total,614936
+Wadi Fira,2017,Total,633385
+Wadi Fira,2018,Total,652386
+Wadi Fira,2019,Total,671958
+Wadi Fira,2020,Total,692116
+Wadi Fira,2021,Total,712880
+Wadi Fira,2022,Total,734266
+Wadi Fira,2023,Total,756294
+Wadi Fira,2024,Total,778983
+Wadi Fira,2025,Total,802353
+Wadi Fira,2026,Total,826423
+Wadi Fira,2027,Total,851216
+Wadi Fira,2028,Total,876753
+Wadi Fira,2029,Total,903055
+Wadi Fira,2030,Total,930147
+Wadi Fira,2031,Total,958051
+Wadi Fira,2032,Total,986793
+Wadi Fira,2033,Total,1016397
+Wadi Fira,2034,Total,1046888
+Wadi Fira,2035,Total,1078295
+Wadi Fira,2036,Total,1110644
+Wadi Fira,2037,Total,1143963
+Wadi Fira,2038,Total,1178282
+Wadi Fira,2039,Total,1213631
+Wadi Fira,2040,Total,1250040
+Wadi Fira,2041,Total,1287541
+Wadi Fira,2042,Total,1326167
+Wadi Fira,2043,Total,1365952
+Wadi Fira,2044,Total,1406931
+Wadi Fira,2045,Total,1449139
+Wadi Fira,2046,Total,1492613
+Wadi Fira,2047,Total,1537391
+Wadi Fira,2048,Total,1583513
+Wadi Fira,2049,Total,1631018
+Wadi Fira,2050,Total,1679949
+N'Djamena,2009,Total,500000
+N'Djamena,2010,Total,515000
+N'Djamena,2011,Total,530450
+N'Djamena,2012,Total,546363
+N'Djamena,2013,Total,562754
+N'Djamena,2014,Total,579637
+N'Djamena,2015,Total,597026
+N'Djamena,2016,Total,614936
+N'Djamena,2017,Total,633385
+N'Djamena,2018,Total,652386
+N'Djamena,2019,Total,671958
+N'Djamena,2020,Total,692116
+N'Djamena,2021,Total,712880
+N'Djamena,2022,Total,734266
+N'Djamena,2023,Total,756294
+N'Djamena,2024,Total,778983
+N'Djamena,2025,Total,802353
+N'Djamena,2026,Total,826423
+N'Djamena,2027,Total,851216
+N'Djamena,2028,Total,876753
+N'Djamena,2029,Total,903055
+N'Djamena,2030,Total,930147
+N'Djamena,2031,Total,958051
+N'Djamena,2032,Total,986793
+N'Djamena,2033,Total,1016397
+N'Djamena,2034,Total,1046888
+N'Djamena,2035,Total,1078295
+N'Djamena,2036,Total,1110644
+N'Djamena,2037,Total,1143963
+N'Djamena,2038,Total,1178282
+N'Djamena,2039,Total,1213631
+N'Djamena,2040,Total,1250040
+N'Djamena,2041,Total,1287541
+N'Djamena,2042,Total,1326167
+N'Djamena,2043,Total,1365952
+N'Djamena,2044,Total,1406931
+N'Djamena,2045,Total,1449139
+N'Djamena,2046,Total,1492613
+N'Djamena,2047,Total,1537391
+N'Djamena,2048,Total,1583513
+N'Djamena,2049,Total,1631018
+N'Djamena,2050,Total,1679949
+Tchad,2009,Total,500000
+Tchad,2010,Total,515000
+Tchad,2011,Total,530450
+Tchad,2012,Total,546363
+Tchad,2013,Total,562754
+Tchad,2014,Total,579637
+Tchad,2015,Total,597026
+Tchad,2016,Total,614936
+Tchad,2017,Total,633385
+Tchad,2018,Total,652386
+Tchad,2019,Total,671958
+Tchad,2020,Total,692116
+Tchad,2021,Total,712880
+Tchad,2022,Total,734266
+Tchad,2023,Total,756294
+Tchad,2024,Total,778983
+Tchad,2025,Total,802353
+Tchad,2026,Total,826423
+Tchad,2027,Total,851216
+Tchad,2028,Total,876753
+Tchad,2029,Total,903055
+Tchad,2030,Total,930147
+Tchad,2031,Total,958051
+Tchad,2032,Total,986793
+Tchad,2033,Total,1016397
+Tchad,2034,Total,1046888
+Tchad,2035,Total,1078295
+Tchad,2036,Total,1110644
+Tchad,2037,Total,1143963
+Tchad,2038,Total,1178282
+Tchad,2039,Total,1213631
+Tchad,2040,Total,1250040
+Tchad,2041,Total,1287541
+Tchad,2042,Total,1326167
+Tchad,2043,Total,1365952
+Tchad,2044,Total,1406931
+Tchad,2045,Total,1449139
+Tchad,2046,Total,1492613
+Tchad,2047,Total,1537391
+Tchad,2048,Total,1583513
+Tchad,2049,Total,1631018
+Tchad,2050,Total,1679949

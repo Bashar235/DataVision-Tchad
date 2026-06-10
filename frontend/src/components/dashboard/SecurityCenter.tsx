@@ -6,6 +6,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { getAdminAudit, adminExport, setup2FA, verify2FASetup, disable2FA, changePassword } from "@/services/api";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Dialog,
   DialogContent,
@@ -33,6 +34,8 @@ import {
 const SecurityCenter = () => {
   const { t, isRtl } = useLanguage();
   const { toast } = useToast();
+  const { user } = useAuth();
+  const isAdmin = user?.role === 'admin' || user?.role === 'administrator';
 
   const [logs, setLogs] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -40,52 +43,113 @@ const SecurityCenter = () => {
   const [selectedLog, setSelectedLog] = useState<any | null>(null);
   const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
   const [twoFADialogOpen, setTwoFADialogOpen] = useState(false);
+  const [isDisabling2FA, setIsDisabling2FA] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
   const [totpSecret, setTotpSecret] = useState<string | null>(null);
   const [twoFACode, setTwoFACode] = useState("");
-  const [is2FAEnabled, setIs2FAEnabled] = useState(false);
+  const [is2FAEnabled, setIs2FAEnabled] = useState(user?.is_2fa_enabled || false);
   const navigate = useNavigate();
+
+  const [securityMetrics, setSecurityMetrics] = useState({ accessToday: 0, accessTrend: 0, exportsMonth: 0, alerts: 0 });
+
+  const calculateMetrics = useCallback((auditLogs: any[]) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    let accessToday = 0;
+    let accessYesterday = 0;
+    let exportsMonth = 0;
+    let alerts = 0;
+
+    auditLogs.forEach(log => {
+      const logDate = new Date(log.time);
+
+      // Access Logic
+      if (log.action === 'USER_LOGIN' || log.action === 'LOGIN') {
+        if (logDate >= today) accessToday++;
+        else if (logDate >= yesterday && logDate < today) accessYesterday++;
+      }
+
+      // Exports Logic
+      if (log.action === 'DATA_EXPORT' || log.action === 'REPORT_GENERATE' || log.action === 'REPORT_GENERATION') {
+        if (logDate >= firstDayOfMonth) exportsMonth++;
+      }
+
+      // Alerts Logic
+      if (log.status === 'failed' || log.status === 'error' || log.action.toUpperCase().includes('FAILED') || log.action.toUpperCase().includes('ERROR') || log.action.toUpperCase().includes('LOCKED')) {
+        alerts++;
+      }
+    });
+
+    let accessTrend = 0;
+    if (accessYesterday === 0 && accessToday > 0) accessTrend = 100;
+    else if (accessYesterday > 0) accessTrend = Math.round(((accessToday - accessYesterday) / accessYesterday) * 100);
+
+    setSecurityMetrics({ accessToday, accessTrend, exportsMonth, alerts });
+  }, []);
 
   const fetchLogs = useCallback(async () => {
     setLoading(true);
     try {
       const data = await getAdminAudit();
-      setLogs(data.length > 0 ? data : [
-        { id: 1, user: "admin@inseed.td", action: "Export données", dataset: "Recensement 2020", time: "2024-01-15 14:32", status: "success", ip: "192.168.1.1", browser: "Chrome/Linux", query: "SELECT * FROM census_2020" },
-        { id: 2, user: "analyste1@inseed.td", action: "Consultation", dataset: "Enquête Emploi", time: "2024-01-15 13:15", status: "success", ip: "192.168.1.42", browser: "Firefox/Windows", query: "GET /api/research/trends" },
-      ]);
+      const logsData = data.length > 0 ? data : [
+        { id: 1, user: "admin@inseed.td", action: "DATA_EXPORT", dataset: "Recensement 2020", time: new Date().toISOString(), status: "success", ip: "192.168.1.1", browser: "Chrome/Linux", query: "SELECT * FROM census_2020" },
+        { id: 2, user: "analyste1@inseed.td", action: "LOGIN", dataset: "System", time: new Date().toISOString(), status: "success", ip: "192.168.1.42", browser: "Firefox/Windows", query: "Authentication" },
+      ];
+      setLogs(logsData);
+      calculateMetrics(logsData);
     } catch (error) {
       console.error("Failed to fetch logs", error);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [calculateMetrics]);
 
   useEffect(() => {
     fetchLogs();
   }, [fetchLogs]);
 
-  const handleExport = async (format: string) => {
+  // Keep local 2FA state in sync with global auth state
+  useEffect(() => {
+    if (user) {
+      setIs2FAEnabled(user.is_2fa_enabled);
+    }
+  }, [user]);
+
+  const handleExportAuditLog = async (format: string) => {
     setExporting(format);
     try {
-      const res = await adminExport(format, "General Data");
+      const fileExtension = format.toLowerCase() === 'excel' ? 'xlsx' : format.toLowerCase();
+      
+      const res = await adminExport(format, 'audit_log');
+
+      const url = window.URL.createObjectURL(new Blob([res as unknown as BlobPart]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `INSEED_Security_Audit_Log_${new Date().toISOString().split('T')[0]}.${fileExtension}`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
       toast({
-        title: t('export_started'),
-        description: `${t('security_export_traceability')} (${format})`,
+        title: t('common_success'),
+        description: `Audit Log exported successfully in ${format}.`,
       });
       fetchLogs();
-
-      setTimeout(() => {
-        window.open(res.download_url, '_blank');
-      }, 1000);
     } catch (error) {
       toast({
         variant: "destructive",
         title: t('common_error'),
-        description: t('reports_download_failed'),
+        description: "Failed to generate security audit report.",
       });
     } finally {
       setExporting(null);
@@ -144,12 +208,22 @@ const SecurityCenter = () => {
 
   const handle2FAVerify = async () => {
     try {
-      await verify2FASetup(twoFACode);
-      toast({
-        title: t('security_2fa_enabled'),
-        description: t('security_2fa_enabled_desc'),
-      });
-      setIs2FAEnabled(true);
+      if (isDisabling2FA) {
+        await disable2FA(twoFACode);
+        toast({
+          title: t('security_2fa_disabled'),
+          description: t('security_2fa_disabled_desc'),
+        });
+        setIs2FAEnabled(false);
+        setIsDisabling2FA(false);
+      } else {
+        await verify2FASetup(twoFACode);
+        toast({
+          title: t('security_2fa_enabled'),
+          description: t('security_2fa_enabled_desc'),
+        });
+        setIs2FAEnabled(true);
+      }
       setTwoFADialogOpen(false);
       setTwoFACode("");
       setQrCodeUrl(null);
@@ -157,31 +231,18 @@ const SecurityCenter = () => {
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: t('security_2fa_verify_failed'),
-        description: error.response?.data?.detail || t('security_2fa_verify_error'),
+        title: isDisabling2FA ? t('security_2fa_disable_failed') : t('security_2fa_verify_failed'),
+        description: error.response?.data?.detail || (isDisabling2FA ? t('security_2fa_disable_error') : t('security_2fa_verify_error')),
       });
     }
   };
 
   const handle2FADisable = async () => {
-    if (!confirm(t('security_2fa_disable_confirm'))) {
-      return;
-    }
-    try {
-      await disable2FA(twoFACode);
-      toast({
-        title: t('security_2fa_disabled'),
-        description: t('security_2fa_disabled_desc'),
-      });
-      setIs2FAEnabled(false);
-      setTwoFACode("");
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: t('security_2fa_disable_failed'),
-        description: error.response?.data?.detail || t('security_2fa_disable_error'),
-      });
-    }
+    setIsDisabling2FA(true);
+    setQrCodeUrl(null);
+    setTotpSecret(null);
+    setTwoFACode("");
+    setTwoFADialogOpen(true);
   };
 
   return (
@@ -260,11 +321,11 @@ const SecurityCenter = () => {
                   key={fmt}
                   variant="outline"
                   className={`justify-start`}
-                  onClick={() => handleExport(fmt)}
+                  onClick={() => handleExportAuditLog(fmt)}
                   disabled={exporting === fmt}
                 >
-                  {exporting === fmt ? <Loader2 className={`w-4 h-4 ${isRtl ? 'ml-2' : 'mr-2'} animate-spin`} /> : <FileDown className={`w-4 h-4 ${isRtl ? 'ml-2' : 'mr-2'}`} />}
-                  {t('security_export_btn', { fmt })}
+                  {exporting === fmt ? <Loader2 className="w-4 h-4 me-2 animate-spin" /> : <FileDown className="w-4 h-4 me-2" />}
+                  {t('common_export')} {t('security_audit_log')} ({fmt})
                 </Button>
               ))}
             </div>
@@ -293,13 +354,33 @@ const SecurityCenter = () => {
             <CardDescription>{t('security_account_settings_desc')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4 text-start">
+            {/* Mandatory 2FA notice for admins */}
+            {isAdmin && (
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-amber-50 border border-amber-200">
+                <ShieldAlert className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
+                <div className="text-sm">
+                  <p className="font-semibold text-amber-800">{t('security_2fa_mandatory')}</p>
+                  <p className="text-amber-700 text-xs mt-0.5">{t('security_2fa_mandatory_desc')}</p>
+                </div>
+              </div>
+            )}
             <Button className="w-full justify-start" variant="outline" onClick={() => setPasswordDialogOpen(true)}>
-              <Key className={`w-4 h-4 ${isRtl ? 'ml-2' : 'mr-2'}`} />
+              <Key className="w-4 h-4 me-2" />
               {t('security_change_password')}
             </Button>
-            <Button className="w-full justify-start" variant="outline" onClick={() => is2FAEnabled ? handle2FADisable() : handle2FASetup()}>
-              <Fingerprint className={`w-4 h-4 ${isRtl ? 'ml-2' : 'mr-2'}`} />
+            <Button
+              className={`w-full justify-start ${is2FAEnabled ? 'border-emerald-300 text-emerald-700 hover:bg-emerald-50' : isAdmin ? 'border-amber-300 text-amber-700 hover:bg-amber-50' : ''}`}
+              variant="outline"
+              onClick={() => is2FAEnabled ? handle2FADisable() : handle2FASetup()}
+            >
+              <Fingerprint className="w-4 h-4 me-2" />
               {is2FAEnabled ? t('security_disable_2fa') : t('security_enable_2fa')}
+              {isAdmin && !is2FAEnabled && (
+                <span className="ms-auto text-[10px] font-bold bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full border border-amber-300">{t('security_status_required', { defaultValue: 'REQUIRED' })}</span>
+              )}
+              {is2FAEnabled && (
+                <span className="ms-auto text-[10px] font-bold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full border border-emerald-300">{t('security_status_active_upper', { defaultValue: 'ACTIVE' })}</span>
+              )}
             </Button>
           </CardContent>
         </Card>
@@ -331,7 +412,29 @@ const SecurityCenter = () => {
                       </Badge>
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      {log.user} • {log.time}
+                      {log.user} <span className="opacity-50">({log.role === 'administrator' ? t('role_admin') :
+                        log.role === 'analyst' ? t('role_analyst') :
+                          log.role === 'researcher' ? t('role_researcher') :
+                            log.role})</span> • {(() => {
+                              try {
+                                const d = new Date(log.time);
+                                if (isNaN(d.getTime())) return log.time;
+                                const year = d.getFullYear();
+                                const month = String(d.getMonth() + 1).padStart(2, '0');
+                                const day = String(d.getDate()).padStart(2, '0');
+                                const hours = String(d.getHours()).padStart(2, '0');
+                                const mins = String(d.getMinutes()).padStart(2, '0');
+                                const offsetMinutes = -d.getTimezoneOffset();
+                                const offsetHours = Math.floor(Math.abs(offsetMinutes) / 60);
+                                const offsetMins = Math.abs(offsetMinutes) % 60;
+                                const sign = offsetMinutes >= 0 ? '+' : '-';
+                                const offsetStr = `${sign}${String(offsetHours).padStart(2, '0')}:${String(offsetMins).padStart(2, '0')}`;
+
+                                return `${year}-${month}-${day} ${hours}:${mins} ${offsetStr}`;
+                              } catch (e) {
+                                return log.time;
+                              }
+                            })()}
                     </p>
                   </div>
                 </div>
@@ -362,8 +465,10 @@ const SecurityCenter = () => {
             <CardTitle className="text-sm font-medium">{t('access_today')}</CardTitle>
           </CardHeader>
           <CardContent className="text-start">
-            <div className="text-2xl font-bold">127</div>
-            <p className="text-xs text-muted-foreground mt-1">+12% {t('up_yesterday')}</p>
+            <div className="text-2xl font-bold">{securityMetrics.accessToday}</div>
+            <p className={`text-xs mt-1 ${securityMetrics.accessTrend >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+              {securityMetrics.accessTrend >= 0 ? '+' : ''}{securityMetrics.accessTrend}% {t('up_yesterday')}
+            </p>
           </CardContent>
         </Card>
 
@@ -372,7 +477,7 @@ const SecurityCenter = () => {
             <CardTitle className="text-sm font-medium">{t('exports_month')}</CardTitle>
           </CardHeader>
           <CardContent className="text-start">
-            <div className="text-2xl font-bold">45</div>
+            <div className="text-2xl font-bold">{securityMetrics.exportsMonth}</div>
             <p className="text-xs text-muted-foreground mt-1">{t('authorized_all')}</p>
           </CardContent>
         </Card>
@@ -382,8 +487,10 @@ const SecurityCenter = () => {
             <CardTitle className="text-sm font-medium">{t('security_alerts')}</CardTitle>
           </CardHeader>
           <CardContent className="text-start">
-            <div className="text-2xl font-bold">0</div>
-            <p className="text-xs text-green-600 dark:text-green-400 mt-1">{t('no_anomalies')}</p>
+            <div className="text-2xl font-bold">{securityMetrics.alerts}</div>
+            <p className={`text-xs mt-1 ${securityMetrics.alerts > 0 ? 'text-red-600 font-medium animate-pulse' : 'text-green-600 dark:text-green-400'}`}>
+              {securityMetrics.alerts > 0 ? t('security_alerts') : t('no_anomalies')}
+            </p>
           </CardContent>
         </Card>
       </div>
@@ -470,22 +577,24 @@ const SecurityCenter = () => {
         </DialogContent>
       </Dialog>
 
-      {/* 2FA Setup Dialog */}
-      <Dialog open={twoFADialogOpen} onOpenChange={setTwoFADialogOpen}>
+      <Dialog open={twoFADialogOpen} onOpenChange={(open) => {
+        setTwoFADialogOpen(open);
+        if (!open) setIsDisabling2FA(false);
+      }}>
         <DialogContent className="max-w-md">
           <DialogHeader className="text-start">
-            <DialogTitle>{t('security_2fa_setup_title')}</DialogTitle>
+            <DialogTitle>{isDisabling2FA ? t('security_2fa_disable_confirm') : t('security_2fa_setup_title')}</DialogTitle>
             <DialogDescription>
-              {t('security_2fa_setup_desc')}
+              {isDisabling2FA ? "To disable two-factor authentication, please enter the current 6-digit code from your authenticator app to confirm your identity." : t('security_2fa_setup_desc')}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4 text-start">
-            {qrCodeUrl && (
+            {!isDisabling2FA && qrCodeUrl && (
               <div className="flex justify-center">
                 <img src={qrCodeUrl} alt="2FA QR Code" className="border rounded-lg" />
               </div>
             )}
-            {totpSecret && (
+            {!isDisabling2FA && totpSecret && (
               <div className="text-center">
                 <p className="text-sm text-muted-foreground mb-2">{t('security_2fa_manual_entry')}</p>
                 <code className="bg-muted px-3 py-2 rounded text-sm font-mono">{totpSecret}</code>

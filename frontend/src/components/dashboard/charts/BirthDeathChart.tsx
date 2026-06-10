@@ -9,6 +9,10 @@ interface BirthDeathChartProps {
 const BirthDeathChart = ({ data }: BirthDeathChartProps) => {
     const { t, isRtl } = useLanguage();
 
+    const formatRate = (value: number) => {
+        return `${value} ${t('per_1000_people')}`;
+    };
+
     // Fallback data
     const chartData = data && data.length > 0 ? data : [
         { year: 2015, birth_rate: 42, death_rate: 12 },
@@ -41,6 +45,7 @@ const BirthDeathChart = ({ data }: BirthDeathChartProps) => {
                             tickLine={false}
                             axisLine={false}
                             reversed={isRtl}
+                            minTickGap={30}
                         />
                         <YAxis
                             stroke="#64748b"
@@ -48,9 +53,10 @@ const BirthDeathChart = ({ data }: BirthDeathChartProps) => {
                             tickLine={false}
                             axisLine={false}
                             orientation={isRtl ? 'right' : 'left'}
-                            label={{ value: t('per_1000_people'), angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fill: '#94a3b8', fontSize: 12 } }}
+                            label={{ value: t('per_1000_people'), angle: isRtl ? 90 : -90, position: 'insideLeft', style: { textAnchor: 'middle', fill: '#94a3b8', fontSize: 12 } }}
                         />
                         <Tooltip
+                            formatter={(value: number) => [formatRate(value), '']}
                             contentStyle={{
                                 backgroundColor: "rgba(255, 255, 255, 0.95)",
                                 border: "none",
@@ -73,7 +79,7 @@ const BirthDeathChart = ({ data }: BirthDeathChartProps) => {
                             dataKey="birth_rate"
                             stroke="#10b981"
                             strokeWidth={3}
-                            name={t('birth_rate')}
+                            name={t('birth_rate_label')}
                             isAnimationActive={true}
                             dot={{ r: 4, strokeWidth: 2, fill: "#fff" }}
                         />
@@ -82,7 +88,7 @@ const BirthDeathChart = ({ data }: BirthDeathChartProps) => {
                             dataKey="death_rate"
                             stroke="#f43f5e"
                             strokeWidth={3}
-                            name={t('death_rate')}
+                            name={t('mortality_rate_label')}
                             isAnimationActive={true}
                             dot={{ r: 4, strokeWidth: 2, fill: "#fff" }}
                         />

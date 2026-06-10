@@ -51,11 +51,33 @@ const OTPVerification = () => {
             const res = await verifyOtp(email, otp);
             sessionStorage.setItem("authToken", res.token);
 
-            const dbRole = res.user?.role || location.state?.role || "analyst";
+            // Refresh global auth state immediately and get the full user profile
+            const freshUser = await refreshUser();
+            
+            const dbRole = freshUser?.role || res.user?.role || location.state?.role || "analyst";
             sessionStorage.setItem("userRole", dbRole);
+            sessionStorage.setItem("loginTime", new Date().toISOString());
 
-            // Refresh global auth state immediately
-            await refreshUser();
+            const isAdmin = dbRole.toLowerCase() === 'administrator' || dbRole.toLowerCase() === 'admin';
+            // Use the flag from the response directly for immediate redirection, with freshUser as fallback
+            const has2FA = res.user?.is_2fa_enabled === true || freshUser?.is_2fa_enabled === true;
+
+            console.log(`[Auth] Redirect check: isAdmin=${isAdmin}, has2FA=${has2FA}, res_2fa=${res.user?.is_2fa_enabled}, fresh_2fa=${freshUser?.is_2fa_enabled}`);
+
+            // Admin with 2FA enabled → redirect to TOTP verification screen
+            if (isAdmin && has2FA) {
+                // Keep the token as a pre-auth token for the 2FA screen
+                sessionStorage.setItem("preAuthToken", res.token);
+                // We keep authToken for now as ProtectedRoute needs it, but the 2FA page will 
+                // replace it with the final one upon successful TOTP.
+                
+                toast({
+                    title: t('success'),
+                    description: "Two-Factor Authentication (TOTP) required for administrator access.",
+                });
+                navigate("/auth/2fa", { state: { email, role: dbRole } });
+                return;
+            }
 
             const rolePathMap: Record<string, string> = {
                 "administrator": "admin",

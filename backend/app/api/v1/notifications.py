@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy import Integer, func
 from sqlalchemy.orm import Session
 from typing import List
 from app.api.v1.auth import get_current_user
 from app.db.session import get_db
-from app.models import Notification, User
+from app.models import ExportTask, Notification, User
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -25,8 +26,16 @@ def get_notifications(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    return db.query(Notification).filter(
-        Notification.user_id == current_user.id
+    # Return only completed exports whose scheduled target date has arrived.
+    task_id = Notification.details["task_id"].astext.cast(Integer)
+    return db.query(Notification).join(
+        ExportTask,
+        ExportTask.id == task_id
+    ).filter(
+        Notification.user_id == current_user.id,
+        Notification.type == "EXPORT_READY",
+        ExportTask.status == "COMPLETED",
+        func.date(ExportTask.target_date) <= func.current_date()
     ).order_by(Notification.created_at.desc()).all()
 
 @router.put("/{notification_id}/read")

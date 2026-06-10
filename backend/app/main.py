@@ -1,12 +1,31 @@
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.v1 import auth, users, data, reports, export, admin, notifications, scheduler, contact, support, analytics, datasets
+from app.api.v1 import auth, users, data, reports, export, admin, notifications, scheduler, contact, support, analytics, datasets, spatial, ml, user_activity, analyst, researcher
 from app.core.config import settings
 from app.api.v1.scheduler import scheduler as bg_scheduler
 from app.db.session import engine, Base
 from app.models import User # Ensure all models are registered
 
-app = FastAPI(title=settings.PROJECT_NAME)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    Base.metadata.create_all(bind=engine)
+    bg_scheduler.start()
+    
+    # Load ML Engine at startup
+    try:
+        from app.api.v1.ml import load_ml_engine
+        load_ml_engine()
+    except Exception as e:
+        print(f"ML Engine startup error: {e}")
+        
+    yield
+    
+    # Shutdown
+    bg_scheduler.shutdown()
+
+app = FastAPI(title=settings.PROJECT_NAME, lifespan=lifespan)
 
 # CORS setup
 origins = [
@@ -30,31 +49,28 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include Routers with legacy compatibility
-app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
-app.include_router(users.router, prefix="/api/admin/users", tags=["admin"])
-app.include_router(admin.router, prefix="/api/admin", tags=["admin"])
-app.include_router(data.router, prefix="/api/admin", tags=["admin"])
-app.include_router(data.router, prefix="/api", tags=["data"])
-app.include_router(reports.router, prefix="/api/reports", tags=["reports"])
-app.include_router(reports.router, prefix="/api/admin/reports", tags=["admin"])  # Also mount under admin
-app.include_router(export.router, prefix="/api/admin", tags=["admin"])
-app.include_router(notifications.router, prefix="/api/notifications", tags=["notifications"])
-app.include_router(scheduler.router, prefix="/api/schedule-export", tags=["scheduler"])
-app.include_router(contact.router, prefix="/api/contact", tags=["contact"])
-app.include_router(support.router, prefix="/api/support", tags=["support"])
-app.include_router(analytics.router, prefix="/api/analytics", tags=["analytics"])
-app.include_router(datasets.router, prefix="/api/datasets", tags=["datasets"])
+# Include Routers with /v1 standard
+app.include_router(auth.router, prefix="/api/v1/auth", tags=["auth"])
+app.include_router(users.router, prefix="/api/v1/admin/users", tags=["admin"])
+app.include_router(admin.router, prefix="/api/v1/admin", tags=["admin"])
+app.include_router(data.router, prefix="/api/v1/admin", tags=["admin"])
+app.include_router(data.router, prefix="/api/v1/data", tags=["data"])
+app.include_router(reports.router, prefix="/api/v1/reports", tags=["reports"])
+app.include_router(reports.router, prefix="/api/v1/admin/reports", tags=["admin"])
+app.include_router(export.router, prefix="/api/v1/admin", tags=["admin"])
+app.include_router(notifications.router, prefix="/api/v1/notifications", tags=["notifications"])
+app.include_router(scheduler.router, prefix="/api/v1/schedule-export", tags=["scheduler"])
+app.include_router(contact.router, prefix="/api/v1/contact", tags=["contact"])
+app.include_router(support.router, prefix="/api/v1/support", tags=["support"])
+app.include_router(analytics.router, prefix="/api/v1/analytics", tags=["analytics"])
+app.include_router(datasets.router, prefix="/api/v1/datasets", tags=["datasets"])
+app.include_router(spatial.router, prefix="/api/v1/spatial", tags=["spatial"])
+app.include_router(ml.router, prefix="/api/v1/ml", tags=["ml"])
+app.include_router(user_activity.router, prefix="/api/v1/activity", tags=["activity"])
+app.include_router(analyst.router, prefix="/api/v1/analyst", tags=["analyst"])
+app.include_router(researcher.router, prefix="/api/v1/researcher", tags=["researcher"])
 
-@app.on_event("startup")
-def startup_event():
-    Base.metadata.create_all(bind=engine)
-    bg_scheduler.start()
-
-@app.on_event("shutdown")
-def shutdown_event():
-    bg_scheduler.shutdown()
-
+# Base routes
 @app.get("/")
 def read_root():
     return {"message": f"Welcome to {settings.PROJECT_NAME} API", "docs": "/docs"}

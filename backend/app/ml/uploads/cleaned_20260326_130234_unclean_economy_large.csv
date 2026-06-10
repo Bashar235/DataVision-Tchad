@@ -1,0 +1,967 @@
+Region,Year,GDP_Per_Capita,Urbanization_Rate
+Batha,2009,800.0,25.0
+Batha,2010,810.0,25.2
+Batha,2011,820.0,25.4
+Batha,2012,830.0,25.6
+Batha,2013,840.0,25.8
+Batha,2014,850.0,26.0
+Batha,2015,860.0,26.2
+Batha,2016,870.0,26.4
+Batha,2017,880.0,26.6
+Batha,2018,890.0,26.8
+Batha,2019,900.0,27.0
+Batha,2020,910.0,27.2
+Batha,2021,920.0,27.4
+Batha,2022,930.0,27.6
+Batha,2023,940.0,27.8
+Batha,2024,950.0,28.0
+Batha,2025,960.0,28.2
+Batha,2026,970.0,28.4
+Batha,2027,980.0,28.6
+Batha,2028,990.0,28.8
+Batha,2029,1000.0,29.0
+Batha,2030,1010.0,29.2
+Batha,2031,1020.0,29.4
+Batha,2032,1030.0,29.6
+Batha,2033,1040.0,29.8
+Batha,2034,1050.0,30.0
+Batha,2035,1060.0,30.2
+Batha,2036,1070.0,30.4
+Batha,2037,1080.0,30.6
+Batha,2038,1090.0,30.8
+Batha,2039,1100.0,31.0
+Batha,2040,1110.0,31.2
+Batha,2041,1120.0,31.4
+Batha,2042,1130.0,31.6
+Batha,2043,1140.0,31.8
+Batha,2044,1150.0,32.0
+Batha,2045,1160.0,32.2
+Batha,2046,1170.0,32.4
+Batha,2047,1180.0,32.6
+Batha,2048,1190.0,32.8
+Batha,2049,1200.0,33.0
+Batha,2050,1210.0,33.2
+Borkou,2009,800.0,25.0
+Borkou,2010,810.0,25.2
+Borkou,2011,820.0,25.4
+Borkou,2012,830.0,25.6
+Borkou,2013,840.0,25.8
+Borkou,2014,850.0,26.0
+Borkou,2015,860.0,26.2
+Borkou,2016,870.0,26.4
+Borkou,2017,880.0,26.6
+Borkou,2018,890.0,26.8
+Borkou,2019,900.0,27.0
+Borkou,2020,910.0,27.2
+Borkou,2021,920.0,27.4
+Borkou,2022,930.0,27.6
+Borkou,2023,940.0,27.8
+Borkou,2024,950.0,28.0
+Borkou,2025,960.0,28.2
+Borkou,2026,970.0,28.4
+Borkou,2027,980.0,28.6
+Borkou,2028,990.0,28.8
+Borkou,2029,1000.0,29.0
+Borkou,2030,1010.0,29.2
+Borkou,2031,1020.0,29.4
+Borkou,2032,1030.0,29.6
+Borkou,2033,1040.0,29.8
+Borkou,2034,1050.0,30.0
+Borkou,2035,1060.0,30.2
+Borkou,2036,1070.0,30.4
+Borkou,2037,1080.0,30.6
+Borkou,2038,1090.0,30.8
+Borkou,2039,1100.0,31.0
+Borkou,2040,1110.0,31.2
+Borkou,2041,1120.0,31.4
+Borkou,2042,1130.0,31.6
+Borkou,2043,1140.0,31.8
+Borkou,2044,1150.0,32.0
+Borkou,2045,1160.0,32.2
+Borkou,2046,1170.0,32.4
+Borkou,2047,1180.0,32.6
+Borkou,2048,1190.0,32.8
+Borkou,2049,1200.0,33.0
+Borkou,2050,1210.0,33.2
+Chari-Baguirmi,2009,800.0,25.0
+Chari-Baguirmi,2010,810.0,25.2
+Chari-Baguirmi,2011,820.0,25.4
+Chari-Baguirmi,2012,830.0,25.6
+Chari-Baguirmi,2013,840.0,25.8
+Chari-Baguirmi,2014,850.0,26.0
+Chari-Baguirmi,2015,860.0,26.2
+Chari-Baguirmi,2016,870.0,26.4
+Chari-Baguirmi,2017,880.0,26.6
+Chari-Baguirmi,2018,890.0,26.8
+Chari-Baguirmi,2019,900.0,27.0
+Chari-Baguirmi,2020,910.0,27.2
+Chari-Baguirmi,2021,920.0,27.4
+Chari-Baguirmi,2022,930.0,27.6
+Chari-Baguirmi,2023,940.0,27.8
+Chari-Baguirmi,2024,950.0,28.0
+Chari-Baguirmi,2025,960.0,28.2
+Chari-Baguirmi,2026,970.0,28.4
+Chari-Baguirmi,2027,980.0,28.6
+Chari-Baguirmi,2028,990.0,28.8
+Chari-Baguirmi,2029,1000.0,29.0
+Chari-Baguirmi,2030,1010.0,29.2
+Chari-Baguirmi,2031,1020.0,29.4
+Chari-Baguirmi,2032,1030.0,29.6
+Chari-Baguirmi,2033,1040.0,29.8
+Chari-Baguirmi,2034,1050.0,30.0
+Chari-Baguirmi,2035,1060.0,30.2
+Chari-Baguirmi,2036,1070.0,30.4
+Chari-Baguirmi,2037,1080.0,30.6
+Chari-Baguirmi,2038,1090.0,30.8
+Chari-Baguirmi,2039,1100.0,31.0
+Chari-Baguirmi,2040,1110.0,31.2
+Chari-Baguirmi,2041,1120.0,31.4
+Chari-Baguirmi,2042,1130.0,31.6
+Chari-Baguirmi,2043,1140.0,31.8
+Chari-Baguirmi,2044,1150.0,32.0
+Chari-Baguirmi,2045,1160.0,32.2
+Chari-Baguirmi,2046,1170.0,32.4
+Chari-Baguirmi,2047,1180.0,32.6
+Chari-Baguirmi,2048,1190.0,32.8
+Chari-Baguirmi,2049,1200.0,33.0
+Chari-Baguirmi,2050,1210.0,33.2
+Ennedi Est,2009,800.0,25.0
+Ennedi Est,2010,810.0,25.2
+Ennedi Est,2011,820.0,25.4
+Ennedi Est,2012,830.0,25.6
+Ennedi Est,2013,840.0,25.8
+Ennedi Est,2014,850.0,26.0
+Ennedi Est,2015,860.0,26.2
+Ennedi Est,2016,870.0,26.4
+Ennedi Est,2017,880.0,26.6
+Ennedi Est,2018,890.0,26.8
+Ennedi Est,2019,900.0,27.0
+Ennedi Est,2020,910.0,27.2
+Ennedi Est,2021,920.0,27.4
+Ennedi Est,2022,930.0,27.6
+Ennedi Est,2023,940.0,27.8
+Ennedi Est,2024,950.0,28.0
+Ennedi Est,2025,960.0,28.2
+Ennedi Est,2026,970.0,28.4
+Ennedi Est,2027,980.0,28.6
+Ennedi Est,2028,990.0,28.8
+Ennedi Est,2029,1000.0,29.0
+Ennedi Est,2030,1010.0,29.2
+Ennedi Est,2031,1020.0,29.4
+Ennedi Est,2032,1030.0,29.6
+Ennedi Est,2033,1040.0,29.8
+Ennedi Est,2034,1050.0,30.0
+Ennedi Est,2035,1060.0,30.2
+Ennedi Est,2036,1070.0,30.4
+Ennedi Est,2037,1080.0,30.6
+Ennedi Est,2038,1090.0,30.8
+Ennedi Est,2039,1100.0,31.0
+Ennedi Est,2040,1110.0,31.2
+Ennedi Est,2041,1120.0,31.4
+Ennedi Est,2042,1130.0,31.6
+Ennedi Est,2043,1140.0,31.8
+Ennedi Est,2044,1150.0,32.0
+Ennedi Est,2045,1160.0,32.2
+Ennedi Est,2046,1170.0,32.4
+Ennedi Est,2047,1180.0,32.6
+Ennedi Est,2048,1190.0,32.8
+Ennedi Est,2049,1200.0,33.0
+Ennedi Est,2050,1210.0,33.2
+Ennedi Ouest,2009,800.0,25.0
+Ennedi Ouest,2010,810.0,25.2
+Ennedi Ouest,2011,820.0,25.4
+Ennedi Ouest,2012,830.0,25.6
+Ennedi Ouest,2013,840.0,25.8
+Ennedi Ouest,2014,850.0,26.0
+Ennedi Ouest,2015,860.0,26.2
+Ennedi Ouest,2016,870.0,26.4
+Ennedi Ouest,2017,880.0,26.6
+Ennedi Ouest,2018,890.0,26.8
+Ennedi Ouest,2019,900.0,27.0
+Ennedi Ouest,2020,910.0,27.2
+Ennedi Ouest,2021,920.0,27.4
+Ennedi Ouest,2022,930.0,27.6
+Ennedi Ouest,2023,940.0,27.8
+Ennedi Ouest,2024,950.0,28.0
+Ennedi Ouest,2025,960.0,28.2
+Ennedi Ouest,2026,970.0,28.4
+Ennedi Ouest,2027,980.0,28.6
+Ennedi Ouest,2028,990.0,28.8
+Ennedi Ouest,2029,1000.0,29.0
+Ennedi Ouest,2030,1010.0,29.2
+Ennedi Ouest,2031,1020.0,29.4
+Ennedi Ouest,2032,1030.0,29.6
+Ennedi Ouest,2033,1040.0,29.8
+Ennedi Ouest,2034,1050.0,30.0
+Ennedi Ouest,2035,1060.0,30.2
+Ennedi Ouest,2036,1070.0,30.4
+Ennedi Ouest,2037,1080.0,30.6
+Ennedi Ouest,2038,1090.0,30.8
+Ennedi Ouest,2039,1100.0,31.0
+Ennedi Ouest,2040,1110.0,31.2
+Ennedi Ouest,2041,1120.0,31.4
+Ennedi Ouest,2042,1130.0,31.6
+Ennedi Ouest,2043,1140.0,31.8
+Ennedi Ouest,2044,1150.0,32.0
+Ennedi Ouest,2045,1160.0,32.2
+Ennedi Ouest,2046,1170.0,32.4
+Ennedi Ouest,2047,1180.0,32.6
+Ennedi Ouest,2048,1190.0,32.8
+Ennedi Ouest,2049,1200.0,33.0
+Ennedi Ouest,2050,1210.0,33.2
+Guéra,2009,800.0,25.0
+Guéra,2010,810.0,25.2
+Guéra,2011,820.0,25.4
+Guéra,2012,830.0,25.6
+Guéra,2013,840.0,25.8
+Guéra,2014,850.0,26.0
+Guéra,2015,860.0,26.2
+Guéra,2016,870.0,26.4
+Guéra,2017,880.0,26.6
+Guéra,2018,890.0,26.8
+Guéra,2019,900.0,27.0
+Guéra,2020,910.0,27.2
+Guéra,2021,920.0,27.4
+Guéra,2022,930.0,27.6
+Guéra,2023,940.0,27.8
+Guéra,2024,950.0,28.0
+Guéra,2025,960.0,28.2
+Guéra,2026,970.0,28.4
+Guéra,2027,980.0,28.6
+Guéra,2028,990.0,28.8
+Guéra,2029,1000.0,29.0
+Guéra,2030,1010.0,29.2
+Guéra,2031,1020.0,29.4
+Guéra,2032,1030.0,29.6
+Guéra,2033,1040.0,29.8
+Guéra,2034,1050.0,30.0
+Guéra,2035,1060.0,30.2
+Guéra,2036,1070.0,30.4
+Guéra,2037,1080.0,30.6
+Guéra,2038,1090.0,30.8
+Guéra,2039,1100.0,31.0
+Guéra,2040,1110.0,31.2
+Guéra,2041,1120.0,31.4
+Guéra,2042,1130.0,31.6
+Guéra,2043,1140.0,31.8
+Guéra,2044,1150.0,32.0
+Guéra,2045,1160.0,32.2
+Guéra,2046,1170.0,32.4
+Guéra,2047,1180.0,32.6
+Guéra,2048,1190.0,32.8
+Guéra,2049,1200.0,33.0
+Guéra,2050,1210.0,33.2
+Hadjer-Lamis,2009,800.0,25.0
+Hadjer-Lamis,2010,810.0,25.2
+Hadjer-Lamis,2011,820.0,25.4
+Hadjer-Lamis,2012,830.0,25.6
+Hadjer-Lamis,2013,840.0,25.8
+Hadjer-Lamis,2014,850.0,26.0
+Hadjer-Lamis,2015,860.0,26.2
+Hadjer-Lamis,2016,870.0,26.4
+Hadjer-Lamis,2017,880.0,26.6
+Hadjer-Lamis,2018,890.0,26.8
+Hadjer-Lamis,2019,900.0,27.0
+Hadjer-Lamis,2020,910.0,27.2
+Hadjer-Lamis,2021,920.0,27.4
+Hadjer-Lamis,2022,930.0,27.6
+Hadjer-Lamis,2023,940.0,27.8
+Hadjer-Lamis,2024,950.0,28.0
+Hadjer-Lamis,2025,960.0,28.2
+Hadjer-Lamis,2026,970.0,28.4
+Hadjer-Lamis,2027,980.0,28.6
+Hadjer-Lamis,2028,990.0,28.8
+Hadjer-Lamis,2029,1000.0,29.0
+Hadjer-Lamis,2030,1010.0,29.2
+Hadjer-Lamis,2031,1020.0,29.4
+Hadjer-Lamis,2032,1030.0,29.6
+Hadjer-Lamis,2033,1040.0,29.8
+Hadjer-Lamis,2034,1050.0,30.0
+Hadjer-Lamis,2035,1060.0,30.2
+Hadjer-Lamis,2036,1070.0,30.4
+Hadjer-Lamis,2037,1080.0,30.6
+Hadjer-Lamis,2038,1090.0,30.8
+Hadjer-Lamis,2039,1100.0,31.0
+Hadjer-Lamis,2040,1110.0,31.2
+Hadjer-Lamis,2041,1120.0,31.4
+Hadjer-Lamis,2042,1130.0,31.6
+Hadjer-Lamis,2043,1140.0,31.8
+Hadjer-Lamis,2044,1150.0,32.0
+Hadjer-Lamis,2045,1160.0,32.2
+Hadjer-Lamis,2046,1170.0,32.4
+Hadjer-Lamis,2047,1180.0,32.6
+Hadjer-Lamis,2048,1190.0,32.8
+Hadjer-Lamis,2049,1200.0,33.0
+Hadjer-Lamis,2050,1210.0,33.2
+Kanem,2009,800.0,25.0
+Kanem,2010,810.0,25.2
+Kanem,2011,820.0,25.4
+Kanem,2012,830.0,25.6
+Kanem,2013,840.0,25.8
+Kanem,2014,850.0,26.0
+Kanem,2015,860.0,26.2
+Kanem,2016,870.0,26.4
+Kanem,2017,880.0,26.6
+Kanem,2018,890.0,26.8
+Kanem,2019,900.0,27.0
+Kanem,2020,910.0,27.2
+Kanem,2021,920.0,27.4
+Kanem,2022,930.0,27.6
+Kanem,2023,940.0,27.8
+Kanem,2024,950.0,28.0
+Kanem,2025,960.0,28.2
+Kanem,2026,970.0,28.4
+Kanem,2027,980.0,28.6
+Kanem,2028,990.0,28.8
+Kanem,2029,1000.0,29.0
+Kanem,2030,1010.0,29.2
+Kanem,2031,1020.0,29.4
+Kanem,2032,1030.0,29.6
+Kanem,2033,1040.0,29.8
+Kanem,2034,1050.0,30.0
+Kanem,2035,1060.0,30.2
+Kanem,2036,1070.0,30.4
+Kanem,2037,1080.0,30.6
+Kanem,2038,1090.0,30.8
+Kanem,2039,1100.0,31.0
+Kanem,2040,1110.0,31.2
+Kanem,2041,1120.0,31.4
+Kanem,2042,1130.0,31.6
+Kanem,2043,1140.0,31.8
+Kanem,2044,1150.0,32.0
+Kanem,2045,1160.0,32.2
+Kanem,2046,1170.0,32.4
+Kanem,2047,1180.0,32.6
+Kanem,2048,1190.0,32.8
+Kanem,2049,1200.0,33.0
+Kanem,2050,1210.0,33.2
+Lac,2009,800.0,25.0
+Lac,2010,810.0,25.2
+Lac,2011,820.0,25.4
+Lac,2012,830.0,25.6
+Lac,2013,840.0,25.8
+Lac,2014,850.0,26.0
+Lac,2015,860.0,26.2
+Lac,2016,870.0,26.4
+Lac,2017,880.0,26.6
+Lac,2018,890.0,26.8
+Lac,2019,900.0,27.0
+Lac,2020,910.0,27.2
+Lac,2021,920.0,27.4
+Lac,2022,930.0,27.6
+Lac,2023,940.0,27.8
+Lac,2024,950.0,28.0
+Lac,2025,960.0,28.2
+Lac,2026,970.0,28.4
+Lac,2027,980.0,28.6
+Lac,2028,990.0,28.8
+Lac,2029,1000.0,29.0
+Lac,2030,1010.0,29.2
+Lac,2031,1020.0,29.4
+Lac,2032,1030.0,29.6
+Lac,2033,1040.0,29.8
+Lac,2034,1050.0,30.0
+Lac,2035,1060.0,30.2
+Lac,2036,1070.0,30.4
+Lac,2037,1080.0,30.6
+Lac,2038,1090.0,30.8
+Lac,2039,1100.0,31.0
+Lac,2040,1110.0,31.2
+Lac,2041,1120.0,31.4
+Lac,2042,1130.0,31.6
+Lac,2043,1140.0,31.8
+Lac,2044,1150.0,32.0
+Lac,2045,1160.0,32.2
+Lac,2046,1170.0,32.4
+Lac,2047,1180.0,32.6
+Lac,2048,1190.0,32.8
+Lac,2049,1200.0,33.0
+Lac,2050,1210.0,33.2
+Logone Occidental,2009,800.0,25.0
+Logone Occidental,2010,810.0,25.2
+Logone Occidental,2011,820.0,25.4
+Logone Occidental,2012,830.0,25.6
+Logone Occidental,2013,840.0,25.8
+Logone Occidental,2014,850.0,26.0
+Logone Occidental,2015,860.0,26.2
+Logone Occidental,2016,870.0,26.4
+Logone Occidental,2017,880.0,26.6
+Logone Occidental,2018,890.0,26.8
+Logone Occidental,2019,900.0,27.0
+Logone Occidental,2020,910.0,27.2
+Logone Occidental,2021,920.0,27.4
+Logone Occidental,2022,930.0,27.6
+Logone Occidental,2023,940.0,27.8
+Logone Occidental,2024,950.0,28.0
+Logone Occidental,2025,960.0,28.2
+Logone Occidental,2026,970.0,28.4
+Logone Occidental,2027,980.0,28.6
+Logone Occidental,2028,990.0,28.8
+Logone Occidental,2029,1000.0,29.0
+Logone Occidental,2030,1010.0,29.2
+Logone Occidental,2031,1020.0,29.4
+Logone Occidental,2032,1030.0,29.6
+Logone Occidental,2033,1040.0,29.8
+Logone Occidental,2034,1050.0,30.0
+Logone Occidental,2035,1060.0,30.2
+Logone Occidental,2036,1070.0,30.4
+Logone Occidental,2037,1080.0,30.6
+Logone Occidental,2038,1090.0,30.8
+Logone Occidental,2039,1100.0,31.0
+Logone Occidental,2040,1110.0,31.2
+Logone Occidental,2041,1120.0,31.4
+Logone Occidental,2042,1130.0,31.6
+Logone Occidental,2043,1140.0,31.8
+Logone Occidental,2044,1150.0,32.0
+Logone Occidental,2045,1160.0,32.2
+Logone Occidental,2046,1170.0,32.4
+Logone Occidental,2047,1180.0,32.6
+Logone Occidental,2048,1190.0,32.8
+Logone Occidental,2049,1200.0,33.0
+Logone Occidental,2050,1210.0,33.2
+Logone Oriental,2009,800.0,25.0
+Logone Oriental,2010,810.0,25.2
+Logone Oriental,2011,820.0,25.4
+Logone Oriental,2012,830.0,25.6
+Logone Oriental,2013,840.0,25.8
+Logone Oriental,2014,850.0,26.0
+Logone Oriental,2015,860.0,26.2
+Logone Oriental,2016,870.0,26.4
+Logone Oriental,2017,880.0,26.6
+Logone Oriental,2018,890.0,26.8
+Logone Oriental,2019,900.0,27.0
+Logone Oriental,2020,910.0,27.2
+Logone Oriental,2021,920.0,27.4
+Logone Oriental,2022,930.0,27.6
+Logone Oriental,2023,940.0,27.8
+Logone Oriental,2024,950.0,28.0
+Logone Oriental,2025,960.0,28.2
+Logone Oriental,2026,970.0,28.4
+Logone Oriental,2027,980.0,28.6
+Logone Oriental,2028,990.0,28.8
+Logone Oriental,2029,1000.0,29.0
+Logone Oriental,2030,1010.0,29.2
+Logone Oriental,2031,1020.0,29.4
+Logone Oriental,2032,1030.0,29.6
+Logone Oriental,2033,1040.0,29.8
+Logone Oriental,2034,1050.0,30.0
+Logone Oriental,2035,1060.0,30.2
+Logone Oriental,2036,1070.0,30.4
+Logone Oriental,2037,1080.0,30.6
+Logone Oriental,2038,1090.0,30.8
+Logone Oriental,2039,1100.0,31.0
+Logone Oriental,2040,1110.0,31.2
+Logone Oriental,2041,1120.0,31.4
+Logone Oriental,2042,1130.0,31.6
+Logone Oriental,2043,1140.0,31.8
+Logone Oriental,2044,1150.0,32.0
+Logone Oriental,2045,1160.0,32.2
+Logone Oriental,2046,1170.0,32.4
+Logone Oriental,2047,1180.0,32.6
+Logone Oriental,2048,1190.0,32.8
+Logone Oriental,2049,1200.0,33.0
+Logone Oriental,2050,1210.0,33.2
+Mandoul,2009,800.0,25.0
+Mandoul,2010,810.0,25.2
+Mandoul,2011,820.0,25.4
+Mandoul,2012,830.0,25.6
+Mandoul,2013,840.0,25.8
+Mandoul,2014,850.0,26.0
+Mandoul,2015,860.0,26.2
+Mandoul,2016,870.0,26.4
+Mandoul,2017,880.0,26.6
+Mandoul,2018,890.0,26.8
+Mandoul,2019,900.0,27.0
+Mandoul,2020,910.0,27.2
+Mandoul,2021,920.0,27.4
+Mandoul,2022,930.0,27.6
+Mandoul,2023,940.0,27.8
+Mandoul,2024,950.0,28.0
+Mandoul,2025,960.0,28.2
+Mandoul,2026,970.0,28.4
+Mandoul,2027,980.0,28.6
+Mandoul,2028,990.0,28.8
+Mandoul,2029,1000.0,29.0
+Mandoul,2030,1010.0,29.2
+Mandoul,2031,1020.0,29.4
+Mandoul,2032,1030.0,29.6
+Mandoul,2033,1040.0,29.8
+Mandoul,2034,1050.0,30.0
+Mandoul,2035,1060.0,30.2
+Mandoul,2036,1070.0,30.4
+Mandoul,2037,1080.0,30.6
+Mandoul,2038,1090.0,30.8
+Mandoul,2039,1100.0,31.0
+Mandoul,2040,1110.0,31.2
+Mandoul,2041,1120.0,31.4
+Mandoul,2042,1130.0,31.6
+Mandoul,2043,1140.0,31.8
+Mandoul,2044,1150.0,32.0
+Mandoul,2045,1160.0,32.2
+Mandoul,2046,1170.0,32.4
+Mandoul,2047,1180.0,32.6
+Mandoul,2048,1190.0,32.8
+Mandoul,2049,1200.0,33.0
+Mandoul,2050,1210.0,33.2
+Mayo-Kebbi Est,2009,800.0,25.0
+Mayo-Kebbi Est,2010,810.0,25.2
+Mayo-Kebbi Est,2011,820.0,25.4
+Mayo-Kebbi Est,2012,830.0,25.6
+Mayo-Kebbi Est,2013,840.0,25.8
+Mayo-Kebbi Est,2014,850.0,26.0
+Mayo-Kebbi Est,2015,860.0,26.2
+Mayo-Kebbi Est,2016,870.0,26.4
+Mayo-Kebbi Est,2017,880.0,26.6
+Mayo-Kebbi Est,2018,890.0,26.8
+Mayo-Kebbi Est,2019,900.0,27.0
+Mayo-Kebbi Est,2020,910.0,27.2
+Mayo-Kebbi Est,2021,920.0,27.4
+Mayo-Kebbi Est,2022,930.0,27.6
+Mayo-Kebbi Est,2023,940.0,27.8
+Mayo-Kebbi Est,2024,950.0,28.0
+Mayo-Kebbi Est,2025,960.0,28.2
+Mayo-Kebbi Est,2026,970.0,28.4
+Mayo-Kebbi Est,2027,980.0,28.6
+Mayo-Kebbi Est,2028,990.0,28.8
+Mayo-Kebbi Est,2029,1000.0,29.0
+Mayo-Kebbi Est,2030,1010.0,29.2
+Mayo-Kebbi Est,2031,1020.0,29.4
+Mayo-Kebbi Est,2032,1030.0,29.6
+Mayo-Kebbi Est,2033,1040.0,29.8
+Mayo-Kebbi Est,2034,1050.0,30.0
+Mayo-Kebbi Est,2035,1060.0,30.2
+Mayo-Kebbi Est,2036,1070.0,30.4
+Mayo-Kebbi Est,2037,1080.0,30.6
+Mayo-Kebbi Est,2038,1090.0,30.8
+Mayo-Kebbi Est,2039,1100.0,31.0
+Mayo-Kebbi Est,2040,1110.0,31.2
+Mayo-Kebbi Est,2041,1120.0,31.4
+Mayo-Kebbi Est,2042,1130.0,31.6
+Mayo-Kebbi Est,2043,1140.0,31.8
+Mayo-Kebbi Est,2044,1150.0,32.0
+Mayo-Kebbi Est,2045,1160.0,32.2
+Mayo-Kebbi Est,2046,1170.0,32.4
+Mayo-Kebbi Est,2047,1180.0,32.6
+Mayo-Kebbi Est,2048,1190.0,32.8
+Mayo-Kebbi Est,2049,1200.0,33.0
+Mayo-Kebbi Est,2050,1210.0,33.2
+Mayo-Kebbi Ouest,2009,800.0,25.0
+Mayo-Kebbi Ouest,2010,810.0,25.2
+Mayo-Kebbi Ouest,2011,820.0,25.4
+Mayo-Kebbi Ouest,2012,830.0,25.6
+Mayo-Kebbi Ouest,2013,840.0,25.8
+Mayo-Kebbi Ouest,2014,850.0,26.0
+Mayo-Kebbi Ouest,2015,860.0,26.2
+Mayo-Kebbi Ouest,2016,870.0,26.4
+Mayo-Kebbi Ouest,2017,880.0,26.6
+Mayo-Kebbi Ouest,2018,890.0,26.8
+Mayo-Kebbi Ouest,2019,900.0,27.0
+Mayo-Kebbi Ouest,2020,910.0,27.2
+Mayo-Kebbi Ouest,2021,920.0,27.4
+Mayo-Kebbi Ouest,2022,930.0,27.6
+Mayo-Kebbi Ouest,2023,940.0,27.8
+Mayo-Kebbi Ouest,2024,950.0,28.0
+Mayo-Kebbi Ouest,2025,960.0,28.2
+Mayo-Kebbi Ouest,2026,970.0,28.4
+Mayo-Kebbi Ouest,2027,980.0,28.6
+Mayo-Kebbi Ouest,2028,990.0,28.8
+Mayo-Kebbi Ouest,2029,1000.0,29.0
+Mayo-Kebbi Ouest,2030,1010.0,29.2
+Mayo-Kebbi Ouest,2031,1020.0,29.4
+Mayo-Kebbi Ouest,2032,1030.0,29.6
+Mayo-Kebbi Ouest,2033,1040.0,29.8
+Mayo-Kebbi Ouest,2034,1050.0,30.0
+Mayo-Kebbi Ouest,2035,1060.0,30.2
+Mayo-Kebbi Ouest,2036,1070.0,30.4
+Mayo-Kebbi Ouest,2037,1080.0,30.6
+Mayo-Kebbi Ouest,2038,1090.0,30.8
+Mayo-Kebbi Ouest,2039,1100.0,31.0
+Mayo-Kebbi Ouest,2040,1110.0,31.2
+Mayo-Kebbi Ouest,2041,1120.0,31.4
+Mayo-Kebbi Ouest,2042,1130.0,31.6
+Mayo-Kebbi Ouest,2043,1140.0,31.8
+Mayo-Kebbi Ouest,2044,1150.0,32.0
+Mayo-Kebbi Ouest,2045,1160.0,32.2
+Mayo-Kebbi Ouest,2046,1170.0,32.4
+Mayo-Kebbi Ouest,2047,1180.0,32.6
+Mayo-Kebbi Ouest,2048,1190.0,32.8
+Mayo-Kebbi Ouest,2049,1200.0,33.0
+Mayo-Kebbi Ouest,2050,1210.0,33.2
+Moyen-Chari,2009,800.0,25.0
+Moyen-Chari,2010,810.0,25.2
+Moyen-Chari,2011,820.0,25.4
+Moyen-Chari,2012,830.0,25.6
+Moyen-Chari,2013,840.0,25.8
+Moyen-Chari,2014,850.0,26.0
+Moyen-Chari,2015,860.0,26.2
+Moyen-Chari,2016,870.0,26.4
+Moyen-Chari,2017,880.0,26.6
+Moyen-Chari,2018,890.0,26.8
+Moyen-Chari,2019,900.0,27.0
+Moyen-Chari,2020,910.0,27.2
+Moyen-Chari,2021,920.0,27.4
+Moyen-Chari,2022,930.0,27.6
+Moyen-Chari,2023,940.0,27.8
+Moyen-Chari,2024,950.0,28.0
+Moyen-Chari,2025,960.0,28.2
+Moyen-Chari,2026,970.0,28.4
+Moyen-Chari,2027,980.0,28.6
+Moyen-Chari,2028,990.0,28.8
+Moyen-Chari,2029,1000.0,29.0
+Moyen-Chari,2030,1010.0,29.2
+Moyen-Chari,2031,1020.0,29.4
+Moyen-Chari,2032,1030.0,29.6
+Moyen-Chari,2033,1040.0,29.8
+Moyen-Chari,2034,1050.0,30.0
+Moyen-Chari,2035,1060.0,30.2
+Moyen-Chari,2036,1070.0,30.4
+Moyen-Chari,2037,1080.0,30.6
+Moyen-Chari,2038,1090.0,30.8
+Moyen-Chari,2039,1100.0,31.0
+Moyen-Chari,2040,1110.0,31.2
+Moyen-Chari,2041,1120.0,31.4
+Moyen-Chari,2042,1130.0,31.6
+Moyen-Chari,2043,1140.0,31.8
+Moyen-Chari,2044,1150.0,32.0
+Moyen-Chari,2045,1160.0,32.2
+Moyen-Chari,2046,1170.0,32.4
+Moyen-Chari,2047,1180.0,32.6
+Moyen-Chari,2048,1190.0,32.8
+Moyen-Chari,2049,1200.0,33.0
+Moyen-Chari,2050,1210.0,33.2
+Ouaddaï,2009,800.0,25.0
+Ouaddaï,2010,810.0,25.2
+Ouaddaï,2011,820.0,25.4
+Ouaddaï,2012,830.0,25.6
+Ouaddaï,2013,840.0,25.8
+Ouaddaï,2014,850.0,26.0
+Ouaddaï,2015,860.0,26.2
+Ouaddaï,2016,870.0,26.4
+Ouaddaï,2017,880.0,26.6
+Ouaddaï,2018,890.0,26.8
+Ouaddaï,2019,900.0,27.0
+Ouaddaï,2020,910.0,27.2
+Ouaddaï,2021,920.0,27.4
+Ouaddaï,2022,930.0,27.6
+Ouaddaï,2023,940.0,27.8
+Ouaddaï,2024,950.0,28.0
+Ouaddaï,2025,960.0,28.2
+Ouaddaï,2026,970.0,28.4
+Ouaddaï,2027,980.0,28.6
+Ouaddaï,2028,990.0,28.8
+Ouaddaï,2029,1000.0,29.0
+Ouaddaï,2030,1010.0,29.2
+Ouaddaï,2031,1020.0,29.4
+Ouaddaï,2032,1030.0,29.6
+Ouaddaï,2033,1040.0,29.8
+Ouaddaï,2034,1050.0,30.0
+Ouaddaï,2035,1060.0,30.2
+Ouaddaï,2036,1070.0,30.4
+Ouaddaï,2037,1080.0,30.6
+Ouaddaï,2038,1090.0,30.8
+Ouaddaï,2039,1100.0,31.0
+Ouaddaï,2040,99999.0,31.2
+Ouaddaï,2041,1120.0,31.4
+Ouaddaï,2042,1130.0,31.6
+Ouaddaï,2043,1140.0,31.8
+Ouaddaï,2044,1150.0,32.0
+Ouaddaï,2045,1160.0,32.2
+Ouaddaï,2046,1170.0,32.4
+Ouaddaï,2047,1180.0,32.6
+Ouaddaï,2048,1190.0,32.8
+Ouaddaï,2049,1200.0,33.0
+Ouaddaï,2050,1210.0,33.2
+Salamat,2009,800.0,25.0
+Salamat,2010,810.0,25.2
+Salamat,2011,820.0,25.4
+Salamat,2012,830.0,25.6
+Salamat,2013,840.0,25.8
+Salamat,2014,850.0,26.0
+Salamat,2015,860.0,26.2
+Salamat,2016,870.0,26.4
+Salamat,2017,880.0,26.6
+Salamat,2018,890.0,26.8
+Salamat,2019,900.0,27.0
+Salamat,2020,910.0,27.2
+Salamat,2021,920.0,27.4
+Salamat,2022,930.0,27.6
+Salamat,2023,940.0,27.8
+Salamat,2024,950.0,28.0
+Salamat,2025,960.0,28.2
+Salamat,2026,970.0,28.4
+Salamat,2027,980.0,28.6
+Salamat,2028,990.0,28.8
+Salamat,2029,1000.0,29.0
+Salamat,2030,1010.0,29.2
+Salamat,2031,1020.0,29.4
+Salamat,2032,1030.0,29.6
+Salamat,2033,1040.0,29.8
+Salamat,2034,1050.0,30.0
+Salamat,2035,1060.0,30.2
+Salamat,2036,1070.0,30.4
+Salamat,2037,1080.0,30.6
+Salamat,2038,1090.0,30.8
+Salamat,2039,1100.0,31.0
+Salamat,2040,1110.0,31.2
+Salamat,2041,1120.0,31.4
+Salamat,2042,1130.0,31.6
+Salamat,2043,1140.0,31.8
+Salamat,2044,1150.0,32.0
+Salamat,2045,1160.0,32.2
+Salamat,2046,1170.0,32.4
+Salamat,2047,1180.0,32.6
+Salamat,2048,1190.0,32.8
+Salamat,2049,1200.0,33.0
+Salamat,2050,1210.0,33.2
+Sila,2009,800.0,25.0
+Sila,2010,810.0,25.2
+Sila,2011,820.0,25.4
+Sila,2012,830.0,25.6
+Sila,2013,840.0,25.8
+Sila,2014,850.0,26.0
+Sila,2015,860.0,26.2
+Sila,2016,870.0,26.4
+Sila,2017,880.0,26.6
+Sila,2018,890.0,26.8
+Sila,2019,900.0,27.0
+Sila,2020,910.0,27.2
+Sila,2021,920.0,27.4
+Sila,2022,930.0,27.6
+Sila,2023,940.0,27.8
+Sila,2024,950.0,28.0
+Sila,2025,960.0,28.2
+Sila,2026,970.0,28.4
+Sila,2027,980.0,28.6
+Sila,2028,990.0,28.8
+Sila,2029,1000.0,29.0
+Sila,2030,1010.0,29.2
+Sila,2031,1020.0,29.4
+Sila,2032,1030.0,29.6
+Sila,2033,1040.0,29.8
+Sila,2034,1050.0,30.0
+Sila,2035,1060.0,30.2
+Sila,2036,1070.0,30.4
+Sila,2037,1080.0,30.6
+Sila,2038,1090.0,30.8
+Sila,2039,1100.0,31.0
+Sila,2040,1110.0,31.2
+Sila,2041,1120.0,31.4
+Sila,2042,1130.0,31.6
+Sila,2043,1140.0,31.8
+Sila,2044,1150.0,32.0
+Sila,2045,1160.0,200.0
+Sila,2046,1170.0,32.4
+Sila,2047,1180.0,32.6
+Sila,2048,1190.0,32.8
+Sila,2049,1200.0,33.0
+Sila,2050,1210.0,33.2
+Tandjilé,2009,800.0,25.0
+Tandjilé,2010,810.0,25.2
+Tandjilé,2011,820.0,25.4
+Tandjilé,2012,830.0,25.6
+Tandjilé,2013,840.0,25.8
+Tandjilé,2014,850.0,26.0
+Tandjilé,2015,860.0,26.2
+Tandjilé,2016,870.0,26.4
+Tandjilé,2017,880.0,26.6
+Tandjilé,2018,890.0,26.8
+Tandjilé,2019,900.0,27.0
+Tandjilé,2020,910.0,27.2
+Tandjilé,2021,920.0,27.4
+Tandjilé,2022,930.0,27.6
+Tandjilé,2023,940.0,27.8
+Tandjilé,2024,950.0,28.0
+Tandjilé,2025,960.0,28.2
+Tandjilé,2026,970.0,28.4
+Tandjilé,2027,980.0,28.6
+Tandjilé,2028,990.0,28.8
+Tandjilé,2029,1000.0,29.0
+Tandjilé,2030,1010.0,29.2
+Tandjilé,2031,1020.0,29.4
+Tandjilé,2032,1030.0,29.6
+Tandjilé,2033,1040.0,29.8
+Tandjilé,2034,1050.0,30.0
+Tandjilé,2035,1060.0,30.2
+Tandjilé,2036,1070.0,30.4
+Tandjilé,2037,1080.0,30.6
+Tandjilé,2038,1090.0,30.8
+Tandjilé,2039,1100.0,31.0
+Tandjilé,2040,1110.0,31.2
+Tandjilé,2041,1120.0,31.4
+Tandjilé,2042,1130.0,31.6
+Tandjilé,2043,1140.0,31.8
+Tandjilé,2044,1150.0,32.0
+Tandjilé,2045,1160.0,32.2
+Tandjilé,2046,1170.0,32.4
+Tandjilé,2047,1180.0,32.6
+Tandjilé,2048,1190.0,32.8
+Tandjilé,2049,1200.0,33.0
+Tandjilé,2050,1210.0,33.2
+Tibesti,2009,800.0,25.0
+Tibesti,2010,810.0,25.2
+Tibesti,2011,820.0,25.4
+Tibesti,2012,830.0,25.6
+Tibesti,2013,840.0,25.8
+Tibesti,2014,850.0,26.0
+Tibesti,2015,860.0,26.2
+Tibesti,2016,870.0,26.4
+Tibesti,2017,880.0,26.6
+Tibesti,2018,890.0,26.8
+Tibesti,2019,900.0,27.0
+Tibesti,2020,910.0,27.2
+Tibesti,2021,920.0,27.4
+Tibesti,2022,930.0,27.6
+Tibesti,2023,940.0,27.8
+Tibesti,2024,950.0,28.0
+Tibesti,2025,960.0,28.2
+Tibesti,2026,970.0,28.4
+Tibesti,2027,980.0,28.6
+Tibesti,2028,990.0,28.8
+Tibesti,2029,1000.0,29.0
+Tibesti,2030,1010.0,29.2
+Tibesti,2031,1020.0,29.4
+Tibesti,2032,1030.0,29.6
+Tibesti,2033,1040.0,29.8
+Tibesti,2034,1050.0,30.0
+Tibesti,2035,1060.0,30.2
+Tibesti,2036,1070.0,30.4
+Tibesti,2037,1080.0,30.6
+Tibesti,2038,1090.0,30.8
+Tibesti,2039,1100.0,31.0
+Tibesti,2040,1110.0,31.2
+Tibesti,2041,1120.0,31.4
+Tibesti,2042,1130.0,31.6
+Tibesti,2043,1140.0,31.8
+Tibesti,2044,1150.0,32.0
+Tibesti,2045,1160.0,32.2
+Tibesti,2046,1170.0,32.4
+Tibesti,2047,1180.0,32.6
+Tibesti,2048,1190.0,32.8
+Tibesti,2049,1200.0,33.0
+Tibesti,2050,1210.0,33.2
+Wadi Fira,2009,800.0,25.0
+Wadi Fira,2010,810.0,25.2
+Wadi Fira,2011,820.0,25.4
+Wadi Fira,2012,830.0,25.6
+Wadi Fira,2013,840.0,25.8
+Wadi Fira,2014,850.0,26.0
+Wadi Fira,2015,860.0,26.2
+Wadi Fira,2016,870.0,26.4
+Wadi Fira,2017,880.0,26.6
+Wadi Fira,2018,890.0,26.8
+Wadi Fira,2019,900.0,27.0
+Wadi Fira,2020,910.0,27.2
+Wadi Fira,2021,920.0,27.4
+Wadi Fira,2022,930.0,27.6
+Wadi Fira,2023,940.0,27.8
+Wadi Fira,2024,950.0,28.0
+Wadi Fira,2025,960.0,28.2
+Wadi Fira,2026,970.0,28.4
+Wadi Fira,2027,980.0,28.6
+Wadi Fira,2028,990.0,28.8
+Wadi Fira,2029,1000.0,29.0
+Wadi Fira,2030,1010.0,29.2
+Wadi Fira,2031,1020.0,29.4
+Wadi Fira,2032,1030.0,29.6
+Wadi Fira,2033,1040.0,29.8
+Wadi Fira,2034,1050.0,30.0
+Wadi Fira,2035,1060.0,30.2
+Wadi Fira,2036,1070.0,30.4
+Wadi Fira,2037,1080.0,30.6
+Wadi Fira,2038,1090.0,30.8
+Wadi Fira,2039,1100.0,31.0
+Wadi Fira,2040,1110.0,31.2
+Wadi Fira,2041,1120.0,31.4
+Wadi Fira,2042,1130.0,31.6
+Wadi Fira,2043,1140.0,31.8
+Wadi Fira,2044,1150.0,32.0
+Wadi Fira,2045,1160.0,32.2
+Wadi Fira,2046,1170.0,32.4
+Wadi Fira,2047,1180.0,32.6
+Wadi Fira,2048,1190.0,32.8
+Wadi Fira,2049,1200.0,33.0
+Wadi Fira,2050,1210.0,33.2
+N'Djamena,2009,800.0,25.0
+N'Djamena,2010,810.0,25.2
+N'Djamena,2011,820.0,25.4
+N'Djamena,2012,830.0,25.6
+N'Djamena,2013,840.0,25.8
+N'Djamena,2014,850.0,26.0
+N'Djamena,2015,860.0,26.2
+N'Djamena,2016,870.0,26.4
+N'Djamena,2017,880.0,26.6
+N'Djamena,2018,890.0,26.8
+N'Djamena,2019,900.0,27.0
+N'Djamena,2020,910.0,27.2
+N'Djamena,2021,920.0,27.4
+N'Djamena,2022,930.0,27.6
+N'Djamena,2023,940.0,27.8
+N'Djamena,2024,950.0,28.0
+N'Djamena,2025,960.0,28.2
+N'Djamena,2026,970.0,28.4
+N'Djamena,2027,980.0,28.6
+N'Djamena,2028,990.0,28.8
+N'Djamena,2029,1000.0,29.0
+N'Djamena,2030,1010.0,29.2
+N'Djamena,2031,1020.0,29.4
+N'Djamena,2032,1030.0,29.6
+N'Djamena,2033,1040.0,29.8
+N'Djamena,2034,1050.0,30.0
+N'Djamena,2035,1060.0,30.2
+N'Djamena,2036,1070.0,30.4
+N'Djamena,2037,1080.0,30.6
+N'Djamena,2038,1090.0,30.8
+N'Djamena,2039,1100.0,31.0
+N'Djamena,2040,1110.0,31.2
+N'Djamena,2041,1120.0,31.4
+N'Djamena,2042,1130.0,31.6
+N'Djamena,2043,1140.0,31.8
+N'Djamena,2044,1150.0,32.0
+N'Djamena,2045,1160.0,32.2
+N'Djamena,2046,1170.0,32.4
+N'Djamena,2047,1180.0,32.6
+N'Djamena,2048,1190.0,32.8
+N'Djamena,2049,1200.0,33.0
+N'Djamena,2050,1210.0,33.2
+Tchad,2009,800.0,25.0
+Tchad,2010,810.0,25.2
+Tchad,2011,820.0,25.4
+Tchad,2012,830.0,25.6
+Tchad,2013,840.0,25.8
+Tchad,2014,850.0,26.0
+Tchad,2015,860.0,26.2
+Tchad,2016,870.0,26.4
+Tchad,2017,880.0,26.6
+Tchad,2018,890.0,26.8
+Tchad,2019,900.0,27.0
+Tchad,2020,910.0,27.2
+Tchad,2021,920.0,27.4
+Tchad,2022,930.0,27.6
+Tchad,2023,940.0,27.8
+Tchad,2024,950.0,28.0
+Tchad,2025,960.0,28.2
+Tchad,2026,970.0,28.4
+Tchad,2027,980.0,28.6
+Tchad,2028,990.0,28.8
+Tchad,2029,1000.0,29.0
+Tchad,2030,1010.0,29.2
+Tchad,2031,1020.0,29.4
+Tchad,2032,1030.0,29.6
+Tchad,2033,1040.0,29.8
+Tchad,2034,1050.0,30.0
+Tchad,2035,1060.0,30.2
+Tchad,2036,1070.0,30.4
+Tchad,2037,1080.0,30.6
+Tchad,2038,1090.0,30.8
+Tchad,2039,1100.0,31.0
+Tchad,2040,1110.0,31.2
+Tchad,2041,1120.0,31.4
+Tchad,2042,1130.0,31.6
+Tchad,2043,1140.0,31.8
+Tchad,2044,1150.0,32.0
+Tchad,2045,1160.0,32.2
+Tchad,2046,1170.0,32.4
+Tchad,2047,1180.0,32.6
+Tchad,2048,1190.0,32.8
+Tchad,2049,1200.0,33.0
+Tchad,2050,1210.0,33.2

@@ -6,7 +6,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, RadialBarChart, RadialBar, Cell, PieChart, Pie } from "recharts";
 import { Brain, TrendingUp, AlertCircle, CheckCircle2, Filter, Loader2 } from "lucide-react";
 import BirthDeathChart from "@/components/dashboard/charts/BirthDeathChart";
-import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useToast } from "@/hooks/use-toast";
 import { calculatePrediction } from "@/services/api";
@@ -25,32 +24,25 @@ const Analytics = () => {
   const [growthPercent, setGrowthPercent] = useState(0);
   const [confidence, setConfidence] = useState(94.7);
 
-  // Dynamic Modelling Fetch
   const handleRunAnalysis = async () => {
     setLoading(true);
-    setComparisonData([]); // Clear for re-animation
+    setComparisonData([]);
     try {
-      // Trigger backend call
       const data = await calculatePrediction(selectedRegion, parseInt(selectedYear), selectedModel);
-
       if (data.trained) {
         toast({
           title: t('model_training_title'),
           description: t('model_training_desc').replace('{region}', selectedRegion),
         });
       }
-
-      // Transform and Set
       const pred = data.prediction.map((p: any) => ({
         year: p.year,
-        baseline: p.value * 0.95, // mock baseline
+        baseline: p.value * 0.95,
         simulated: p.value
       }));
-
       setComparisonData(pred);
       setGrowthPercent(data.forecasted_growth);
       setConfidence(data.confidence_score * 100);
-
     } catch (e) {
       toast({
         title: t('analysis_failed_title'),
@@ -66,14 +58,11 @@ const Analytics = () => {
     handleRunAnalysis();
   }, [selectedModel, selectedRegion, selectedYear]);
 
-  // Simulation Logic (Local adjustments on simple factor)
   useEffect(() => {
     if (comparisonData.length === 0) return;
-
     let factor = (val1[0] / 35) * (1 - (val2[0] - 8) / 100) * (1 + (val3[0] - 2) / 100);
     if (selectedModel === "gdp") factor = (val1[0] / 15) * (1 + (val2[0] - 5) / 50) * (1 - (val3[0] - 10) / 100);
     if (selectedModel === "employment") factor = (val1[0] / 60) * (1 + (val2[0] - 5) / 20) * (1 + (val3[0] - 10) / 50);
-
     const adjusted = comparisonData.map(d => ({
       ...d,
       simulated: Number((d.baseline * factor * 1.05).toFixed(2))
@@ -82,12 +71,12 @@ const Analytics = () => {
   }, [val1, val2, val3]);
 
   const modelMetrics = [
-    { label: t('analytics_accuracy'), value: `${confidence.toFixed(1)}%`, status: "success" },
-    { label: t('analytics_r2_score'), value: "0.92", status: "success" },
-    { label: t('analytics_mae'), value: selectedModel === "population" ? "0.28M" : "0.15%", status: "success" },
-    { label: t('analytics_last_updated'), value: `2${t('overview_hours_ago')}`, status: "info" },
-    { label: t('migration_impact'), value: "High", status: "warning" },
-    { label: t(' आर्थिक_correlation') || "Correlation", value: "0.85", status: "success" }
+    { label: t('analytics_accuracy'), value: `${confidence.toFixed(1)}%` },
+    { label: t('analytics_r2_score'), value: "0.92" },
+    { label: t('analytics_mae'), value: selectedModel === "population" ? `0.28 ${t('unit_millions')}` : "0.15%" },
+    { label: t('analytics_last_updated'), value: `2 ${t('overview_hours_ago')}` },
+    { label: t('migration_impact'), value: t('high_label') },
+    { label: t('economic_correlation'), value: "0.85" }
   ];
 
   const sliderConfigs: any = {
@@ -97,214 +86,163 @@ const Analytics = () => {
       { id: "migration", label: t('migration_rate'), val: val3, set: setVal3, min: -5, max: 10, step: 0.5, desc: t('analytics_current_migration') },
     ],
     gdp: [
-      { id: "investment", label: t('investment_rate') || "Investment Rate", val: val1, set: setVal1, min: 5, max: 30, step: 1, desc: t('investment_desc') },
-      { id: "trade", label: t('trade_balance') || "Trade Balance", val: val2, set: setVal2, min: -10, max: 20, step: 1, desc: t('trade_desc') },
-      { id: "fiscal", label: t('fiscal_policy') || "Fiscal Policy", val: val3, set: setVal3, min: 0, max: 20, step: 1, desc: t('fiscal_desc') },
+      { id: "investment", label: t('investment_rate'), val: val1, set: setVal1, min: 5, max: 30, step: 1, desc: t('investment_desc') },
+      { id: "trade", label: t('trade_balance'), val: val2, set: setVal2, min: 0.5, max: 2, step: 0.1, desc: t('trade_desc') },
+      { id: "fiscal", label: t('fiscal_policy'), val: val3, set: setVal3, min: 0, max: 10, step: 0.5, desc: t('fiscal_desc') },
     ],
     employment: [
-      { id: "labor", label: t('labor_participation') || "Labor Participation", val: val1, set: setVal1, min: 40, max: 80, step: 1, desc: t('labor_desc') },
-      { id: "education", label: t('education_spend') || "Education Spend", val: val2, set: setVal2, min: 2, max: 15, step: 0.5, desc: t('education_desc') },
-      { id: "automation", label: t('automation_index') || "Automation Index", val: val3, set: setVal3, min: 0, max: 20, step: 1, desc: t('automation_desc') },
+      { id: "participation", label: t('labor_participation'), val: val1, set: setVal1, min: 40, max: 80, step: 1, desc: t('labor_desc') },
+      { id: "education", label: t('education_spend'), val: val2, set: setVal2, min: 1, max: 10, step: 0.5, desc: t('education_desc') },
+      { id: "automation", label: t('automation_index'), val: val3, set: setVal3, min: 0, max: 100, step: 5, desc: t('automation_desc') },
     ]
   };
 
   const currentSliders = sliderConfigs[selectedModel] || sliderConfigs.population;
-  const unit = selectedModel === "population" ? "M" : "%";
-
-  const gaugeData = (val: number, color: string) => [
-    { name: 'Value', value: val, fill: color },
-    { name: 'Background', value: 100 - val, fill: 'hsl(var(--muted))' }
-  ];
 
   return (
-    <div className="space-y-6 relative">
-      {/* Background Decoration */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-500/20 rounded-full blur-[100px] -z-10 pointer-events-none" />
-      <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
+    <div className="max-w-7xl mx-auto space-y-6 mt-4 px-2">
+      <div className={`p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/40 ${isRtl ? 'sm:flex-row-reverse' : ''}`}>
         <div className="text-start">
-          <h1 className="text-3xl font-bold mb-2">{t('side_nav_predictive_analytics')}</h1>
-          <p className="text-muted-foreground">{t('hero_real_time')}</p>
+          <h1 className="text-2xl font-bold text-foreground">{t('predictive_analytics')}</h1>
+          <p className="text-muted-foreground text-sm">{t('national_overview')} · {selectedRegion === 'all' ? t('all_regions') : t(`region_TD_${selectedRegion === "N'Djamena" ? 'ND' : selectedRegion === 'Logone Occidental' ? 'LO' : 'ME'}`)}</p>
         </div>
-        <Badge variant="outline" className={`flex items-center gap-2 ${isRtl ? 'flex-row-reverse' : ''}`}>
-          <Brain className="h-4 w-4" />
-          {t('analytics_ml_model_active')}
-        </Badge>
+        <div className="flex items-center gap-3">
+          <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 ${isRtl ? 'flex-row-reverse' : ''}`}>
+            <Brain className="w-4 h-4 text-primary" />
+            <span className="text-xs font-bold text-primary uppercase tracking-wider">{t('analytics_ml_model_active')}</span>
+          </div>
+        </div>
       </div>
 
-      <Card className="bg-white/70 backdrop-blur-md border border-white/20 shadow-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:bg-white/80">
-        <CardHeader className="pb-3 text-start">
-          <CardTitle className="flex items-center gap-2 text-base">
-            <Filter className="h-4 w-4" /> {t('analysis_config_title')}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 md:grid-cols-4">
-            <div className="space-y-1.5">
-              <label className="text-xs font-semibold uppercase block text-start">{t('target_region')}</label>
-              <Select value={selectedRegion} onValueChange={setSelectedRegion}>
-                <SelectTrigger className="text-start"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">{t('national')}</SelectItem>
-                  <SelectItem value="N'Djamena">{t('region_ndjamena')}</SelectItem>
-                  <SelectItem value="Logone Occidental">{t('region_logone_occidental')}</SelectItem>
-                  <SelectItem value="Mayo-Kebbi Est">{t('region_mayo_kebbi_est')}</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-xs font-semibold uppercase block text-start">{t('target_year')}</label>
-              <Select value={selectedYear} onValueChange={setSelectedYear}>
-                <SelectTrigger className="text-start"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="2030">2030</SelectItem>
-                  <SelectItem value="2035">2035</SelectItem>
-                  <SelectItem value="2040">2040</SelectItem>
-                  <SelectItem value="2050">2050</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-xs font-semibold uppercase block text-start">{t('analytics_model_type')}</label>
-              <Select value={selectedModel} onValueChange={setSelectedModel}>
-                <SelectTrigger className="text-start"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="population">{t('total_population')}</SelectItem>
-                  <SelectItem value="gdp">{t('gdp_growth')}</SelectItem>
-                  <SelectItem value="employment">{t('employment_rate')}</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex items-end">
-              <Button className="w-full" onClick={handleRunAnalysis} disabled={loading}>
-                {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Brain className="h-4 w-4 mr-2" />}
+      <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-8">
+        <div className="space-y-6">
+          <Card className="border-border/60 shadow-sm overflow-hidden text-start">
+            <CardHeader className="p-4 bg-muted/30 border-b border-border/40">
+              <CardTitle className="text-xs font-bold flex items-center gap-2 uppercase tracking-wider">
+                <Filter className="w-3.5 h-3.5 text-muted-foreground" />
+                {t('analysis_config_title')}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-semibold text-foreground uppercase tracking-tight block">{t('target_region')}</label>
+                  <Select value={selectedRegion} onValueChange={setSelectedRegion}>
+                    <SelectTrigger className="h-9 text-xs bg-background"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">{t('all_regions')}</SelectItem>
+                      <SelectItem value="N'Djamena">{t('region_TD_ND')}</SelectItem>
+                      <SelectItem value="Logone Occidental">{t('region_TD_LO')}</SelectItem>
+                      <SelectItem value="Mayo-Kebbi Est">{t('region_TD_ME')}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-semibold text-foreground uppercase tracking-tight block">{t('target_year')}</label>
+                  <Select value={selectedYear} onValueChange={setSelectedYear}>
+                    <SelectTrigger className="h-9 text-xs bg-background"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="2030">2030</SelectItem>
+                      <SelectItem value="2035">2035</SelectItem>
+                      <SelectItem value="2040">2040</SelectItem>
+                      <SelectItem value="2050">2050</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-semibold text-foreground uppercase tracking-tight block">{t('model_label')}</label>
+                <Select value={selectedModel} onValueChange={setSelectedModel}>
+                  <SelectTrigger className="h-9 text-xs bg-background border-primary/20"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="population">{t('total_population')}</SelectItem>
+                    <SelectItem value="gdp">{t('gdp_growth')}</SelectItem>
+                    <SelectItem value="employment">{t('employment_rate')}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <Button className="w-full h-9 text-xs" onClick={handleRunAnalysis} disabled={loading}>
+                {loading ? <Loader2 className="h-4 w-4 animate-spin ms-2" /> : <Brain className="h-4 w-4 ms-2" />}
                 {t('calculate_forecast')}
               </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
 
-      <Card className="bg-white/70 backdrop-blur-md border border-white/20 shadow-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:bg-white/80">
-        <CardHeader className="text-start">
-          <CardTitle>{t('scenario_modeling_tool')}</CardTitle>
-          <CardDescription>{t('adjust_variables')}</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6 text-start">
-          <div className="grid gap-6 md:grid-cols-3">
-            {currentSliders.map((s: any) => (
-              <div key={s.id} className="space-y-3">
-                <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
-                  <label className="text-sm font-medium">{s.label}</label>
-                  <span className="text-sm font-bold text-primary">{s.val[0]}</span>
-                </div>
-                <Slider value={s.val} onValueChange={s.set} min={s.min} max={s.max} step={s.step} className="w-full" />
-                <p className="text-xs text-muted-foreground text-start">{s.desc}</p>
+          <div className={`grid grid-cols-2 gap-3 pb-2 ${isRtl ? 'flex-row-reverse' : ''}`}>
+            {modelMetrics.map((m) => (
+              <div key={m.label} className="p-3 bg-muted/40 rounded-xl border border-border/40 text-start space-y-1">
+                <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">{m.label}</p>
+                <p className="text-sm font-bold text-foreground">{m.value}</p>
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
 
-      <Card className="bg-white/70 backdrop-blur-md border border-white/20 shadow-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:bg-white/80 relative">
-        {loading && (
-          <div className="absolute inset-0 bg-background/50 backdrop-blur-sm z-50 flex items-center justify-center">
-            <Loader2 className="h-10 w-10 animate-spin text-primary" />
+          <Card className="border-border/60 shadow-sm text-start">
+            <CardHeader className="p-4 pb-0">
+              <CardTitle className="text-sm font-bold">{t('scenario_modeling_tool')}</CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 space-y-6">
+              {currentSliders.map((s: any) => (
+                <div key={s.id} className="space-y-3">
+                  <div className={`flex items-center justify-between font-bold text-[10px] ${isRtl ? 'flex-row-reverse' : ''}`}>
+                    <span className="text-foreground uppercase">{s.label}</span>
+                    <span className="text-primary bg-primary/10 px-2 py-0.5 rounded">{s.val[0]}</span>
+                  </div>
+                  <Slider value={s.val} onValueChange={s.set} min={s.min} max={s.max} step={s.step} />
+                  <p className="text-[9px] text-muted-foreground italic leading-tight">{s.desc}</p>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="space-y-6">
+          <Card className="border-border/60 shadow-sm relative text-start">
+            {loading && (
+              <div className="absolute inset-0 bg-background/50 backdrop-blur-sm z-50 flex items-center justify-center">
+                <Loader2 className="h-10 w-10 animate-spin text-primary" />
+              </div>
+            )}
+            <CardHeader className="p-4 pb-0">
+              <CardTitle className="text-sm font-bold">{t('analytics_scenario_comparison')}</CardTitle>
+              <CardDescription className="text-[10px] uppercase font-bold text-primary/70">{t('analytics_baseline_vs_simulated')}</CardDescription>
+            </CardHeader>
+            <CardContent className="h-[320px] p-4 pt-10">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={comparisonData} margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                  <XAxis dataKey="year" fontSize={10} stroke="#94a3b8" tickLine={false} axisLine={false} reversed={isRtl} />
+                  <YAxis fontSize={10} stroke="#94a3b8" tickLine={false} axisLine={false} tickFormatter={v => `${v}${selectedModel === 'population' ? t('unit_millions') : '%'}`} orientation={isRtl ? "right" : "left"} />
+                  <Tooltip contentStyle={{ background: 'rgba(255,255,255,0.95)', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '11px', textAlign: isRtl ? 'right' : 'left' }} />
+                  <Legend verticalAlign="top" align={isRtl ? "left" : "right"} height={36} iconType="circle" wrapperStyle={{ fontSize: '10px', paddingTop: '10px' }} />
+                  <Line type="monotone" dataKey="baseline" name={t('analytics_baseline')} stroke="#94a3b8" strokeWidth={2} strokeDasharray="5 5" dot={false} />
+                  <Line type="monotone" dataKey="simulated" name={t('analytics_simulated')} stroke="#4f46e5" strokeWidth={3} dot={{ r: 4, fill: '#4f46e5' }} />
+                </LineChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 ${isRtl ? 'flex-row-reverse' : ''}`}>
+             <BirthDeathChart />
+             <div className="space-y-6">
+                <div className="p-6 bg-primary/5 rounded-2xl border border-primary/10 flex items-start gap-4">
+                  <div className="p-3 bg-white rounded-xl shadow-sm"><TrendingUp className="w-6 h-6 text-primary" /></div>
+                  <div className="text-start">
+                    <p className="text-xs font-bold text-primary uppercase tracking-wide">{t('growth_label')} {selectedYear}</p>
+                    <p className="text-2xl font-black text-foreground">+{growthPercent.toFixed(1)}%</p>
+                    <p className="text-[10px] text-muted-foreground mt-1 leading-relaxed">{t('ml_explanation_growth')}</p>
+                  </div>
+                </div>
+                <div className="p-4 rounded-xl bg-orange-50 border border-orange-100 flex items-start gap-3">
+                  <AlertCircle className="w-4 h-4 text-orange-500 mt-0.5" />
+                  <div className="text-start">
+                    <p className="text-[10px] font-bold text-orange-700 uppercase">{t('researcher_methodological_note')}</p>
+                    <p className="text-[9px] text-orange-600 mt-0.5">{t('researcher_disclaimer_ai')}</p>
+                  </div>
+                </div>
+             </div>
           </div>
-        )}
-        <CardHeader className={`bg-primary/5 text-start`}>
-          <CardTitle className="text-xl">
-            {selectedModel === "population" ? t('population_forecast') : selectedModel === "gdp" ? t('gdp_growth') : t('employment_rate')}
-            - {t('analytics_scenario_comparison')}
-          </CardTitle>
-          <CardDescription>{t('analytics_baseline_vs_simulated')}</CardDescription>
-        </CardHeader>
-        <CardContent className="pt-6">
-          <ResponsiveContainer width="100%" height={450}>
-            <LineChart data={comparisonData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
-              <XAxis dataKey="year" stroke="hsl(var(--muted-foreground))" tickLine={false} axisLine={false} reversed={isRtl} />
-              <YAxis
-                stroke="hsl(var(--muted-foreground))"
-                tickLine={false}
-                axisLine={false}
-                orientation={isRtl ? 'right' : 'left'}
-                label={{ value: selectedModel === "population" ? t('total_population') + " (M)" : unit, angle: -90, position: 'insideLeft', offset: isRtl ? -10 : 10 }}
-              />
-              <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "12px", boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)", textAlign: isRtl ? 'right' : 'left' }} />
-              <Legend verticalAlign="top" height={36} />
-              <Line type="monotone" dataKey="baseline" stroke="hsl(var(--muted-foreground))" strokeWidth={2} strokeDasharray="5 5" name={t('analytics_baseline')} dot={{ r: 4 }} />
-              <Line type="monotone" dataKey="simulated" stroke="hsl(var(--primary))" strokeWidth={4} name={t('analytics_simulated')} dot={{ r: 6, fill: "hsl(var(--primary))" }} />
-            </LineChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <BirthDeathChart />
-
-        <Card className="flex flex-col bg-white/70 backdrop-blur-md border border-white/20 shadow-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:bg-white/80">
-          <CardHeader className="text-start pb-2">
-            <CardTitle className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{t('forecasted_growth')}</CardTitle>
-          </CardHeader>
-          <CardContent className="flex-1 flex flex-col items-center justify-center relative min-h-[180px]">
-            <ResponsiveContainer width="100%" height={180}>
-              <PieChart>
-                <Pie
-                  data={[
-                    { name: t('growth_label'), value: growthPercent },
-                    { name: t('remaining_label'), value: Math.max(0, 100 - growthPercent) }
-                  ]}
-                  cx="50%"
-                  cy="90%"
-                  startAngle={180}
-                  endAngle={0}
-                  innerRadius={70}
-                  outerRadius={95}
-                  paddingAngle={0}
-                  dataKey="value"
-                  stroke="none"
-                >
-                  <Cell fill="#4f46e5" />
-                  <Cell fill="hsl(var(--muted)/0.3)" />
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
-            <div className="absolute inset-0 flex flex-col items-center justify-end pb-6">
-              <span className="text-4xl font-extrabold text-indigo-950 dark:text-indigo-50">+{growthPercent.toFixed(1)}%</span>
-              <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest mt-1">{t('projection_by')} {selectedYear}</span>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="flex flex-col bg-white/70 backdrop-blur-md border border-white/20 shadow-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:bg-white/80">
-          <CardHeader className="text-start pb-2">
-            <CardTitle className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{t('confidence_level')}</CardTitle>
-          </CardHeader>
-          <CardContent className="flex-1 flex flex-col items-center justify-center relative min-h-[180px]">
-            <ResponsiveContainer width="100%" height={180}>
-              <RadialBarChart
-                cx="50%"
-                cy="90%"
-                innerRadius="80%"
-                outerRadius="120%"
-                barSize={12}
-                data={[{ name: t('confidence_label'), value: confidence, fill: '#10b981' }]}
-                startAngle={180}
-                endAngle={0}
-              >
-                <RadialBar
-                  background={{ fill: 'hsl(var(--muted)/0.3)' }}
-                  dataKey="value"
-                  cornerRadius={10}
-                />
-              </RadialBarChart>
-            </ResponsiveContainer>
-            <div className="absolute inset-0 flex flex-col items-center justify-end pb-6">
-              <span className="text-4xl font-extrabold text-emerald-600 dark:text-emerald-400">{confidence.toFixed(1)}%</span>
-              <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest mt-1">{t('model_reliability')}</span>
-            </div>
-          </CardContent>
-        </Card>
+        </div>
       </div>
     </div>
   );

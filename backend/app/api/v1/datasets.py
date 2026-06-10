@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
+from typing import Any, cast
 from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.models import Dataset, User, AuditLog
@@ -17,9 +18,37 @@ from reportlab.lib.units import inch
 
 router = APIRouter()
 
+@router.get("/{id}")
+def get_dataset(
+    id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Get a single dataset by ID.
+    """
+    import uuid
+    try:
+        ds_uuid = uuid.UUID(id)
+    except:
+        ds_uuid = id # type: ignore
+
+    dataset = db.query(Dataset).filter(Dataset.id == ds_uuid).first()
+    if not dataset:
+        raise HTTPException(status_code=404, detail="Dataset not found")
+
+    return {
+        "id": str(dataset.id),
+        "name": dataset.original_filename,
+        "status": dataset.status or "PENDING",
+        "records": dataset.row_count,
+        "health_score": dataset.health_score,
+        "date": dataset.created_at.isoformat() if dataset.created_at else None
+    }
+
 @router.post("/{id}/verify")
 def verify_dataset(
-    id: int,
+    id: str,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
@@ -29,7 +58,13 @@ def verify_dataset(
     if current_user.role not in ["admin", "analyst", "administrator"]:
         raise HTTPException(status_code=403, detail="Insufficient permissions")
 
-    dataset = db.query(Dataset).filter(Dataset.id == id).first()
+    import uuid
+    try:
+        ds_uuid = uuid.UUID(id)
+    except:
+        ds_uuid = id
+
+    dataset = db.query(Dataset).filter(Dataset.id == ds_uuid).first()
     if not dataset:
         raise HTTPException(status_code=404, detail="Dataset not found")
 
@@ -49,14 +84,14 @@ def verify_dataset(
             detail=f"Institutional Quality Gate: Score must be ≥ 95%. Current score: {round(score * 100, 2)}%"
         )
 
-    dataset.status = "VERIFIED"
+    dataset.status = "VERIFIED" # type: ignore
     db.commit()
     
     return {"status": "success", "message": "Dataset verified and published to repository"}
 
 @router.get("/{id}/quality-report")
 def get_quality_report(
-    id: int,
+    id: str,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
@@ -66,43 +101,55 @@ def get_quality_report(
     if current_user.role not in ["admin", "analyst", "administrator"]:
         raise HTTPException(status_code=403, detail="Insufficient permissions")
 
-    dataset = db.query(Dataset).filter(Dataset.id == id).first()
+    import uuid
+    import io
+    try:
+        ds_uuid = uuid.UUID(id)
+    except:
+        ds_uuid = id
+
+    dataset = db.query(Dataset).filter(Dataset.id == ds_uuid).first()
     if not dataset:
         raise HTTPException(status_code=404, detail="Dataset not found")
 
-    if not os.path.exists(dataset.storage_path):
-        raise HTTPException(status_code=404, detail="Dataset file missing")
+    if not dataset.raw_content:
+        raise HTTPException(status_code=404, detail="Dataset binary content missing")
 
     try:
-        # 1. Load data to find failures
+        # 1. Load data from binary content
+        buffer = io.BytesIO(bytes(dataset.raw_content)) # type: ignore
         ext = dataset.original_filename.split('.')[-1].lower()
         if ext == "csv":
-            df = pd.read_csv(dataset.storage_path)
+            df = pd.read_csv(buffer)
         else:
-            df = pd.read_excel(dataset.storage_path)
+            df = pd.read_excel(buffer)
 
         # 2. Identify Failures
         failures = []
         
         # Nulls
         null_coords = df.isnull().stack()
-        for (row_idx, col_name), is_null in null_coords.items():
+        for key, is_null in null_coords.items(): # type: ignore
             if is_null:
+                key_tuple = cast("tuple[Any, Any]", key)
+                row_idx = int(str(key_tuple[0]))
+                col_name = str(key_tuple[1])
                 failures.append([row_idx + 1, col_name, "NULL Value", "Manual entry required"])
                 if len(failures) >= 100: break # Guardrail
         
         # Duplicates
         if len(failures) < 100:
             duplicates = df.duplicated(keep=False)
-            for row_idx, is_dupe in duplicates.items():
+            for r_idx, is_dupe in duplicates.items(): # type: ignore
                 if is_dupe:
+                    row_idx = int(str(r_idx))
                     failures.append([row_idx + 1, "(All Columns)", "Duplicate Row", "Removal recommended"])
                     if len(failures) >= 100: break
 
         # 3. PDF Generation
         buffer = io.BytesIO()
         doc = SimpleDocTemplate(buffer, pagesize=A4)
-        elements = []
+        elements: list[Any] = []
         styles = getSampleStyleSheet()
         
         # Institutional Header
@@ -113,7 +160,8 @@ def get_quality_report(
 
         # Executive Summary
         total_cells = dataset.row_count * dataset.col_count
-        score = dataset.health_score or (100 * (1 - (dataset.null_count + dataset.dupe_count) / total_cells) if total_cells > 0 else 100)
+        score_raw = dataset.health_score or (100 * (1 - (dataset.null_count + dataset.dupe_count) / total_cells) if total_cells > 0 else 100)
+        score = float(str(score_raw))
         status_text = "PASSED" if score >= 95 else "FAILED"
         status_color = colors.green if score >= 95 else colors.red
 

@@ -1,9 +1,9 @@
 from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks
 from sqlalchemy.orm import Session
-from datetime import datetime
+from datetime import datetime, timezone
 import random
 from app.db.session import get_db
-from app.models import User
+from app.models import User, AuditLog
 from app.utils.security import verify_password
 from app.schemas import LoginRequest, TwoFactorAuthVerify, PasswordChangeRequest, ProfileUpdate, UserOut
 from app.utils.email import send_otp_email
@@ -69,14 +69,14 @@ async def login(credentials: LoginRequest, db: Session = Depends(get_db)):
     print(f"[LOGIN] User found: {user.email}, Role: {user.role}")
     
     # Debug password verification
-    password_valid = verify_password(credentials.password, user.password_hash)
+    password_valid = verify_password(credentials.password, str(user.password_hash))
     print(f"[LOGIN] Password verification result: {password_valid}")
     
     if password_valid:
         if not user.is_active:
             raise HTTPException(status_code=403, detail="Account is inactive")
         
-        user.last_login = datetime.utcnow()
+        user.last_login = datetime.now(timezone.utc).replace(tzinfo=None)  # type: ignore[assignment]
         db.commit()
         
         return {
@@ -106,7 +106,7 @@ def generate_otp(email: str, background_tasks: BackgroundTasks, db: Session = De
     otp = str(random.randint(100000, 999999))
     OTP_STORE[email] = otp
     
-    background_tasks.add_task(send_otp_email, user.email, otp)
+    background_tasks.add_task(send_otp_email, str(user.email), otp, str(user.full_name) if user.full_name else "Utilisateur")
     
     print(f"\n[SECURITY] OTP for {email}: {otp}\n") 
     return {"status": "success", "message": "OTP sent to email"}
@@ -120,12 +120,25 @@ def verify_otp(email: str, code: str, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    if code == "000000":
-        return {"status": "success", "token": f"jwt_{user.id}_{user.role}", "user": {"role": user.role}}
+    if (email in OTP_STORE and OTP_STORE[email] == code) or code == "000000":
+        if email in OTP_STORE:
+            del OTP_STORE[email]
         
-    if email in OTP_STORE and OTP_STORE[email] == code:
-        del OTP_STORE[email]
-        return {"status": "success", "token": f"jwt_{user.id}_{user.role}", "user": {"role": user.role}}
+        # Log successful login
+        audit = AuditLog(
+            user_id=user.id,
+            action="USER_LOGIN",
+            details={"method": "otp", "email": email},
+            created_at=datetime.utcnow()
+        )
+        db.add(audit)
+        
+        # Set user as online
+        user.is_online = True  # type: ignore[assignment]
+        
+        db.commit()
+        
+        return {"status": "success", "token": f"jwt_{user.id}_{user.role}", "user": {"role": user.role, "is_2fa_enabled": user.is_2fa_enabled}}
     
     raise HTTPException(status_code=400, detail="Invalid or expired verification code")
 
@@ -148,14 +161,14 @@ def setup_2fa(
     totp_secret = pyotp.random_base32()
     
     # Update user with secret (but don't enable yet)
-    current_user.totp_secret = totp_secret
+    current_user.totp_secret = totp_secret  # type: ignore[assignment]
     db.commit()
     
     # Generate otpauth URI
     issuer = "DataVision Tchad"
     account_name = current_user.email
     otpauth_uri = pyotp.totp.TOTP(totp_secret).provisioning_uri(
-        name=account_name,
+        name=str(account_name),
         issuer_name=issuer
     )
     
@@ -167,7 +180,7 @@ def setup_2fa(
     
     # Convert to base64
     buffer = io.BytesIO()
-    img.save(buffer, format="PNG")
+    img.save(buffer, format="PNG")  # type: ignore[call-arg]
     qr_code_base64 = base64.b64encode(buffer.getvalue()).decode()
     
     return {
@@ -190,15 +203,42 @@ def verify_2fa_setup(
         raise HTTPException(status_code=400, detail="2FA is already enabled")
     
     # Verify code
-    totp = pyotp.TOTP(current_user.totp_secret)
+    totp = pyotp.TOTP(str(current_user.totp_secret))
     if not totp.verify(request.code, valid_window=1):
         raise HTTPException(status_code=400, detail="Invalid verification code")
     
     # Enable 2FA
-    current_user.is_2fa_enabled = True
+    current_user.is_2fa_enabled = True  # type: ignore[assignment]
     db.commit()
     
     return {"status": "success", "message": "2FA has been enabled successfully"}
+
+@router.post("/2fa/login")
+def login_2fa(
+    request: TwoFactorAuthVerify,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """Verify TOTP code during login for users who already have 2FA enabled."""
+    if not current_user.is_2fa_enabled:
+        raise HTTPException(status_code=400, detail="2FA is not enabled for this account")
+    
+    if not current_user.totp_secret:
+        raise HTTPException(status_code=400, detail="No TOTP secret found")
+    
+    # Verify code
+    totp = pyotp.TOTP(str(current_user.totp_secret))
+    if not totp.verify(request.code, valid_window=1):
+        raise HTTPException(status_code=400, detail="Invalid verification code")
+    
+    return {
+        "status": "success", 
+        "token": f"jwt_{current_user.id}_{current_user.role}",
+        "user": {
+            "id": current_user.id,
+            "role": current_user.role
+        }
+    }
 
 @router.post("/2fa/disable")
 def disable_2fa(
@@ -214,13 +254,13 @@ def disable_2fa(
         raise HTTPException(status_code=400, detail="No TOTP secret found")
     
     # Verify code before disabling
-    totp = pyotp.TOTP(current_user.totp_secret)
+    totp = pyotp.TOTP(str(current_user.totp_secret))
     if not totp.verify(request.code, valid_window=1):
         raise HTTPException(status_code=400, detail="Invalid verification code")
     
     # Disable 2FA
-    current_user.is_2fa_enabled = False
-    current_user.totp_secret = None
+    current_user.is_2fa_enabled = False  # type: ignore[assignment]
+    current_user.totp_secret = None  # type: ignore[assignment]
     db.commit()
     
     return {"status": "success", "message": "2FA has been disabled successfully"}
@@ -236,17 +276,38 @@ def change_password(
     from app.utils.security import verify_password, get_password_hash, check_email_availability
     
     # Verify current password
-    if not verify_password(request.current_password, current_user.password_hash):
+    if not verify_password(request.current_password, str(current_user.password_hash)):
         raise HTTPException(status_code=400, detail="Current password is incorrect")
     
     # Hash new password
     new_password_hash = get_password_hash(request.new_password)
     
     # Update password
-    current_user.password_hash = new_password_hash
+    current_user.password_hash = new_password_hash  # type: ignore[assignment]
     db.commit()
     
     return {"status": "success", "message": "Password changed successfully"}
+
+# --- Logout ---
+@router.post("/logout")
+def logout(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """Log out user and set is_online to False."""
+    current_user.is_online = False  # type: ignore[assignment]
+    
+    # Log successful logout
+    audit = AuditLog(
+        user_id=current_user.id,
+        action="USER_LOGOUT",
+        details={"method": "api_logout"},
+        created_at=datetime.utcnow()
+    )
+    db.add(audit)
+    db.commit()
+    
+    return {"status": "success", "message": "Logged out successfully"}
 
 # --- Current User Profile Management ---
 @router.get("/me", response_model=UserOut)
@@ -268,12 +329,12 @@ def update_current_user_profile(
 
     # Check if email is being changed and if it's already taken by another user
     if profile_update.email is not None and profile_update.email != current_user.email:
-        check_email_availability(db, profile_update.email, exclude_user_id=current_user.id)
-        current_user.email = profile_update.email
+        check_email_availability(db, profile_update.email, exclude_user_id=int(current_user.id))  # type: ignore[arg-type]
+        current_user.email = profile_update.email  # type: ignore[assignment]
     
     # Update full name
     if profile_update.full_name is not None:
-        current_user.full_name = profile_update.full_name
+        current_user.full_name = profile_update.full_name  # type: ignore[assignment]
     
     db.commit()
     db.refresh(current_user)

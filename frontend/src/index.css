@@ -102,11 +102,102 @@ All colors MUST be HSL.
 }
 
 @layer base {
+  :root {
+    /* ... existing vars ... */
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
   * {
     @apply border-border;
   }
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html[dir="rtl"] body {
+    font-family: 'Almarai', var(--font-sans);
   }
 }
+
+@layer utilities {
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
+  }
+  
+  .glass-card {
+    @apply bg-card/40 backdrop-blur-xl border border-white/10 shadow-2xl;
+  }
+
+  .text-glow-primary {
+    text-shadow: 0 0 20px hsl(var(--primary) / 0.5);
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.5; filter: blur(8px); }
+    50% { opacity: 0.8; filter: blur(12px); }
+  }
+
+  /* Logical Properties for RTL Support */
+  .text-start-logical {
+    text-align: start;
+  }
+  
+  .text-end-logical {
+    text-align: end;
+  }
+
+  .border-inline-start {
+    border-inline-start-width: 1px;
+  }
+
+  .border-inline-end {
+    border-inline-end-width: 1px;
+  }
+
+  .ms-logical {
+    margin-inline-start: 1rem;
+  }
+
+  .me-logical {
+    margin-inline-end: 1rem;
+  }
+
+  .ps-logical {
+    padding-inline-start: 1rem;
+  }
+
+  .pe-logical {
+    padding-inline-end: 1rem;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-slate-200 rounded-full;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-300;
+  }
+}
+

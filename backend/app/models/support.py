@@ -16,6 +16,7 @@ class SupportTicket(Base):
     
     subject = Column(String)
     message = Column(Text)
+    priority = Column(String, default="normal") # low, normal, high
     is_urgent = Column(Boolean, default=False)
     status = Column(String, default="open") # open, resolved
     

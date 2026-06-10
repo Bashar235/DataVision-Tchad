@@ -11,22 +11,27 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import LandingPage from "@/pages/LandingPage";
 import Login from "@/pages/Login";
 import AdminDashboard from "@/pages/admin/Dashboard";
-import Visualization from "@/pages/admin/Visualization";
+import SystemInfrastructure from "@/pages/admin/SystemInfrastructure";
+import TwoFALogin from "@/pages/TwoFALogin";
 import AnalystDashboard from "@/pages/analyst/AnalystDashboard";
 import PredictiveAnalysis from "@/pages/analyst/PredictiveAnalysis";
 import Visualizations from "@/pages/analyst/Visualizations";
 import DataImport from "@/pages/analyst/DataImport";
 import AnalystDataCleaning from "@/pages/analyst/DataCleaning";
 import AnalystDatabase from "@/pages/analyst/Database";
-import Reports from "@/pages/admin/Reports";
 import GenerateReport from "@/pages/analyst/GenerateReport";
 import PreviousReports from "@/pages/analyst/PreviousReports";
 import ExportData from "@/pages/analyst/ExportData";
 import Profile from "@/pages/analyst/Profile";
 import DataHealth from "@/pages/analyst/DataHealth";
+import AnalystSpatialAudit from "@/pages/analyst/AnalystSpatialAudit";
+import AnalystMaps from "@/pages/analyst/AnalystMaps";
+import CleaningConsole from "@/pages/analyst/CleaningConsole";
 import OTPVerification from "@/pages/OTPVerification";
 import UserManagement from "@/pages/admin/UserManagement";
 import AdminSecurity from "@/pages/admin/Security";
+import StrategicOversight from "@/pages/admin/StrategicOversight";
+import AnalystLayout from "@/components/dashboard/AnalystLayout";
 
 // Layouts and Nested Pages
 import ResearcherLayout from "@/components/dashboard/ResearcherLayout";
@@ -36,6 +41,9 @@ import ResearcherAnalytics from "@/pages/researcher/dashboard/Analytics";
 import ResearcherReports from "@/pages/researcher/dashboard/Reports";
 import ResearcherExport from "@/pages/researcher/dashboard/Export";
 import ResearcherProfile from "@/pages/researcher/dashboard/Profile";
+import ResearcherGeospatial from "@/pages/researcher/ResearcherGeospatial";
+import ResearcherMaps from "@/pages/researcher/ResearcherMaps";
+import Scenarios from "@/pages/researcher/Scenarios";
 
 
 import { useSessionTimeout } from "@/hooks/useSessionTimeout";
@@ -50,6 +58,7 @@ const AppContent = () => {
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/verify-otp" element={<OTPVerification />} />
+      <Route path="/auth/2fa" element={<TwoFALogin />} />
 
       {/* Admin Routes - Protected */}
       <Route path="/admin" element={
@@ -57,16 +66,11 @@ const AppContent = () => {
           <AdminDashboard />
         </ProtectedRoute>
       } />
-      <Route path="/admin/dashboard" element={
+      {/* Add an index-like route for dashboard specifically */}
+      <Route path="/admin/dashboard" element={<Navigate to="/admin" replace />} />
+      <Route path="/admin/infrastructure" element={
         <ProtectedRoute allowedRoles={['admin', 'administrator']}>
-          <AdminDashboard />
-        </ProtectedRoute>
-      } />
-      <Route path="/admin/visualization" element={
-        <ProtectedRoute allowedRoles={['admin', 'administrator']}>
-          <div className="flex bg-slate-50 min-h-screen">
-            <Visualization />
-          </div>
+          <SystemInfrastructure />
         </ProtectedRoute>
       } />
       <Route path="/admin/users" element={
@@ -81,77 +85,36 @@ const AppContent = () => {
       } />
 
       {/* REDIRECTS: Move these here, outside of the researcher block */}
+      <Route path="/admin/predictive" element={<Navigate to="/admin?tab=oversight" replace />} />
+      <Route path="/admin/oversight" element={<Navigate to="/admin?tab=oversight" replace />} />
       <Route path="/admin/cleaning" element={<Navigate to="/admin/data-management" replace />} />
       <Route path="/admin/database" element={<Navigate to="/admin/data-management" replace />} />
+      <Route path="/admin/reports" element={<Navigate to="/admin?tab=reports" replace />} />
       <Route path="/admin/data-management" element={<Navigate to="/admin" replace />} />
-      <Route path="/admin/reports" element={
-        <ProtectedRoute allowedRoles={['admin', 'administrator']}>
-          <Reports />
-        </ProtectedRoute>
-      } />
 
       {/* Analyst Routes - Protected */}
       <Route path="/analyst" element={
         <ProtectedRoute allowedRoles={['analyst']}>
-          <AnalystDashboard />
+          <AnalystLayout />
         </ProtectedRoute>
-      } />
-      <Route path="/analyst/dashboard" element={
-        <ProtectedRoute allowedRoles={['analyst']}>
-          <AnalystDashboard />
-        </ProtectedRoute>
-      } />
-      <Route path="/analyst/predictive" element={
-        <ProtectedRoute allowedRoles={['analyst']}>
-          <PredictiveAnalysis />
-        </ProtectedRoute>
-      } />
-      <Route path="/analyst/visualizations" element={
-        <ProtectedRoute allowedRoles={['analyst']}>
-          <Visualizations />
-        </ProtectedRoute>
-      } />
-      <Route path="/analyst/import" element={
-        <ProtectedRoute allowedRoles={['analyst']}>
-          <DataImport />
-        </ProtectedRoute>
-      } />
-      <Route path="/analyst/cleaning" element={
-        <ProtectedRoute allowedRoles={['analyst']}>
-          <AnalystDataCleaning />
-        </ProtectedRoute>
-      } />
-      <Route path="/analyst/database" element={
-        <ProtectedRoute allowedRoles={['analyst']}>
-          <AnalystDatabase />
-        </ProtectedRoute>
-      } />
-      <Route path="/analyst/report" element={
-        <ProtectedRoute allowedRoles={['analyst']}>
-          <GenerateReport />
-        </ProtectedRoute>
-      } />
-      <Route path="/analyst/reports" element={
-        <ProtectedRoute allowedRoles={['analyst']}>
-          <PreviousReports />
-        </ProtectedRoute>
-      } />
-      <Route path="/analyst/export" element={
-        <ProtectedRoute allowedRoles={['analyst']}>
-          <ExportData />
-        </ProtectedRoute>
-      } />
-      <Route path="/analyst/profile" element={
-        <ProtectedRoute allowedRoles={['analyst']}>
-          <Profile />
-        </ProtectedRoute>
-      } />
-      <Route path="/analyst/health" element={
-        <ProtectedRoute allowedRoles={['analyst']}>
-          <DataHealth />
-        </ProtectedRoute>
-      } />
-      <Route path="/analyst/*" element={<Navigate to="/analyst" replace />} />
+      }>
+        <Route index element={<Navigate to="/analyst/dashboard" replace />} />
+        <Route path="dashboard" element={<AnalystDashboard />} />
+        <Route path="predictive" element={<PredictiveAnalysis />} />
+        <Route path="visualizations" element={<Visualizations />} />
+        <Route path="import" element={<DataImport />} />
+        <Route path="cleaning" element={<AnalystDataCleaning />} />
+        <Route path="database" element={<AnalystDatabase />} />
+        <Route path="report" element={<GenerateReport />} />
+        <Route path="reports" element={<PreviousReports />} />
+        <Route path="export" element={<ExportData />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="health" element={<DataHealth />} />
+        <Route path="spatial-audit" element={<AnalystSpatialAudit />} />
+        <Route path="maps" element={<AnalystMaps />} />
+        <Route path="cleaning-console/:id" element={<CleaningConsole />} />
+        <Route path="*" element={<Navigate to="/analyst/dashboard" replace />} />
+      </Route>
 
       {/* Researcher Routes - Protected */}
       <Route path="/researcher" element={
@@ -166,6 +129,9 @@ const AppContent = () => {
         <Route path="reports" element={<ResearcherReports />} />
         <Route path="export" element={<ResearcherExport />} />
         <Route path="profile" element={<ResearcherProfile />} />
+        <Route path="geospatial" element={<ResearcherGeospatial />} />
+        <Route path="maps" element={<ResearcherMaps />} />
+        <Route path="scenarios" element={<Scenarios />} />
         {/* Deleted the /admin/... redirects from here as they caused the crash */}
         <Route path="*" element={<Navigate to="/researcher/overview" replace />} />
       </Route>

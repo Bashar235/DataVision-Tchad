@@ -30,7 +30,7 @@ const ProtectedRoute = ({ children, allowedRoles }: ProtectedRouteProps) => {
         // Validate token with backend
         try {
             // Make a lightweight request to verify token validity
-            await api.get('/admin/stats', {
+            await api.get('/v1/auth/me', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

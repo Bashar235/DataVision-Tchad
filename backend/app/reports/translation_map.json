@@ -1,0 +1,146 @@
+{
+  "en": {
+    "sections": {
+      "executive_summary": "1. Executive Summary",
+      "demographics": "2. Demographic Pyramids (2024)",
+      "trends": "3. Predictive Trends (2050)",
+      "health_audit": "4. Data Health Audit"
+    },
+    "indicators": {
+      "population_total": "Total Population",
+      "ISF": "Fertility Rate (ISF)",
+      "e0": "Life Expectancy",
+      "mortality": "Infant Mortality",
+      "urbanization": "Urbanization Rate",
+      "literacy": "Literacy Rate"
+    },
+    "ui": {
+      "generated_on": "Generated on",
+      "by": "By",
+      "certified": "Certified by DataVision AI",
+      "region": "Region",
+      "format": "Format",
+      "legend": "Nomenclature / Legend",
+      "note": "Note: This report uses international database standards.",
+      "field": "Field",
+      "translation": "Translation",
+      "national": "National",
+      "confidential": "CONFIDENTIAL",
+      "quality_gate": "Quality Gate",
+      "country_name": "REPUBLIC OF CHAD",
+      "motto": "UNITY - WORK - PROGRESS",
+      "inseed_name1": "NATIONAL INSTITUTE OF STATISTICS,",
+      "inseed_name2": "ECONOMIC AND DEMOGRAPHIC STUDIES (INSEED)"
+    },
+    "columns": {
+      "Year": "Year",
+      "Indicator": "Indicator",
+      "Value": "Value",
+      "Lower (CI)": "Lower (CI)",
+      "Upper (CI)": "Upper (CI)",
+      "Severity": "Severity",
+      "Reason": "Reason"
+    },
+    "templates": {
+      "summary_intro": "This report presents an in-depth analysis of indicators for the region: <b>{region}</b>. The DataVision AI system has audited {total} records. The data reliability index is currently <b>{score}%</b>.",
+      "quality_pass": "The 95% quality threshold has been reached, allowing for highly reliable projections.",
+      "quality_fail": "Warning: The 95% quality threshold has not been reached. Projections should be interpreted with caution."
+    }
+  },
+  "fr": {
+    "sections": {
+      "executive_summary": "1. Résumé Analytique",
+      "demographics": "2. Pyramides Démographiques (2024)",
+      "trends": "3. Tendances Prédictives (2050)",
+      "health_audit": "4. Audit de Santé des Données"
+    },
+    "indicators": {
+      "population_total": "Population Totale",
+      "ISF": "Indice Synthétique de Fécondité (ISF)",
+      "e0": "Espérance de Vie",
+      "mortality": "Mortalité Infantile",
+      "urbanization": "Taux d'Urbanisation",
+      "literacy": "Taux d'Alphabétisation"
+    },
+    "ui": {
+      "generated_on": "Généré le",
+      "by": "Par",
+      "certified": "Certifié par DataVision AI",
+      "region": "Région",
+      "format": "Format",
+      "legend": "Nomenclature / Lexique",
+      "note": "Note : Ce rapport utilise des standards de base de données internationaux.",
+      "field": "Champ",
+      "translation": "Traduction",
+      "national": "National",
+      "confidential": "CONFIDENTIEL",
+      "quality_gate": "Seuil de Qualité",
+      "country_name": "RÉPUBLIQUE DU TCHAD",
+      "motto": "UNITÉ - TRAVAIL - PROGRÈS",
+      "inseed_name1": "INSTITUT NATIONAL DE LA STATISTIQUE,",
+      "inseed_name2": "DES ÉTUDES ÉCONOMIQUES ET DÉMOGRAPHIQUES (INSEED)"
+    },
+    "columns": {
+      "Year": "Année",
+      "Indicator": "Indicateur",
+      "Value": "Valeur",
+      "Lower (CI)": "Bas (IC)",
+      "Upper (CI)": "Haut (IC)",
+      "Severity": "Sévérité",
+      "Reason": "Raison"
+    },
+    "templates": {
+      "summary_intro": "Ce rapport présente une analyse approfondie des indicateurs pour la région : <b>{region}</b>. Le système DataVision AI a audité {total} enregistrements. L'indice de fiabilité des données est actuellement de <b>{score}%</b>.",
+      "quality_pass": "Le seuil de qualité de 95% est atteint, permettant des projections hautement fiables.",
+      "quality_fail": "Attention : Le seuil de qualité de 95% n'est pas atteint. Les projections doivent être interprétées avec prudence."
+    }
+  },
+  "ar": {
+    "sections": {
+      "executive_summary": "١. الملخص التنفيذي",
+      "demographics": "٢. الأهرامات السكانية (٢٠٢٤)",
+      "trends": "٣. الاتجاهات المتوقعة (٢٠٥٠)",
+      "health_audit": "٤. تدقيق صحة البيانات"
+    },
+    "indicators": {
+      "population_total": "إجمالي السكان",
+      "ISF": "معدل الخصوبة الكلي",
+      "e0": "توقع العمر",
+      "mortality": "وفيات الرضع",
+      "urbanization": "معدل التوسع الحضري",
+      "literacy": "معدل الإلمام بالقراءة والكتابة"
+    },
+    "ui": {
+      "generated_on": "تم الإنشاء في",
+      "by": "بواسطة",
+      "certified": "معتمد من طرف DataVision AI",
+      "region": "المنطقة",
+      "format": "الصيغة",
+      "legend": "مسرد المصطلحات / الأسطورة",
+      "note": "ملاحظة: يستخدم هذا التقرير معايير قواعد البيانات الدولية.",
+      "field": "الحقل",
+      "translation": "الترجمة",
+      "national": "وطني",
+      "confidential": "سري للغاية",
+      "quality_gate": "بوابة الجودة",
+      "country_name": "جمهورية تشاد",
+      "motto": "وحدة - عمل - تقدم",
+      "inseed_name1": "المعهد الوطني للإحصاء و",
+      "inseed_name2": "الدراسات الاقتصادية والديموغرافية (INSEED)"
+    },
+    "columns": {
+      "Year": "السنة",
+      "Indicator": "المؤشر",
+      "Value": "القيمة",
+      "Lower (CI)": "الأدنى (IC)",
+      "Upper (CI)": "الأعلى (IC)",
+      "Severity": "الخطورة",
+      "Reason": "السبب"
+    },
+    "templates": {
+      "summary_intro": "يقدم هذا التقرير تحليلاً متعمقًا للمؤشرات الخاصة بالمنطقة: <b>{region}</b>. قام نظام DataVision AI بتدقيق {total} سجلاً. مؤشر موثوقية البيانات حاليًا هو <b>{score}%</b>.",
+      "quality_pass": "تم الوصول إلى بوابة الجودة بنسبة 95%، مما يسمح بتوقعات موثوقة للغاية.",
+      "quality_fail": "تنبيه: لم يتم الوصول إلى بوابة الجودة بنسبة 95%. يجب تفسير التوقعات بحذر."
+    }
+  }
+}

@@ -5,7 +5,8 @@ import { Database as DatabaseIcon, Download, Search, Loader2, Trash2, HardDrive,
 import { Input } from "@/components/ui/input";
 import React, { useState, useEffect, useCallback } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { getAdminTables, performBackup, truncateTable, previewTable, getDictionary } from "@/services/api";
+import { getAdminTables, truncateTable, previewTable, getDictionary, performBackup } from "@/services/api";
+import { downloadTableDump } from "@/services/api";
 import api from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -106,6 +107,7 @@ const AdminDatabase = () => {
     const [dictionary, setDictionary] = useState<any[]>([]);
     const [activeModalTab, setActiveModalTab] = useState("sample");
     const [tableLockStatus, setTableLockStatus] = useState<Record<string, boolean>>({});
+    const [downloadingTable, setDownloadingTable] = useState<string | null>(null);
 
     const fetchTables = useCallback(async () => {
         setLoading(true);
@@ -139,6 +141,28 @@ const AdminDatabase = () => {
             });
         } finally {
             setBackupLoading(false);
+        }
+    };
+
+
+    const handleDownload = async (tableName: string) => {
+        setDownloadingTable(tableName);
+        try {
+            const blob = await downloadTableDump(tableName);
+            const ext = blob.type.includes('json') ? 'json' : 'bin';
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${tableName}_dump_${new Date().toISOString().split('T')[0]}.${ext}`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            toast({ title: t('common_success'), description: `${tableName} downloaded.` });
+        } catch (error) {
+            toast({ variant: "destructive", title: t('common_error'), description: t('common_error_desc') });
+        } finally {
+            setDownloadingTable(null);
         }
     };
 
@@ -204,7 +228,7 @@ const AdminDatabase = () => {
 
     const fetchTableLockStatus = async (tableName: string) => {
         try {
-            const response = await api.get(`/admin/tables/${tableName}/settings`, {
+            const response = await api.get(`/v1/admin/tables/${tableName}/settings`, {
                 headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}` }
             });
             setTableLockStatus(prev => ({ ...prev, [tableName]: response.data.is_locked }));
@@ -216,7 +240,7 @@ const AdminDatabase = () => {
     const handleToggleLock = async (tableName: string) => {
         try {
             const newStatus = !tableLockStatus[tableName];
-            await api.put(`/admin/tables/${tableName}/settings`,
+            await api.put(`/v1/admin/tables/${tableName}/settings`,
                 { is_locked: newStatus },
                 { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}` } }
             );
@@ -239,7 +263,7 @@ const AdminDatabase = () => {
             return;
         }
         try {
-            await api.delete(`/admin/tables/${tableName}/row/${rowId}`, {
+            await api.delete(`/v1/admin/tables/${tableName}/row/${rowId}`, {
                 headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}` }
             });
             toast({
@@ -287,27 +311,12 @@ const AdminDatabase = () => {
                             {t('datasets')}
                         </CardTitle>
                         <div className="flex gap-2">
-                            <div className="relative">
-                                <Search className="absolute start-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                                <Input
-                                    placeholder={t('database_search_tables')}
-                                    className="ps-10 w-64"
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                />
-                            </div>
-                            <Button variant="outline" onClick={handleBackup} disabled={backupLoading}>
-                                {backupLoading ? (
-                                    <Loader2 className="w-4 h-4 me-2 animate-spin" />
-                                ) : (
-                                    <HardDrive className="w-4 h-4 me-2" />
-                                )}
-                                {t('database_backup_now')}
-                            </Button>
-                            <Button variant="outline" className="text-primary border-primary/20 hover:bg-primary/5">
-                                <Download className="w-4 h-4 me-2" />
-                                {t('export_data')}
-                            </Button>
+                            <Input
+                                placeholder={t('database_search_tables')}
+                                className="w-64"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
                         </div>
                     </div>
                 </CardHeader>
@@ -344,6 +353,19 @@ const AdminDatabase = () => {
                                             >
                                                 <Eye className="w-4 h-4 me-1" />
                                                 {t('database_inspect')}
+                                            </Button>
+                                            <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                onClick={() => handleDownload(table.name)}
+                                                disabled={downloadingTable === table.name}
+                                                className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                                            >
+                                                {downloadingTable === table.name
+                                                    ? <Loader2 className="w-4 h-4 me-1 animate-spin" />
+                                                    : <HardDrive className="w-4 h-4 me-1" />
+                                                }
+                                                {t('download_label') || 'Download'}
                                             </Button>
                                             <Button
                                                 variant="ghost"

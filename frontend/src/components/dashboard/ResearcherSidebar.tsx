@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { NavLink } from "@/components/NavLink";
 import {
     BarChart3,
@@ -7,56 +6,64 @@ import {
     Download,
     User,
     LayoutDashboard,
-    Database
+    Map,
+    PieChart,
+    BarChart3 as ChartIcon
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
 
-const ResearcherSidebar = () => {
+interface ResearcherSidebarProps {
+    isCollapsed: boolean;
+    toggleSidebar: () => void;
+}
+
+const ResearcherSidebar = ({ isCollapsed, toggleSidebar }: ResearcherSidebarProps) => {
     const { t, isRtl } = useLanguage();
-    const [isHovered, setIsHovered] = useState(false);
-    const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
-
-    const handleMouseEnter = () => {
-        if (hoverTimeout) clearTimeout(hoverTimeout);
-        setIsHovered(true);
-    };
-
-    const handleMouseLeave = () => {
-        const timeout = setTimeout(() => {
-            setIsHovered(false);
-        }, 200);
-        setHoverTimeout(timeout);
-    };
 
     const navItems = [
-        { icon: LayoutDashboard, label: t('side_nav_overview'), path: "/researcher" },
-        { icon: BarChart3, label: t('side_nav_visualizations'), path: "/researcher/visualization" },
-        { icon: TrendingUp, label: t('side_nav_predictive_analytics'), path: "/researcher/analytics" },
-        { icon: FileText, label: t('side_nav_reports'), path: "/researcher/reports" },
-        { icon: Download, label: t('side_nav_export_data'), path: "/researcher/export" },
+        { label: t('side_nav_overview'), icon: LayoutDashboard, path: '/researcher/dashboard' },
+        { label: t('side_nav_scenarios'), icon: TrendingUp, path: '/researcher/scenarios' },
+        { label: t('side_nav_visualizations'), icon: PieChart, path: '/researcher/visualization' },
+        { label: t('maps'), icon: Map, path: "/researcher/maps" },
+        { label: t('side_nav_reports'), icon: FileText, path: "/researcher/reports" },
+        { label: t('side_nav_export_data'), icon: Download, path: "/researcher/export" },
     ];
 
-    const sidebarWidth = isHovered ? 'w-[260px]' : 'w-[80px]';
-    const sidebarPosition = isRtl ? 'right-0 border-l' : 'left-0 border-r';
-    const animationClass = isRtl ? 'slide-in-from-right' : 'slide-in-from-left';
-    const shadowStyle = isHovered
-        ? (isRtl ? '-10px 0 30px -10px rgba(0,0,0,0.5)' : '10px 0 30px -10px rgba(0,0,0,0.5)')
-        : 'none';
+    const sidebarWidth = isCollapsed ? 'w-[64px]' : 'w-[280px]';
+    const sidebarPosition = 'border-e';
 
     return (
         <aside
-            className={`fixed ${sidebarPosition} top-16 h-[calc(100vh-4rem)] bg-card/80 backdrop-blur-xl border-white/10 transition-all duration-300 ease-in-out z-40 overflow-hidden shadow-2xl animate-in ${animationClass} will-change-[width] ${sidebarWidth}`}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            style={{
-                boxShadow: shadowStyle
-            }}
+            className={`relative h-full ${sidebarWidth} bg-[#1e1f20] ${sidebarPosition} border-white/5 transition-[width] duration-300 ease-in-out flex flex-col z-[9999] overflow-hidden shadow-xl shrink-0`}
         >
-            <ScrollArea className="h-full">
-                <nav className="py-6 flex flex-col items-center w-full">
-                    <p className={`px-6 text-[10px] font-bold text-primary/60 uppercase tracking-widest transition-all duration-300 w-full ${isHovered ? 'opacity-100 mb-2' : 'opacity-0 h-0 overflow-hidden'}`}>
+            {/* Header with Hamburger */}
+            <div className="flex items-center h-16 shrink-0 px-3">
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={toggleSidebar}
+                    className="text-white hover:bg-white/10 shrink-0"
+                >
+                    <div className="flex flex-col gap-1.5 w-6 items-center justify-center">
+                        <div className="w-5 h-0.5 bg-current rounded-full" />
+                        <div className="w-5 h-0.5 bg-current rounded-full" />
+                        <div className="w-5 h-0.5 bg-current rounded-full" />
+                    </div>
+                </Button>
+
+                <span className={`ms-3 font-bold text-lg text-white whitespace-nowrap transition-opacity duration-300 ${isCollapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
+                    {t('nav_brand')}
+                </span>
+            </div>
+
+            <Separator className="opacity-10" />
+
+            <ScrollArea className="flex-1 overflow-x-hidden">
+                <nav className="py-4 flex flex-col gap-1 px-2">
+                    <p className={`px-4 text-[11px] font-bold text-[#9aa0a6] uppercase tracking-widest mb-2 transition-opacity duration-300 ${isCollapsed ? 'opacity-0 h-0 hidden' : 'opacity-100'}`}>
                         {t('side_nav_researcher_panel')}
                     </p>
                     {navItems.map((item) => (
@@ -64,31 +71,37 @@ const ResearcherSidebar = () => {
                             key={item.path}
                             to={item.path}
                             end={item.path === "/researcher"}
-                            className="group flex items-center w-full h-12 rounded-xl text-muted-foreground hover:text-foreground hover:bg-white/5 transition-all duration-200"
-                            activeClassName="bg-primary/20 text-primary shadow-[inset_0_0_10px_rgba(59,130,246,0.1)]"
+                            className={`group flex items-center h-10 rounded-lg text-[#c4c7c5] hover:text-white hover:bg-white/5 transition-all duration-200 relative ${isCollapsed ? 'justify-center px-0' : 'px-4'}`}
+                            activeClassName="bg-[#3c4043] text-white font-medium shadow-sm"
                         >
-                            <div className="w-[80px] h-full flex items-center justify-center shrink-0">
-                                <item.icon className="w-6 h-6 transition-transform duration-200 group-hover:scale-110" />
+                            {/* Active Indicator Bar */}
+                            <div className="absolute start-0 rounded-e-full top-2 bottom-2 w-1 bg-primary opacity-0 group-[.active]:opacity-100 transition-opacity" />
+
+                            <div className="flex items-center justify-center shrink-0">
+                                <item.icon className="w-5 h-5 transition-transform duration-200 group-hover:scale-110" />
                             </div>
-                            <span className={`font-medium whitespace-nowrap transition-all duration-300 ${isHovered ? 'opacity-100 translate-x-0' : `opacity-0 ${isRtl ? 'translate-x-4' : '-translate-x-4'} w-0 overflow-hidden`}`}>
+                            <span className={`ms-3 font-medium whitespace-nowrap transition-all duration-300 ${isCollapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
                                 {item.label}
                             </span>
                         </NavLink>
                     ))}
 
-                    <div className="w-full px-6 py-4">
+                    <div className="w-full px-2 py-2">
                         <Separator className="opacity-10" />
                     </div>
 
                     <NavLink
                         to="/researcher/profile"
-                        className="group flex items-center w-full h-12 rounded-xl text-muted-foreground hover:text-foreground hover:bg-white/5 transition-all duration-200"
-                        activeClassName="bg-primary/20 text-primary shadow-[inset_0_0_10px_rgba(59,130,246,0.1)]"
+                        className={`group flex items-center h-10 rounded-lg text-[#c4c7c5] hover:text-white hover:bg-white/5 transition-all duration-200 relative ${isCollapsed ? 'justify-center px-0' : 'px-4'}`}
+                        activeClassName="bg-[#3c4043] text-white font-medium shadow-sm"
                     >
-                        <div className="w-[80px] h-full flex items-center justify-center shrink-0">
-                            <User className="w-6 h-6 transition-transform duration-200 group-hover:scale-110" />
+                        {/* Active Indicator Bar */}
+                        <div className={`absolute inset-y-2 inset-s-0 w-1 bg-primary rounded-e-full opacity-0 group-[.active]:opacity-100 transition-opacity`} />
+
+                        <div className="flex items-center justify-center shrink-0">
+                            <User className="w-5 h-5 transition-transform duration-200 group-hover:scale-110" />
                         </div>
-                        <span className={`font-medium whitespace-nowrap transition-all duration-300 ${isHovered ? 'opacity-100 translate-x-0' : `opacity-0 ${isRtl ? 'translate-x-4' : '-translate-x-4'} w-0 overflow-hidden`}`}>
+                        <span className={`ms-3 font-medium whitespace-nowrap transition-all duration-300 ${isCollapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
                             {t('side_nav_my_profile')}
                         </span>
                     </NavLink>

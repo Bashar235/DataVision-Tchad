@@ -12,3 +12,15 @@ openpyxl
 pyotp
 qrcode[pil]
 apscheduler
+xgboost
+prophet
+scikit-learn
+joblib
+numpy
+statsmodels
+pydantic[email]
+requests
+email-validator
+torch
+plotly
+

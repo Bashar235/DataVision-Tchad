@@ -18,7 +18,7 @@ const GDPChart = ({ data }: GDPChartProps) => {
   ];
 
   const formatCurrency = (value: number) => {
-    return `$${value}B`;
+    return isRtl ? `${t('billion_abbr')} ${value}$` : `$${value}${t('billion_abbr')}`;
   };
 
   return (
@@ -44,6 +44,7 @@ const GDPChart = ({ data }: GDPChartProps) => {
               tickLine={false}
               axisLine={false}
               reversed={isRtl}
+              minTickGap={30}
             />
             <YAxis
               stroke="#64748b"
@@ -61,7 +62,10 @@ const GDPChart = ({ data }: GDPChartProps) => {
                 boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
                 textAlign: isRtl ? 'right' : 'left'
               }}
-              formatter={(value: number) => [`$${value} Billion`, t('gdp')]}
+              formatter={(value: number) => [
+                isRtl ? `${t('label_billion')} ${value}$` : `$${value} ${t('label_billion')}`, 
+                t('gdp')
+              ]}
             />
             <Area
               type="monotone"
@@ -77,6 +81,7 @@ const GDPChart = ({ data }: GDPChartProps) => {
         </ResponsiveContainer>
       </CardContent>
     </Card>
+
   );
 };
 

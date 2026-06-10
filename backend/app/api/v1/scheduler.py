@@ -113,8 +113,8 @@ def update_scheduled_export(
     except Exception as e:
         print(f"Error updating job: {e}")
     
-    export.scheduled_time = req.scheduled_time
-    export.export_details = req.details
+    export.scheduled_time = req.scheduled_time  # type: ignore
+    export.export_details = req.details  # type: ignore
     db.commit()
     
     return {"status": "success"}
@@ -157,9 +157,34 @@ def download_scheduled_export(
     if not notification or notification.type != "EXPORT_READY":
         raise HTTPException(status_code=404, detail="Export not found")
         
+    # Check for real asynchronous ExportTask
+    details = notification.details or {}
+    task_id = details.get("task_id")
+    if task_id:
+        from app.models import ExportTask
+        import os
+        from fastapi.responses import FileResponse
+        task = db.query(ExportTask).filter(ExportTask.id == task_id).first()
+        if task and task.file_path and os.path.exists(task.file_path):
+            filename = task.custom_filename or os.path.basename(task.file_path)
+            if not filename.endswith(f".{task.format.lower()}"):
+                filename = f"{filename}.{task.format.lower()}"
+            
+            media_type = "text/csv"
+            if task.format.lower() == "xlsx":
+                media_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            elif task.format.lower() == "json":
+                media_type = "application/json"
+                
+            return FileResponse(
+                path=task.file_path,
+                filename=filename,
+                media_type=media_type
+            )
+            
     # In a real app we'd fetch the data matching notification.details['table']
     from app.api.v1.data import get_data
-    df = get_data()
+    df = get_data(db)
     
     import io
     from fastapi.responses import StreamingResponse
