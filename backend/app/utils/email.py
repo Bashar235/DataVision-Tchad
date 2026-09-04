@@ -253,7 +253,7 @@ def send_otp_email(target_email: str, otp_code: str, username: str = "Utilisateu
     raw_pass  = os.getenv("MAIL_PASSWORD")
 
     if not smtp_user or raw_pass is None:
-        print("❌ ERROR: MAIL_USERNAME or MAIL_PASSWORD not found in .env file!")
+        print("[ERROR] MAIL_USERNAME or MAIL_PASSWORD not found in .env file!")
         return False
 
     smtp_pass = raw_pass.replace(" ", "")
@@ -286,8 +286,8 @@ def send_otp_email(target_email: str, otp_code: str, username: str = "Utilisateu
         server.login(smtp_user, smtp_pass)
         server.send_message(msg)
         server.quit()
-        print(f"✅ HTML OTP email sent to {target_email}")
+        print(f"[OK] HTML OTP email sent to {target_email}")
         return True
     except Exception as e:
-        print(f"❌ SMTP Error: {e}")
+        print(f"[ERROR] SMTP Error: {e}")
         return False

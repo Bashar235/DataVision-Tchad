@@ -163,6 +163,20 @@ export const getAdminStats = async (period: string = "7d") => {
     }
 };
 
+export const exportAdminReportPDF = async (reportType: string, dateRange: string, auditType?: string, role?: string) => {
+    const token = sessionStorage.getItem('authToken');
+    const response = await api.post('/v1/admin/export-admin-report-pdf', {
+        report_type: reportType,
+        date_range: dateRange,
+        audit_type: auditType || 'all',
+        role: role || 'all_roles'
+    }, {
+        responseType: 'blob',
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    return response.data;
+};
+
 export const getAdminProductivity = async () => {
     try {
         const token = sessionStorage.getItem('authToken');
@@ -565,6 +579,8 @@ export interface ReportConfig {
     customFilename?: string;
     includeWatermark?: boolean;
     language?: string;
+    start_year?: number;
+    end_year?: number;
 }
 
 export const generateReport = async (config: ReportConfig & { regions?: string[] }) => {
@@ -646,7 +662,9 @@ export const generateAnalystReport = async (config: AnalystReportConfig) => {
         dataset_id: config.dataset_id,
         custom_filename: config.customFilename,
         include_watermark: config.includeWatermark,
-        language: config.language || 'fr'
+        language: config.language || 'fr',
+        start_year: config.start_year,
+        end_year: config.end_year
     }, {
         responseType: 'blob',
         headers: { 'Authorization': `Bearer ${token}` }

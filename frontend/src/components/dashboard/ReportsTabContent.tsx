@@ -14,7 +14,7 @@ import {
     Download
 } from "lucide-react";
 import React, { useState, useEffect, useCallback } from "react";
-import { downloadReport, getReportHistory, generateFilteredReport, previewReport } from "@/services/api";
+import { downloadReport, getReportHistory, generateFilteredReport, previewReport, exportAdminReportPDF } from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -51,6 +51,7 @@ export const ReportsTabContent = () => {
 
     // UI state
     const [generating, setGenerating] = useState(false);
+    const [generatingPDF, setGeneratingPDF] = useState(false);
     const [history, setHistory] = useState<ReportHistoryItem[]>([]);
     const [loading, setLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
@@ -124,6 +125,52 @@ export const ReportsTabContent = () => {
             });
         } finally {
             setGenerating(false);
+        }
+    };
+
+    const handleGeneratePDF = async () => {
+        if (!reportType) {
+            toast({
+                variant: "destructive",
+                title: t('common_validation_error'),
+                description: t('reports_select_type_error'),
+            });
+            return;
+        }
+
+        setGeneratingPDF(true);
+        try {
+            const blob = await exportAdminReportPDF(
+                reportType,
+                dateRange || 'all_time',
+                auditType || 'all',
+                userRole || 'all_roles'
+            );
+
+            toast({ 
+                title: t('reports_generated_success'), 
+                description: t('reports_generated_success_desc') 
+            });
+
+            if (blob) {
+                const blobUrl = URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }));
+                const link = document.createElement('a');
+                link.href = blobUrl;
+                link.setAttribute('download', `INSEED_Admin_Report_${reportType}.pdf`);
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                setTimeout(() => URL.revokeObjectURL(blobUrl), 10_000);
+            }
+        } catch (error: any) {
+            console.error("PDF report generation failed", error);
+            toast({
+                variant: "destructive",
+                title: t('reports_generation_failed'),
+                description: t('reports_generation_error'),
+            });
+        } finally {
+            setGeneratingPDF(false);
         }
     };
 
@@ -282,11 +329,11 @@ export const ReportsTabContent = () => {
                                 </Select>
                             </div>
 
-                            <div className="pt-4 border-t border-slate-100">
+                            <div className="pt-4 border-t border-slate-100 flex gap-4">
                                 <Button
-                                    className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-11"
+                                    className="flex-1 bg-primary hover:bg-primary/90 text-white font-bold h-11"
                                     onClick={handleGenerate}
-                                    disabled={generating || !reportType}
+                                    disabled={generating || generatingPDF || !reportType}
                                 >
                                     {generating ? (
                                         <>
@@ -297,6 +344,23 @@ export const ReportsTabContent = () => {
                                         <>
                                             <FileText className={`w-4 h-4 ${isRtl ? 'ml-2' : 'mr-2'}`} />
                                             {t('reports_generate_btn')}
+                                        </>
+                                    )}
+                                </Button>
+                                <Button
+                                    className="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold h-11"
+                                    onClick={handleGeneratePDF}
+                                    disabled={generating || generatingPDF || !reportType}
+                                >
+                                    {generatingPDF ? (
+                                        <>
+                                            <Loader2 className={`w-4 h-4 ${isRtl ? 'ml-2' : 'mr-2'} animate-spin`} />
+                                            Generating PDF...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Download className={`w-4 h-4 ${isRtl ? 'ml-2' : 'mr-2'}`} />
+                                            Download PDF
                                         </>
                                     )}
                                 </Button>

@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from fastapi.responses import StreamingResponse, FileResponse
 from sqlalchemy.orm import Session
 from sqlalchemy import func
+from typing import Optional, List, Union, Dict, Any, Tuple
 from app.db.session import get_db
 from app.models import AuditLog, User, IndicatorData, ScheduledExport, DataDictionary, GeneratedReport, CleanedData
 from app.api.v1.auth import get_current_user
@@ -28,6 +29,14 @@ import arabic_reshaper
 from bidi.algorithm import get_display
 
 router = APIRouter()
+
+def is_valid_uuid(val: str) -> bool:
+    try:
+        import uuid
+        uuid.UUID(str(val))
+        return True
+    except (ValueError, TypeError):
+        return False
 
 # Register Arabic-compatible font
 FONT_PATH = "C:\\Windows\\Fonts\\arial.ttf"
@@ -141,11 +150,19 @@ def _make_pdf_table(data: list, col_widths: list | None = None, lang: str = "en"
     return t
 
 
-def _build_pdf_header(elements: list, styles, report_title: str, generated_by: str, lang: str = "fr"):
+def _build_pdf_header(
+    elements: list,
+    styles,
+    report_title: str,
+    generated_by: str,
+    lang: str = "fr",
+    start_year: Optional[int] = None,
+    end_year: Optional[int] = None,
+    dataset_source: Optional[str] = None
+):
     """Append the standard INSEED letterhead to the elements list."""
     t = _get_translator(lang)
     ui = t["ui"]
-    is_rtl = lang.lower() == "ar"
     
     header_style = ParagraphStyle(
         "Header",
@@ -177,10 +194,10 @@ def _build_pdf_header(elements: list, styles, report_title: str, generated_by: s
         except Exception:
             pass
 
-    republique = _handle_text(ui.get("country_name", "RÉPUBLIQUE DU TCHAD"), lang)
-    devise = _handle_text(ui.get("motto", "UNITÉ - TRAVAIL - PROGRÈS"), lang)
-    nom_inseed = _handle_text(ui.get("inseed_name1", "INSTITUT NATIONAL DE LA STATISTIQUE,"), lang)
-    nom_inseed2 = _handle_text(ui.get("inseed_name2", "DES ÉTUDES ÉCONOMIQUES ET DÉMOGRAPHIQUES (INSEED)"), lang)
+    republique = _handle_text("REPUBLIC OF CHAD", lang)
+    devise = _handle_text("UNITY - WORK - PROGRESS", lang)
+    nom_inseed = _handle_text("NATIONAL INSTITUTE OF STATISTICS,", lang)
+    nom_inseed2 = _handle_text("ECONOMIC AND DEMOGRAPHIC STUDIES (INSEED)", lang)
 
     elements.append(Paragraph(republique, header_style))
     elements.append(Paragraph(devise, sub_style))
@@ -189,15 +206,17 @@ def _build_pdf_header(elements: list, styles, report_title: str, generated_by: s
     elements.append(Paragraph(nom_inseed2, header_style))
     elements.append(Spacer(1, 0.2 * inch))
     
-    # Body Header
-    report_label = _handle_text(f"{ui.get('report', 'RAPPORT')} : {report_title.upper()}", lang)
+    # Custom Metadata block with Customization Target
+    years_spec = f" ({start_year} - {end_year})" if start_year and end_year else ""
+    source_spec = f" | Source: {dataset_source}" if dataset_source else ""
+    report_label = _handle_text(f"RAPPORT : CUSTOM_BUILDER{years_spec}{source_spec}", lang)
     elements.append(Paragraph(f"<b>{report_label}</b>", header_style))
     
     gen_time = datetime.now().strftime('%d/%m/%Y %H:%M')
-    gen_by_label = _handle_text(f"{ui.get('generated_on', 'Généré le')}: {gen_time}  |  {ui.get('by', 'Par')}: {generated_by}", lang)
+    gen_by_label = _handle_text(f"Generated on: {gen_time} | By: {generated_by}", lang)
     elements.append(Paragraph(gen_by_label, sub_style))
     
-    certified_label = _handle_text(f"<i>{ui.get('certified', 'Certifié par DataVision AI')}</i>", lang)
+    certified_label = _handle_text("Certified by DataVision AI", lang)
     elements.append(Paragraph(certified_label, sub_style))
     elements.append(Spacer(1, 0.3 * inch))
 
@@ -255,7 +274,16 @@ def save_scheduled_report(
 # PDF content builders (one per report type)
 # ─────────────────────────────────────────────────────────────────────────────
 
-def _build_executive_summary(elementsList: list, styles, db: Session, region: str, lang: str = "fr", dataset_id: str | None = None):
+def _build_executive_summary(
+    elementsList: list,
+    styles,
+    db: Session,
+    region: str,
+    lang: str = "fr",
+    dataset_id: str | None = None,
+    start_year: int | None = None,
+    end_year: int | None = None
+):
     """Executive summary based on Data Quality Gate."""
     t = _get_translator(lang)
     title = _handle_text(t["sections"].get("executive_summary", "1. Résumé Analytique"), lang)
@@ -270,9 +298,16 @@ def _build_executive_summary(elementsList: list, styles, db: Session, region: st
     model = CleanedData if dataset_id else IndicatorData
     query = db.query(model)
     if dataset_id:
-        query = query.filter(model.dataset_id == dataset_id)
+        resolved_dataset_id = dataset_id
+        if resolved_dataset_id and not is_valid_uuid(resolved_dataset_id):
+            resolved_dataset_id = "35949ad2-8b2e-5123-bd6a-2dd65a98a9d3"
+        query = query.filter(model.dataset_id == resolved_dataset_id)
     if region != "National":
         query = query.filter(model.region == region)
+    if start_year:
+        query = query.filter(model.year >= start_year)
+    if end_year:
+        query = query.filter(model.year <= end_year)
     
     all_data = query.all()
     
@@ -308,7 +343,16 @@ def _build_executive_summary(elementsList: list, styles, db: Session, region: st
     elementsList.append(Spacer(1, 0.2 * inch))
 
 
-def _build_demographic_pyramid(elementsList: list, styles, db: Session, region: str, lang: str = "fr", dataset_id: str | None = None):
+def _build_demographic_pyramid(
+    elementsList: list,
+    styles,
+    db: Session,
+    region: str,
+    lang: str = "fr",
+    dataset_id: str | None = None,
+    start_year: int | None = None,
+    end_year: int | None = None
+):
     """Generate demographic pyramid using ReportLab native Drawing shapes (Rect, Line, String).
 
     Filters out aggregate cohorts (e.g. '15-49 ans'), aligns male and female lists
@@ -320,7 +364,13 @@ def _build_demographic_pyramid(elementsList: list, styles, db: Session, region: 
     from reportlab.graphics.charts.legends import Legend
 
     t = _get_translator(lang)
-    title = _handle_text(t["sections"].get("demographics", "2. Pyramide des Âges"), lang)
+    # Strip any hardcoded year from the translation base label, then append
+    # the user-selected start_year so the title always reflects active filters.
+    _base_demographics = t["sections"].get("demographics", "2. Demographic Pyramids")
+    import re as _re
+    _base_demographics = _re.sub(r"\s*\(\d{4}\)", "", _base_demographics).strip()
+    _year_suffix = f" ({start_year})" if start_year else ""
+    title = _handle_text(f"{_base_demographics}{_year_suffix}", lang)
     h_style = ParagraphStyle("H2Pyr", parent=styles["Heading2"], fontName=_get_font(lang, True))
     elementsList.append(Paragraph(title, h_style))
 
@@ -332,10 +382,20 @@ def _build_demographic_pyramid(elementsList: list, styles, db: Session, region: 
 
     # ── Data Fetching (aligned with analyst.py /pyramid endpoint) ─────────
     effective_dataset_id = dataset_id or GOLD_UUID
+    if effective_dataset_id and not is_valid_uuid(effective_dataset_id):
+        effective_dataset_id = GOLD_UUID
 
-    # Try multiple years (2025 matches the preview default, then fallbacks)
+    # Try multiple years (preferring years within user range if provided)
     raw_data = []
-    for try_year in (2025, 2024, 2023, 2020, 2010):
+    if start_year and end_year:
+        if end_year >= start_year:
+            candidate_years = list(range(end_year, start_year - 1, -1))
+        else:
+            candidate_years = [start_year]
+    else:
+        candidate_years = [2025, 2024, 2023, 2020, 2010]
+
+    for try_year in candidate_years:
         raw_data = db.query(CleanedData).filter(
             CleanedData.dataset_id == effective_dataset_id,
             CleanedData.region == query_region,
@@ -348,7 +408,7 @@ def _build_demographic_pyramid(elementsList: list, styles, db: Session, region: 
 
     # Fallback: IndicatorData (legacy seeded rows)
     if not raw_data:
-        for try_year in (2024, 2020, 2010):
+        for try_year in candidate_years:
             raw_data = db.query(IndicatorData).filter(
                 IndicatorData.indicator_name == "Population par Groupe d'Âges",
                 IndicatorData.region == query_region,
@@ -606,10 +666,25 @@ def _build_demographic_pyramid(elementsList: list, styles, db: Session, region: 
     elementsList.append(Spacer(1, 0.2 * inch))
 
 
-def _build_predictive_trends(elementsList: list, styles, db: Session, region: str, lang: str = "fr", dataset_id: str | None = None):
+def _build_predictive_trends(
+    elementsList: list,
+    styles,
+    db: Session,
+    region: str,
+    lang: str = "fr",
+    dataset_id: str | None = None,
+    start_year: int | None = None,
+    end_year: int | None = None
+):
     """Inject Predictive Trends using ML Engine."""
     t = _get_translator(lang)
-    title = _handle_text(t["sections"].get("trends", "3. Projections"), lang)
+    # Strip any hardcoded year from the translation base label, then append
+    # the user-selected end_year so the title always reflects active filters.
+    _base_trends = t["sections"].get("trends", "3. Predictive Trends")
+    import re as _re
+    _base_trends = _re.sub(r"\s*\(\d{4}\)", "", _base_trends).strip()
+    _year_suffix = f" ({end_year})" if end_year else ""
+    title = _handle_text(f"{_base_trends}{_year_suffix}", lang)
     h_style = ParagraphStyle("H2", parent=styles["Heading2"], fontName=_get_font(lang, True))
     elementsList.append(Paragraph(title, h_style))
     
@@ -624,16 +699,19 @@ def _build_predictive_trends(elementsList: list, styles, db: Session, region: st
             isf_q = db.query(model.value).filter(model.region == region, model.indicator_name == "ISF", model.year == 2024)
             e0_q = db.query(model.value).filter(model.region == region, model.indicator_name == "e0", model.year == 2024)
             
+        resolved_dataset_id = dataset_id
         if dataset_id:
-            isf_q = isf_q.filter(model.dataset_id == dataset_id)
-            e0_q = e0_q.filter(model.dataset_id == dataset_id)
+            if resolved_dataset_id and not is_valid_uuid(resolved_dataset_id):
+                resolved_dataset_id = "35949ad2-8b2e-5123-bd6a-2dd65a98a9d3"
+            isf_q = isf_q.filter(model.dataset_id == resolved_dataset_id)
+            e0_q = e0_q.filter(model.dataset_id == resolved_dataset_id)
             
         isf_val = isf_q.scalar() or 6.5
         e0_val = e0_q.scalar() or 58.0
             
         engine = PredictorEngine.load()
-        years = list(range(2025, 2051))
-        preds = engine.predict(params={"ISF": float(isf_val), "e0": float(e0_val)}, years=years)
+        years = list(range(start_year, end_year + 1)) if start_year and end_year else list(range(2025, 2051))
+        preds = engine.predict(params={"ISF": float(isf_val), "e0": float(e0_val)}, years=years, dataset_id=resolved_dataset_id, db=db)
         raw_data = preds.get("predictions", [])
         
         y_values = [p["ensemble_pred"] for p in raw_data]
@@ -680,7 +758,16 @@ def _build_predictive_trends(elementsList: list, styles, db: Session, region: st
     elementsList.append(Spacer(1, 0.2 * inch))
 
 
-def _build_data_health_audit(elementsList: list, styles, db: Session, region: str, lang: str = "fr", dataset_id: str | None = None):
+def _build_data_health_audit(
+    elementsList: list,
+    styles,
+    db: Session,
+    region: str,
+    lang: str = "fr",
+    dataset_id: str | None = None,
+    start_year: int | None = None,
+    end_year: int | None = None
+):
     """Summary of data audit."""
     t = _get_translator(lang)
     title = _handle_text(t["sections"].get("health_audit", "4. Audit Santé"), lang)
@@ -693,9 +780,16 @@ def _build_data_health_audit(elementsList: list, styles, db: Session, region: st
     model = CleanedData if dataset_id else IndicatorData
     query = db.query(model)
     if dataset_id:
-        query = query.filter(model.dataset_id == dataset_id)
+        resolved_dataset_id = dataset_id
+        if resolved_dataset_id and not is_valid_uuid(resolved_dataset_id):
+            resolved_dataset_id = "35949ad2-8b2e-5123-bd6a-2dd65a98a9d3"
+        query = query.filter(model.dataset_id == resolved_dataset_id)
     if region != "National":
         query = query.filter(model.region == region)
+    if start_year:
+        query = query.filter(model.year >= start_year)
+    if end_year:
+        query = query.filter(model.year <= end_year)
     
     health_data = query.limit(1000).all()
         
@@ -1652,7 +1746,16 @@ async def generate_report(
     else:
         # ── ANALYST / STANDARD REPORT PATH ────────────────────────────────
         # Build Header (Only Once per Document)
-        _build_pdf_header(elements, styles, report_title, str(getattr(current_user, "full_name")), lang=request.language or "fr")
+        _build_pdf_header(
+            elements,
+            styles,
+            report_title,
+            str(getattr(current_user, "full_name")),
+            lang=request.language or "fr",
+            start_year=request.start_year,
+            end_year=request.end_year,
+            dataset_source=request.dataset_id
+        )
 
         # Define Regions loop
         if request.regions and len(request.regions) > 0:
@@ -1662,14 +1765,19 @@ async def generate_report(
 
         for current_region in regions_to_process:
             # Empty Region Guard
-            model = CleanedData if request.dataset_id else IndicatorData
+            # Resolve dataset_id: if the value is a non-UUID display label (e.g. the
+            # locked "Dernières Données Nettoyées (Global)" string), treat it as the
+            # global cleaned dataset rather than sending it verbatim into a UUID column.
+            resolved_dataset_id = request.dataset_id if (request.dataset_id and is_valid_uuid(request.dataset_id)) else None
+            model = CleanedData if resolved_dataset_id else IndicatorData
             query = db.query(model).filter(model.region == current_region)
-            
-            if request.dataset_id:
-                query = query.filter(model.dataset_id == request.dataset_id)
+
+            if resolved_dataset_id:
+                query = query.filter(model.dataset_id == resolved_dataset_id)
             else:
+                # No UUID — use the global cleaned data (the default locked source)
                 query = query.filter(model.is_cleaned == True)
-            
+
             region_data = query.first()
 
             if not region_data and current_region != "National" and current_region != "Tchad":
@@ -1685,16 +1793,52 @@ async def generate_report(
 
             # Build Sections based on selection
             if "executive_summary" in sections:
-                _build_executive_summary(elements, styles, db, current_region, lang=request.language or "fr", dataset_id=request.dataset_id)
+                _build_executive_summary(
+                    elements,
+                    styles,
+                    db,
+                    current_region,
+                    lang=request.language or "fr",
+                    dataset_id=resolved_dataset_id,
+                    start_year=request.start_year,
+                    end_year=request.end_year
+                )
             
             if "demographics" in sections or "pyramid" in sections:
-                _build_demographic_pyramid(elements, styles, db, current_region, lang=request.language or "fr", dataset_id=request.dataset_id)
+                _build_demographic_pyramid(
+                    elements,
+                    styles,
+                    db,
+                    current_region,
+                    lang=request.language or "fr",
+                    dataset_id=resolved_dataset_id,
+                    start_year=request.start_year,
+                    end_year=request.end_year
+                )
                 
             if "trends" in sections or "predictive" in sections:
-                _build_predictive_trends(elements, styles, db, current_region, lang=request.language or "fr", dataset_id=request.dataset_id)
+                _build_predictive_trends(
+                    elements,
+                    styles,
+                    db,
+                    current_region,
+                    lang=request.language or "fr",
+                    dataset_id=resolved_dataset_id,
+                    start_year=request.start_year,
+                    end_year=request.end_year
+                )
                 
             if "health_audit" in sections:
-                _build_data_health_audit(elements, styles, db, current_region, lang=request.language or "fr", dataset_id=request.dataset_id)
+                _build_data_health_audit(
+                    elements,
+                    styles,
+                    db,
+                    current_region,
+                    lang=request.language or "fr",
+                    dataset_id=resolved_dataset_id,
+                    start_year=request.start_year,
+                    end_year=request.end_year
+                )
 
             # Page break after every region
             elements.append(PageBreak())

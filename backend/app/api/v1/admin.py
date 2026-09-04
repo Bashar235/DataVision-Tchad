@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from sqlalchemy import text, func
 from app.db.session import get_db
@@ -233,7 +234,7 @@ def get_issues(db: Session = Depends(get_db), current_user: User = Depends(get_c
     try:
         # Load data into Pandas
         query = db.query(IndicatorData).statement
-        df = pd.read_sql(query, db.bind)
+        df = pd.read_sql(query, db.bind)  # type: ignore
         
         if df.empty:
             return []
@@ -323,7 +324,7 @@ def clean_data(
 
     try:
         query = db.query(IndicatorData).statement
-        df = pd.read_sql(query, db.bind)
+        df = pd.read_sql(query, db.bind)  # type: ignore
         
         initial_count = len(df)
         rows_recovered = 0 # Or affected
@@ -334,7 +335,7 @@ def clean_data(
             if 'year' in df.columns:
                 df = df.sort_values(by=['region', 'indicator_name', 'year'])
             
-            df = df.fillna(method='ffill').fillna(method='bfill')
+            df = df.ffill().bfill()
             
             # For remaining NaNs (if any), assume 0 or ""
             df['value'] = df['value'].fillna(0)
@@ -371,7 +372,7 @@ def clean_data(
                 if 'id' in df.columns:
                     df = df.drop(columns=['id'])
                     
-                df.to_sql('indicators_data', db.bind, if_exists='append', index=False)
+                df.to_sql('indicators_data', db.bind, if_exists='append', index=False)  # type: ignore
                 
             db.commit()  # Commit the outer transaction
             
@@ -381,7 +382,7 @@ def clean_data(
 
         # Log to Audit
         audit = AuditLog(
-            user_id=current_user.id,
+            user_id=current_user.id,  # type: ignore
             action="DATA_CLEANING",
             details=json.dumps({
                 "type": type,
@@ -428,7 +429,7 @@ def preview_cleaned_data(
         raise HTTPException(status_code=404, detail="Dataset binary content missing")
 
     try:
-        buffer = io.BytesIO(dataset.raw_content)
+        buffer = io.BytesIO(dataset.raw_content)  # type: ignore
         ext = dataset.original_filename.split('.')[-1].lower()
         if ext == "csv":
             df = pd.read_csv(buffer)
@@ -444,9 +445,9 @@ def preview_cleaned_data(
         df.drop_duplicates(inplace=True)
         
         # Fill missing values for preview
-        for col in df.select_dtypes(include=['number']).columns:
+        for col in df.select_dtypes(include=['number']).columns:  # type: ignore
             df[col] = df[col].fillna(0)
-        for col in df.select_dtypes(include=['object']).columns:
+        for col in df.select_dtypes(include=['object']).columns:  # type: ignore
             df[col] = df[col].fillna("")
 
         # Return sample (top 10 rows)
@@ -475,7 +476,7 @@ def get_cleaning_report(db: Session = Depends(get_db), current_user: User = Depe
     
     try:
         query = db.query(IndicatorData).statement
-        df = pd.read_sql(query, db.bind)
+        df = pd.read_sql(query, db.bind)  # type: ignore
         
         if df.empty:
             raise HTTPException(status_code=404, detail="No data available")
@@ -652,7 +653,7 @@ def backup_database(db: Session = Depends(get_db), current_user: User = Depends(
     try:
         # Dump indicators_data for now as it's the main data
         query = db.query(IndicatorData).statement
-        df = pd.read_sql(query, db.bind)
+        df = pd.read_sql(query, db.bind)  # type: ignore
         df.to_csv(filepath, index=False)
         
         return {"status": "success", "message": "Backup created", "file": filename}
@@ -682,7 +683,7 @@ def truncate_table(
         
         # Log it
         audit = AuditLog(
-            user_id=current_user.id,
+            user_id=current_user.id,  # type: ignore
             action="TRUNCATE_TABLE",
             details=json.dumps({"table": table_name}),
             created_at=datetime.utcnow()
@@ -750,11 +751,11 @@ def preview_table(
         # Calculate completeness
         # Completeness defined as: Percentage of rows that have no NULL values across all columns
         # In SQL: COUNT(*) WHERE (col1 IS NOT NULL AND col2 IS NOT NULL ...) / COUNT(*)
-        if total_rows > 0:
+        if total_rows and total_rows > 0:  # type: ignore
             null_checks = " AND ".join([f"{col} IS NOT NULL" for col in columns])
             comp_sql = text(f"SELECT COUNT(*) FROM {table_name} WHERE {null_checks}")
             complete_rows = db.execute(comp_sql).scalar()
-            completeness = round((complete_rows / total_rows) * 100, 2)
+            completeness = round((complete_rows / total_rows) * 100, 2)  # type: ignore
         else:
             completeness = 100.0
 
@@ -813,8 +814,8 @@ def update_table_settings(
         settings = TableSettings(table_name=table_name, is_locked=settings_update.is_locked)
         db.add(settings)
     else:
-        settings.is_locked = settings_update.is_locked
-        settings.last_modified = datetime.utcnow()
+        settings.is_locked = settings_update.is_locked  # type: ignore
+        settings.last_modified = datetime.utcnow()  # type: ignore
     
     db.commit()
     db.refresh(settings)
@@ -823,7 +824,7 @@ def update_table_settings(
     # Note: Request object not available here, use client IP from a request dependency if needed
     log_security_event(
         db,
-        current_user.id,
+        current_user.id,  # type: ignore
         f"TABLE_LOCK_{'ENABLED' if settings.is_locked else 'DISABLED'}",
         "127.0.0.1",  # TODO: Extract from request headers
         {"table_name": table_name}
@@ -898,7 +899,7 @@ def delete_table_row(
         # Use identifier quoting for safety
         from sqlalchemy import inspect
         inspector = inspect(db.bind)
-        if table_name not in [tbl for tbl in inspector.get_table_names()]:
+        if table_name not in [tbl for tbl in inspector.get_table_names()]:  # type: ignore
             raise HTTPException(status_code=404, detail=f"Table '{table_name}' does not exist")
 
         # Construct safe DELETE query with identifier (table_name is whitelisted, so safe)
@@ -906,13 +907,13 @@ def delete_table_row(
         result = db.execute(delete_sql, {"row_id": row_id})
         db.commit()
 
-        if result.rowcount == 0:
+        if result.rowcount == 0:  # type: ignore
             raise HTTPException(status_code=404, detail=f"Row {row_id} not found in table '{table_name}'")
 
         # Log security event
         log_security_event(
             db,
-            current_user.id,
+            current_user.id,  # type: ignore
             "ROW_DELETED",
             "127.0.0.1",  # TODO: Extract from request headers
             {"table_name": table_name, "row_id": row_id}
@@ -1107,7 +1108,7 @@ def export_audit_log(
             
         stream = io.BytesIO()
         doc = SimpleDocTemplate(stream, pagesize=landscape(letter))
-        elements = []
+        elements: list = []
         styles = getSampleStyleSheet()
         
         title_style = ParagraphStyle(
@@ -1240,7 +1241,7 @@ def generate_intelligent_report(
     
     # 6. Log to Audit
     audit = AuditLog(
-        user_id=current_user.id,
+        user_id=current_user.id,  # type: ignore
         action="REPORT_GENERATION",
         details=json.dumps({
             "type": report_type,
@@ -1335,3 +1336,150 @@ def get_productivity_analytics(
         "activity_timeline": activity_timeline
     }
 
+class AdminPDFReportRequest(BaseModel):
+    report_type: str
+    audit_type: str = "all"
+    date_range: str = "all_time"
+    role: str = "all_roles"
+
+@router.post("/export-admin-report-pdf")
+def export_admin_report_pdf(
+    request: AdminPDFReportRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Generate an intelligent PDF report for Admin.
+    Matches the CSV logic but outputs official PDF styling.
+    """
+    if current_user.role not in ["admin", "administrator"]:
+        raise HTTPException(status_code=403, detail="Administrator access required")
+
+    from fastapi.responses import StreamingResponse
+    import io
+    from reportlab.lib.pagesizes import letter, landscape
+    from reportlab.lib import colors
+    from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.pdfbase.ttfonts import TTFont
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.lib.units import inch
+    import os
+
+    now = datetime.utcnow()
+    
+    stream = io.BytesIO()
+    doc = SimpleDocTemplate(stream, pagesize=landscape(letter))
+    elements: list = []
+    styles = getSampleStyleSheet()
+
+    try:
+        pdfmetrics.registerFont(TTFont('DejaVuSans', 'DejaVuSans.ttf'))
+        font_name = 'DejaVuSans'
+    except Exception:
+        font_name = 'Helvetica'
+
+    title_style = ParagraphStyle(
+        'TitleStyle', parent=styles['Heading1'], fontName=font_name, alignment=1, spaceAfter=20
+    )
+    normal_style = ParagraphStyle(
+        'NormalStyle', parent=styles['Normal'], fontName=font_name, alignment=1
+    )
+    
+    REPORTS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "reports")
+    LOGO_PATH = os.path.join(REPORTS_DIR, "INSEED.jpeg")
+    
+    if os.path.exists(LOGO_PATH):
+        try:
+            img = Image(LOGO_PATH, width=1.0*inch, height=1.0*inch)
+            img.hAlign = 'CENTER'
+            elements.append(img)
+            elements.append(Spacer(1, 10))
+        except Exception:
+            pass
+
+    elements.append(Paragraph("<b>REPUBLIC OF CHAD</b>", normal_style))
+    elements.append(Paragraph("UNITY - WORK - PROGRESS", normal_style))
+    elements.append(Paragraph("<b>NATIONAL INSTITUTE OF STATISTICS,</b>", normal_style))
+    elements.append(Paragraph("<b>ECONOMIC AND DEMOGRAPHIC STUDIES (INSEED)</b>", normal_style))
+    elements.append(Spacer(1, 10))
+    elements.append(Paragraph(f"<b>RAPPORT : SYSTEM_MANAGEMENT ({request.report_type.upper()})</b>", title_style))
+    
+    user_display = getattr(current_user, "full_name", None) or current_user.email
+    elements.append(Paragraph(f"Generated on: {now.strftime('%Y-%m-%d %H:%M:%S')} | By: {user_display}", normal_style))
+    elements.append(Paragraph("Certified by DataVision AI", normal_style))
+    elements.append(Spacer(1, 20))
+
+    query = db.query(AuditLog)
+    
+    if request.report_type == "user_statistics":
+        query = query.filter(AuditLog.action.in_(["USER_LOGIN", "USER_LOGOUT", "PASSWORD_CHANGE"]))
+    elif request.report_type == "security_events":
+        query = query.filter(AuditLog.action.in_(["FAILED_LOGIN", "UNAUTHORIZED_ACCESS", "SECURITY_ALERT", "TABLE_LOCK_ENABLED"]))
+    elif request.report_type == "data_governance":
+        query = query.filter(AuditLog.action.in_(["DATA_CLEANING", "DATA_EXPORT", "UPLOAD_DATA", "DATA_IMPORT", "TRUNCATE_TABLE"]))
+
+    if request.audit_type == "auth_events":
+        query = query.filter(AuditLog.action.ilike("%LOGIN%") | AuditLog.action.ilike("%AUTH%"))
+    elif request.audit_type == "data_operations":
+        query = query.filter(AuditLog.action.ilike("%DATA%") | AuditLog.action.ilike("%IMPORT%") | AuditLog.action.ilike("%EXPORT%"))
+    elif request.audit_type == "system_config":
+        query = query.filter(AuditLog.action.in_(["TABLE_LOCK_ENABLED", "TABLE_LOCK_DISABLED", "TRUNCATE_TABLE"]))
+
+    if request.date_range == "today":
+        start_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        query = query.filter(AuditLog.created_at >= start_date)
+    elif request.date_range == "last_7_days":
+        start_date = now - timedelta(days=7)
+        query = query.filter(AuditLog.created_at >= start_date)
+    elif request.date_range == "last_30_days":
+        start_date = now - timedelta(days=30)
+        query = query.filter(AuditLog.created_at >= start_date)
+    elif request.date_range == "current_quarter":
+        month = (now.month - 1) // 3 * 3 + 1
+        start_date = now.replace(month=month, day=1, hour=0, minute=0, second=0, microsecond=0)
+        query = query.filter(AuditLog.created_at >= start_date)
+
+    if request.role != "all_roles":
+        query = query.join(User).filter(User.role == request.role)
+
+    logs = query.order_by(AuditLog.created_at.desc()).limit(1000).all()
+
+    table_data = [["Timestamp", "User", "Role", "Action", "IP Address"]]
+    for log in logs:
+        user = db.query(User).filter(User.id == log.user_id).first()
+        table_data.append([
+            log.created_at.strftime("%Y-%m-%d %H:%M:%S") if log.created_at else "",
+            user.email if user else f"ID: {log.user_id}",
+            user.role if user else "N/A",
+            log.action,
+            log.ip_address or "N/A"
+        ])
+
+    if len(table_data) == 1:
+        elements.append(Paragraph("No data found for the selected filters.", normal_style))
+    else:
+        t = Table(table_data)
+        t.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1f2937')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), font_name),
+            ('FONTSIZE', (0, 0), (-1, 0), 10),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 10),
+            ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+            ('FONTNAME', (0, 1), (-1, -1), font_name),
+            ('FONTSIZE', (0, 1), (-1, -1), 8),
+            ('GRID', (0, 0), (-1, -1), 0.5, colors.lightgrey),
+            ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#f9fafb')])
+        ]))
+        elements.append(t)
+
+    doc.build(elements)
+    stream.seek(0)
+    
+    return StreamingResponse(
+        stream,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f"attachment; filename=INSEED_Admin_Report_{request.report_type}.pdf"}
+    )

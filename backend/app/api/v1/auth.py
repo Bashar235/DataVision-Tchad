@@ -109,7 +109,7 @@ def generate_otp(email: str, background_tasks: BackgroundTasks, db: Session = De
     background_tasks.add_task(send_otp_email, str(user.email), otp, str(user.full_name) if user.full_name else "Utilisateur")
     
     print(f"\n[SECURITY] OTP for {email}: {otp}\n") 
-    return {"status": "success", "message": "OTP sent to email"}
+    return {"status": "success", "message": "OTP sent to email", "message_key": "auth_otp_sent"}
 
 @router.post("/otp/verify")
 def verify_otp(email: str, code: str, db: Session = Depends(get_db)):
@@ -211,7 +211,7 @@ def verify_2fa_setup(
     current_user.is_2fa_enabled = True  # type: ignore[assignment]
     db.commit()
     
-    return {"status": "success", "message": "2FA has been enabled successfully"}
+    return {"status": "success", "message": "2FA has been enabled successfully", "message_key": "auth_2fa_enabled"}
 
 @router.post("/2fa/login")
 def login_2fa(
@@ -263,7 +263,7 @@ def disable_2fa(
     current_user.totp_secret = None  # type: ignore[assignment]
     db.commit()
     
-    return {"status": "success", "message": "2FA has been disabled successfully"}
+    return {"status": "success", "message": "2FA has been disabled successfully", "message_key": "auth_2fa_disabled"}
 
 # --- Password Change ---
 @router.post("/change-password")
@@ -286,7 +286,7 @@ def change_password(
     current_user.password_hash = new_password_hash  # type: ignore[assignment]
     db.commit()
     
-    return {"status": "success", "message": "Password changed successfully"}
+    return {"status": "success", "message": "Password changed successfully", "message_key": "auth_password_changed"}
 
 # --- Logout ---
 @router.post("/logout")
@@ -307,7 +307,7 @@ def logout(
     db.add(audit)
     db.commit()
     
-    return {"status": "success", "message": "Logged out successfully"}
+    return {"status": "success", "message": "Logged out successfully", "message_key": "auth_logged_out"}
 
 # --- Current User Profile Management ---
 @router.get("/me", response_model=UserOut)
@@ -339,4 +339,4 @@ def update_current_user_profile(
     db.commit()
     db.refresh(current_user)
     
-    return {"status": "success", "message": "Profile updated successfully", "user": current_user}
+    return {"status": "success", "message": "Profile updated successfully", "message_key": "auth_profile_updated", "user": current_user}

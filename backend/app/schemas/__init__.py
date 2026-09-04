@@ -56,6 +56,8 @@ class ReportRequest(BaseModel):
     format: Optional[str] = "pdf" # pdf or excel
     include_watermark: Optional[bool] = False
     language: Optional[str] = "fr" # en, fr, or ar
+    start_year: int
+    end_year: int
 
 class ExportRequest(BaseModel):
     table_name: str

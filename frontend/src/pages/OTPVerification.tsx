@@ -109,7 +109,7 @@ const OTPVerification = () => {
         try {
             await generateOtp(email);
             toast({
-                title: t('otp_sent'),
+                title: t('common_resend_code'),
             });
         } catch (error) {
             toast({
@@ -129,9 +129,9 @@ const OTPVerification = () => {
                             <img src="/logo.ico" alt="Logo" className="w-8 h-8 object-contain" />
                         </div>
                     </div>
-                    <CardTitle className="text-2xl text-center">{t('verification_code')}</CardTitle>
+                    <CardTitle className="text-2xl text-center">{t('common_verification_code')}</CardTitle>
                     <CardDescription className="text-center">
-                        {isRtl ? "تم إرسال رمز إلى" : "Un code a été envoyé à"}
+                        {t('common_otp_code_sent_to')}
                         <br />
                         <span className="font-medium text-foreground">{email}</span>
                     </CardDescription>
@@ -162,11 +162,11 @@ const OTPVerification = () => {
                                     onClick={handleResend}
                                     className="text-primary font-medium"
                                 >
-                                    {t('resend_code')}
+                                    {t('common_resend_code')}
                                 </Button>
                             ) : (
                                 <p className="text-sm text-muted-foreground">
-                                    {t('verification_desc')} <span className="font-mono text-primary font-medium">{timer}s</span>
+                                    {t('common_verification_desc')} <span className="font-mono text-primary font-medium">{timer}s</span>
                                 </p>
                             )}
                         </div>

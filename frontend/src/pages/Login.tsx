@@ -28,8 +28,8 @@ const Login = () => {
             await generateOtp(user.email);
 
             toast({
-                title: t('otp_sent'),
-                description: t('verification_desc'),
+                title: t('common_resend_code'),
+                description: t('common_verification_desc'),
             });
 
             navigate("/verify-otp", { state: { email: user.email, role: user.role } });

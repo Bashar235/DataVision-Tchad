@@ -53,6 +53,8 @@ const GenerateReport = () => {
     "health_audit"
   ]);
   const [isNamingOpen, setIsNamingOpen] = useState(false);
+  const [startYear, setStartYear] = useState<number>(2009);
+  const [endYear, setEndYear] = useState<number>(2024);
 
   // Pyramid Preview State
   const [pyramidData, setPyramidData] = useState<any[]>([]);
@@ -66,8 +68,8 @@ const GenerateReport = () => {
 
   const sections = [
     { id: "executive_summary", label: t('reports_executive_summary_label', {}, "Résumé Analytique"), icon: <FileText className="w-4 h-4" />, desc: t('reports_executive_summary_desc', {}, "Génération automatique basée sur le Quality Gate (95%).") },
-    { id: "pyramid", label: t('reports_demographic_pyramids_label', {}, "Pyramides Démographiques"), icon: <BarChart3 className="w-4 h-4" />, desc: t('reports_demographic_pyramids_desc', {}, "Distribution par âge et sexe pour la région sélectionnée.") },
-    { id: "trends", label: t('reports_predictive_trends_label', {}, "Tendances Prédictives 2050"), icon: <Globe className="w-4 h-4" />, desc: t('reports_predictive_trends_desc', {}, "Projections ML (LSTM/XGBoost) à long terme.") },
+    { id: "pyramid", label: `${t('reports_demographic_pyramids_label', {}, "Pyramides Démographiques")} (${startYear})`, icon: <BarChart3 className="w-4 h-4" />, desc: t('reports_demographic_pyramids_desc', {}, "Distribution par âge et sexe pour la région sélectionnée.") },
+    { id: "trends", label: `${t('reports_predictive_trends_label', {}, "Tendances Prédictives")} (${endYear})`, icon: <Globe className="w-4 h-4" />, desc: t('reports_predictive_trends_desc', {}, "Projections ML (LSTM/XGBoost) à long terme.") },
     { id: "health_audit", label: t('reports_health_audit_label', {}, "Audit de Santé des Données"), icon: <Activity className="w-4 h-4" />, desc: t('reports_health_audit_desc', {}, "Preuve de nettoyage et détection d'anomalies.") },
   ];
 
@@ -171,7 +173,9 @@ const GenerateReport = () => {
         language: language,
         includeWatermark: includeWatermark,
         customFilename: customFilename,
-        dataset_id: selectedDataset === "latest" ? undefined : selectedDataset
+        dataset_id: "Dernières Données Nettoyées (Global)",
+        start_year: startYear,
+        end_year: endYear
       });
 
       clearInterval(interval);
@@ -239,16 +243,13 @@ const GenerateReport = () => {
           <CardContent className="pt-6 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-2">
               <div className="space-y-2 text-start">
-                <Label className="text-xs font-bold uppercase text-muted-foreground">{t('gen_rep_dataset_source', {}, 'Source des Données')}</Label>
-                <Select value={selectedDataset} onValueChange={setSelectedDataset}>
-                  <SelectTrigger className="w-full h-11 border-primary/20">
-                    <SelectValue placeholder={t('gen_rep_select_dataset', {}, 'Sélectionner un dataset')} />
+                <Label className="text-xs font-bold uppercase text-muted-foreground">{t('gen_rep_dataset_source', {}, 'Source des données')}</Label>
+                <Select value="latest" disabled>
+                  <SelectTrigger className="w-full h-11 border-primary/20 bg-muted cursor-not-allowed">
+                    <SelectValue placeholder={t('gen_rep_latest_cleaned', {}, 'Dernières Données Nettoyées (Global)')} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="latest">{t('gen_rep_latest_cleaned', {}, 'Dernières Données Nettoyées (Global)')}</SelectItem>
-                    {datasets.map(d => (
-                      <SelectItem key={d.id} value={d.id}>{d.filename} ({new Date(d.uploaded_at).toLocaleDateString()})</SelectItem>
-                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -273,6 +274,45 @@ const GenerateReport = () => {
                 <p className="text-[10px] text-muted-foreground italic mt-1">
                    {selectedRegions.includes("National") ? t('gen_rep_national_desc', {}, "* Mode National activé") : `${selectedRegions.length} ${t('gen_rep_regions_selected', {}, "régions sélectionnées")}`}
                 </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 pb-2">
+              <div className="space-y-2 text-start">
+                <Label className="text-xs font-bold uppercase text-muted-foreground">{t('common_start_year', {}, 'Année Début')}</Label>
+                <Select
+                  value={String(startYear)}
+                  onValueChange={(val) => {
+                    const yr = parseInt(val);
+                    setStartYear(yr);
+                    if (endYear < yr) setEndYear(yr);
+                  }}
+                >
+                  <SelectTrigger className="h-11 border-primary/20 w-full" id="select-start-year">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Array.from({ length: 2050 - 2009 + 1 }, (_, i) => 2009 + i).map((yr) => (
+                      <SelectItem key={yr} value={String(yr)}>{yr}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2 text-start">
+                <Label className="text-xs font-bold uppercase text-muted-foreground">{t('common_end_year', {}, 'Année Fin')}</Label>
+                <Select
+                  value={String(endYear)}
+                  onValueChange={(val) => setEndYear(parseInt(val))}
+                >
+                  <SelectTrigger className="h-11 border-primary/20 w-full" id="select-end-year">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Array.from({ length: 2050 - startYear + 1 }, (_, i) => startYear + i).map((yr) => (
+                      <SelectItem key={yr} value={String(yr)}>{yr}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
 
@@ -338,7 +378,7 @@ const GenerateReport = () => {
                   <li className="flex justify-between border-b border-slate-200/50 pb-2">
                     <span>{t('gen_rep_summary_dataset', {}, 'Dataset:')}</span>
                     <span className="text-foreground font-bold truncate max-w-[120px]">
-                      {selectedDataset === "latest" ? t('common_latest', {}, "Dernier") : datasets.find(d => d.id === selectedDataset)?.filename || "ID: " + selectedDataset.slice(0,8)}
+                      {t('common_latest', {}, "Dernier")}
                     </span>
                   </li>
                   <li className="flex justify-between border-b border-slate-200/50 pb-2">

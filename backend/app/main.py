@@ -15,8 +15,8 @@ async def lifespan(app: FastAPI):
     
     # Load ML Engine at startup
     try:
-        from app.api.v1.ml import load_ml_engine
-        load_ml_engine()
+        from app.api.v1.ml import _get_engine
+        _get_engine()
     except Exception as e:
         print(f"ML Engine startup error: {e}")
         
